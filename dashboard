@@ -1,0 +1,1084 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mahindra Engineering Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://fontsstorage.blob.core.windows.net/html/css/georama.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <style>
+      :root {
+        --red: #e31b23;
+        --red-dark: #c9151c;
+        --navy: #071b2d;
+        --navy-2: #0d2b43;
+        --blue: #1769aa;
+        --sky: #5db7e8;
+        --teal: #168b9c;
+        --steel: #607789;
+        --bg: #f1f5f7;
+        --surface: #fff;
+        --border: #d7e0e7;
+        --muted: #687988;
+        --green: #16864a;
+        --amber: #c99500;
+        --danger: #d92d3b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: #17212b;
+        font-family: "Georama-Regular";
+      }
+      .topbar {
+        background: linear-gradient(
+          90deg,
+          var(--navy),
+          var(--navy-2) 65%,
+          #103953
+        );
+        color: #fff;
+        border-bottom: 3px solid var(--red);
+      }
+      .header-inner {
+        min-height: 68px;
+      }
+      .mahindra-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: #fff;
+      }
+      .mahindra-logo img {
+        width: 200px;
+      }
+      .logo-symbol {
+        width: 42px;
+        height: 42px;
+        border-radius: 7px;
+        background: var(--red);
+        display: grid;
+        place-items: center;
+        color: #fff;
+        font-weight: 900;
+        font-size: 22px;
+        letter-spacing: -2px;
+        box-shadow: 0 2px 8px #0003;
+      }
+      .logo-word {
+        font-size: 17px;
+        font-weight: 800;
+      }
+      .logo-caption {
+        font-size: 10px;
+        color: #b9c8d3;
+        letter-spacing: 0.4px;
+      }
+      .top-menu {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .top-menu a {
+        color: #dce6ed;
+        text-decoration: none;
+        padding: 11px 17px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .top-menu a:hover,
+      .top-menu a.active {
+        background: #ffffff16;
+        color: #fff;
+      }
+      .top-menu a.active {
+        box-shadow: inset 0 -3px 0 var(--red);
+      }
+      .profile-btn {
+        border: none;
+        background: #ffffff0d;
+        color: #fff;
+        border-radius: 7px;
+        padding: 7px 10px;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+      .avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--navy);
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+      }
+      .profile-name {
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .dropdown-menu {
+        border: 1px solid var(--border);
+        box-shadow: 0 8px 24px #071b2d22;
+        border-radius: 8px;
+      }
+      .dropdown-item {
+        font-size: 13px;
+        padding: 9px 14px;
+      }
+      .dropdown-item:hover {
+        background: #f2f6f8;
+        color: var(--navy);
+      }
+
+      .page {
+        padding: 22px 28px 36px;
+      }
+      .title {
+        font-weight: 800;
+        color: var(--navy);
+      }
+      .accent {
+        height: 3px;
+        width: 48px;
+        background: var(--red);
+        border-radius: 3px;
+      }
+      .cardx {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        box-shadow: 0 2px 9px #071b2d0d;
+      }
+      .section-kicker {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--red);
+        font-weight: 800;
+      }
+      .section-title-row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+      .soft-red {
+        background: #fff3f3;
+        border: 1px solid #f3c7ca;
+      }
+      .soft-blue {
+        background: #fff;
+        border: 1px solid #cfe2ef;
+      }
+      .soft-teal {
+        background: #fff;
+        border: 1px solid #cbe8e9;
+      }
+
+      .filter {
+        padding: 14px;
+      }
+      .form-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: var(--muted);
+        letter-spacing: 0.55px;
+      }
+      .form-select {
+        font-size: 13px;
+        border-color: #cbd5df;
+      }
+      .btn-red {
+        background: var(--red);
+        color: #fff;
+        border-color: var(--red);
+      }
+      .btn-red:hover {
+        background: #c7131a;
+        color: #fff;
+      }
+      .kpi {
+        padding: 17px 18px;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+      }
+      .kpi:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: var(--red);
+      }
+      .kpi-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: var(--muted);
+      }
+      .kpi-value {
+        font-size: 28px;
+        font-weight: 900;
+        color: var(--navy);
+      }
+      .kpi-note {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .iconbox {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #edf4f8;
+        color: var(--navy);
+        font-size: 18px;
+      }
+      .panel-head {
+        padding: 14px 17px;
+        border-bottom: 1px solid var(--border);
+      }
+      .panel-body {
+        padding: 17px;
+      }
+      .gate {
+        cursor: pointer;
+        transition: 0.15s;
+        height: 100%;
+        overflow: hidden;
+      }
+      .gate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 18px #071b2d18;
+      }
+      .gate-head {
+        color: #fff;
+        padding: 10px 13px;
+        font-weight: 800;
+        display: flex;
+        justify-content: space-between;
+      }
+      .g1 {
+        background: #1976a8;
+      }
+      .g2 {
+        background: #b9616b;
+      }
+      .g3 {
+        background: #3474a9;
+      }
+      .g4 {
+        background: #4296b4;
+      }
+      .stat {
+        padding: 9px 12px;
+        border-bottom: 1px solid #edf1f4;
+      }
+      .stat:last-child {
+        border: 0;
+      }
+      .stat small {
+        color: var(--muted);
+      }
+      .pending {
+        color: var(--danger);
+        font-weight: 800;
+      }
+      .complete {
+        color: var(--green);
+        font-weight: 800;
+      }
+      .progress {
+        height: 7px;
+      }
+      .table-wrap {
+        overflow: auto;
+      }
+      .table {
+        margin: 0;
+        min-width: 1200px;
+      }
+      .table thead th {
+        background: var(--navy);
+        color: #fff;
+        font-size: 10px;
+        text-transform: uppercase;
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+      .table td {
+        font-size: 12px;
+        vertical-align: middle;
+      }
+      .table tbody tr:hover {
+        background: #f5f9fb;
+      }
+      .total td {
+        background: #e8f2f7 !important;
+        font-weight: 900;
+        border-top: 2px solid var(--navy);
+      }
+      .badge-p {
+        background: #fff4d5;
+        color: #8a6500;
+      }
+      .badge-c {
+        background: #e7f5ed;
+        color: #147a46;
+      }
+      .clickhint {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .hidden {
+        display: none !important;
+      }
+      .modal-header {
+        background: var(--navy);
+        color: #fff;
+      }
+      .modal-header .btn-close {
+        filter: invert(1);
+      }
+      .alertbar {
+        border-left: 4px solid var(--red);
+        background: #fff8f8;
+      }
+      .chart-row {
+        align-items: stretch;
+      }
+      .chart-card {
+        height: 285px;
+        overflow: hidden;
+      }
+      .chart-head {
+        min-height: 55px;
+        padding: 11px 15px;
+      }
+      .chart-body {
+        height: 215px;
+        padding: 7px 14px 12px;
+      }
+      .donut-body {
+        padding: 3px 18px 7px;
+      }
+      .chart-body canvas {
+        width: 100% !important;
+        height: 100% !important;
+      }
+      @media (max-width: 991px) {
+        .chart-card {
+          height: 270px;
+        }
+      }
+      @media (max-width: 991px) {
+        .top-menu {
+          display: none;
+        }
+        .profile-name {
+          display: none;
+        }
+      }
+      @media (max-width: 767px) {
+        .page {
+          padding: 16px;
+        }
+        .topbar .container-fluid {
+          padding: 10px 16px !important;
+        }
+        .logo-caption {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container-fluid px-4">
+        <div
+          class="header-inner d-flex align-items-center justify-content-between gap-3"
+        >
+          <a class="mahindra-logo" href="#" aria-label="Mahindra Home">
+            <img src="mahindra_rise_white.png" />
+          </a>
+          <nav class="top-menu" aria-label="Primary navigation">
+            <a href="#" class="active"
+              ><i class="bi bi-grid-1x2 me-1"></i>Dashboard</a
+            >
+            <a href="#"><i class="bi bi-kanban me-1"></i>Projects</a>
+            <a href="#"><i class="bi bi-bar-chart-line me-1"></i>Reports</a>
+          </nav>
+          <div class="dropdown">
+            <button
+              class="profile-btn dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span class="avatar">PJ</span
+              ><span class="profile-name">Priyank Jain</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end mt-2">
+              <li>
+                <a class="dropdown-item" href="#"
+                  ><i class="bi bi-person me-2"></i>My Profile</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="#"
+                  ><i class="bi bi-gear me-2"></i>Settings</a
+                >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item text-danger" href="#"
+                  ><i class="bi bi-box-arrow-right me-2"></i>Logout</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page container-fluid">
+      <section class="cardx filter mb-4">
+        <div class="row g-3 align-items-end">
+          <div class="col-12 col-md-3">
+            <label class="form-label">Project</label>
+            <select id="project" class="form-select">
+              <option value="ALL">All Projects</option>
+              <option>ASA NP1.1</option>
+              <option>ASA W1</option>
+              <option>ASA W2</option>
+              <option>ASA W3A</option>
+              <option>ASA W3B</option>
+              <option>ASA W3C</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-3">
+            <label class="form-label">Gate</label>
+            <select id="gate" class="form-select">
+              <option value="ALL">All Gates</option>
+              <option value="G1">Gate 1</option>
+              <option value="G2">Gate 2</option>
+              <option value="G3">Gate 3</option>
+              <option value="G4">Gate 4</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-3">
+            <label class="form-label">Status</label>
+            <select id="status" class="form-select">
+              <option value="ALL">All Items</option>
+              <option value="PENDING">Pending / Action Required</option>
+              <option value="COMPLETE">Completed</option>
+            </select>
+          </div>
+          <div class="col-12 col-md-3 d-flex gap-2">
+            <button class="btn btn-red flex-fill" onclick="refreshDashboard()">
+              <i class="bi bi-funnel"></i> Apply</button
+            ><button class="btn btn-outline-secondary" onclick="resetAll()">
+              <i class="bi bi-arrow-counterclockwise"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-title-row mb-3">
+        <div>
+          <div class="section-kicker">Engineering • Portfolio</div>
+          <h5 class="title mb-1">Portfolio Overview</h5>
+          <div class="accent"></div>
+        </div>
+        <div class="small text-muted">
+          <i class="bi bi-clock me-1"></i>Last refreshed: 07-Oct-2026
+        </div>
+      </div>
+      <section class="row g-3 mb-4">
+        <div class="col-6 col-xl-3">
+          <div class="cardx kpi soft-blue">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="kpi-label">Total Scope</div>
+                <div class="kpi-value">1,759</div>
+                <div class="kpi-note">6 projects</div>
+              </div>
+              <div class="iconbox"><i class="bi bi-diagram-3"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div class="cardx kpi soft-teal">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="kpi-label">TDP Available</div>
+                <div class="kpi-value">1,757</div>
+                <div class="kpi-note">
+                  <span class="complete">99.9%</span> readiness
+                </div>
+              </div>
+              <div class="iconbox"><i class="bi bi-check2-circle"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div class="cardx kpi soft-blue">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="kpi-label">FPQ Complete</div>
+                <div class="kpi-value">1,719</div>
+                <div class="kpi-note">6 pending</div>
+              </div>
+              <div class="iconbox"><i class="bi bi-person-check"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div class="cardx kpi soft-red">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="kpi-label">3D Model Pending</div>
+                <div class="kpi-value">61</div>
+                <div class="kpi-note">
+                  <span class="pending">Action required</span>
+                </div>
+              </div>
+              <div class="iconbox">
+                <i class="bi bi-exclamation-triangle"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-title-row mb-3">
+        <div>
+          <div class="section-kicker">Stage Governance</div>
+          <h5 class="title mb-1">Gate Readiness</h5>
+          <div class="accent"></div>
+        </div>
+        <span class="clickhint"
+          ><i class="bi bi-hand-index-thumb me-1"></i>Click a gate for detailed
+          status</span
+        >
+      </div>
+      <section class="row g-3 mb-4">
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="cardx gate" onclick="showGate('G1')">
+            <div class="gate-head g1">
+              <span>GATE 1</span><i class="bi bi-flag"></i>
+            </div>
+            <div>
+              <div class="stat d-flex justify-content-between">
+                <small>TDP Available</small><b>1,757</b>
+              </div>
+              <div class="px-3 pt-2">
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    style="width: 99.9%; background: #1976a8"
+                  ></div>
+                </div>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>TDP Pending</small><b class="pending">2</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>Feasibility Completed</small><b>1,751</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>Feasibility Pending</small><b class="pending">8</b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="cardx gate" onclick="showGate('G2')">
+            <div class="gate-head g2">
+              <span>GATE 2</span><i class="bi bi-clipboard-check"></i>
+            </div>
+            <div>
+              <div class="stat d-flex justify-content-between">
+                <small>P-BOM Complete</small><b>1,750</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>P-BOM Pending</small><b class="pending">9</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>SST Approval Complete</small><b>1,755</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>SST Approval Pending</small><b class="pending">4</b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="cardx gate" onclick="showGate('G3')">
+            <div class="gate-head g3">
+              <span>GATE 3</span><i class="bi bi-shield-check"></i>
+            </div>
+            <div>
+              <div class="stat d-flex justify-content-between">
+                <small>LAI Approval Complete</small><b>1,702</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>LAI Approval Pending</small><b class="pending">57</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>FPQ Approval Complete</small><b>1,719</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>Tool Design Pending</small><b class="pending">106</b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="cardx gate" onclick="showGate('G4')">
+            <div class="gate-head g4">
+              <span>GATE 4</span><i class="bi bi-award"></i>
+            </div>
+            <div>
+              <div class="stat d-flex justify-content-between">
+                <small>Concurrence Complete</small><b>1,747</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>Concurrence Pending</small><b class="pending">12</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>TRF Given</small><b>1,747</b>
+              </div>
+              <div class="stat d-flex justify-content-between">
+                <small>3D Model Pending</small><b class="pending">61</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="row g-3 mb-4 chart-row">
+        <div class="col-lg-7">
+          <div class="cardx chart-card">
+            <div
+              class="panel-head chart-head d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <b class="title">Pending Items by Project</b>
+                <div class="small text-muted">Primary action areas</div>
+              </div>
+              <span class="badge badge-p">Needs attention</span>
+            </div>
+            <div class="chart-body"><canvas id="pendingChart"></canvas></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="cardx chart-card">
+            <div class="panel-head chart-head">
+              <b class="title">Gate Completion</b>
+            </div>
+            <div class="chart-body donut-body">
+              <canvas id="gateChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cardx">
+        <div
+          class="panel-head d-flex justify-content-between align-items-center"
+        >
+          <div>
+            <b class="title">Project & Scope Details</b>
+            <div class="small text-muted">
+              Click a project name to filter the dashboard
+            </div>
+          </div>
+          <button
+            class="btn btn-sm btn-outline-secondary"
+            onclick="exportCsv()"
+          >
+            <i class="bi bi-download"></i> Export CSV
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table class="table table-sm align-middle" id="projectTable">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Scope</th>
+                <th>TDP Avail.</th>
+                <th>TDP Pend.</th>
+                <th>Feas. Comp.</th>
+                <th>Feas. Pend.</th>
+                <th>P-BOM Comp.</th>
+                <th>P-BOM Pend.</th>
+                <th>SST Comp.</th>
+                <th>SST Pend.</th>
+                <th>LAI Comp.</th>
+                <th>LAI Pend.</th>
+                <th>FPQ Comp.</th>
+                <th>FPQ Pend.</th>
+                <th>Tool Concept Pend.</th>
+                <th>Tool Design Pend.</th>
+                <th>Concurrence Pend.</th>
+                <th>3D Model Pend.</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+      <div class="text-end text-muted small mt-3">
+        Mahindra-inspired enterprise UI • Bootstrap 5 • Dashboard prototype
+      </div>
+    </main>
+
+    <div class="modal fade" id="gateModal" tabindex="-1">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle"></h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body" id="modalBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const data = [
+        {
+          p: "ASA NP1.1",
+          scope: 148,
+          tdpa: 146,
+          tdpp: 2,
+          fc: 140,
+          fp: 8,
+          pbc: 139,
+          pbp: 9,
+          sstc: 148,
+          sstp: 0,
+          laic: 148,
+          laip: 0,
+          fpqc: 142,
+          fpqp: 0,
+          tcp: 6,
+          tdp: 6,
+          cp: 12,
+          mp: 6,
+        },
+        {
+          p: "ASA W1",
+          scope: 53,
+          tdpa: 53,
+          tdpp: 0,
+          fc: 53,
+          fp: 0,
+          pbc: 53,
+          pbp: 0,
+          sstc: 53,
+          sstp: 0,
+          laic: 52,
+          laip: 1,
+          fpqc: 53,
+          fpqp: 0,
+          tcp: 0,
+          tdp: 0,
+          cp: 0,
+          mp: 0,
+        },
+        {
+          p: "ASA W2",
+          scope: 618,
+          tdpa: 618,
+          tdpp: 0,
+          fc: 618,
+          fp: 0,
+          pbc: 618,
+          pbp: 0,
+          sstc: 614,
+          sstp: 4,
+          laic: 610,
+          laip: 8,
+          fpqc: 618,
+          fpqp: 4,
+          tcp: 0,
+          tdp: 2,
+          cp: 0,
+          mp: 2,
+        },
+        {
+          p: "ASA W3A",
+          scope: 313,
+          tdpa: 313,
+          tdpp: 0,
+          fc: 313,
+          fp: 0,
+          pbc: 313,
+          pbp: 0,
+          sstc: 313,
+          sstp: 0,
+          laic: 307,
+          laip: 6,
+          fpqc: 311,
+          fpqp: 2,
+          tcp: 0,
+          tdp: 0,
+          cp: 0,
+          mp: 0,
+        },
+        {
+          p: "ASA W3B",
+          scope: 276,
+          tdpa: 276,
+          tdpp: 0,
+          fc: 276,
+          fp: 0,
+          pbc: 276,
+          pbp: 0,
+          sstc: 276,
+          sstp: 0,
+          laic: 275,
+          laip: 1,
+          fpqc: 274,
+          fpqp: 2,
+          tcp: 0,
+          tdp: 64,
+          cp: 0,
+          mp: 26,
+        },
+        {
+          p: "ASA W3C",
+          scope: 351,
+          tdpa: 351,
+          tdpp: 0,
+          fc: 351,
+          fp: 0,
+          pbc: 351,
+          pbp: 0,
+          sstc: 351,
+          sstp: 0,
+          laic: 310,
+          laip: 41,
+          fpqc: 321,
+          fpqp: 0,
+          tcp: 0,
+          tdp: 34,
+          cp: 0,
+          mp: 27,
+        },
+      ];
+      const cols = [
+        ["tdpa", "TDP Avail."],
+        ["tdpp", "TDP Pend."],
+        ["fc", "Feas. Comp."],
+        ["fp", "Feas. Pend."],
+        ["pbc", "P-BOM Comp."],
+        ["pbp", "P-BOM Pend."],
+        ["sstc", "SST Comp."],
+        ["sstp", "SST Pend."],
+        ["laic", "LAI Comp."],
+        ["laip", "LAI Pend."],
+        ["fpqc", "FPQ Comp."],
+        ["fpqp", "FPQ Pend."],
+        ["tcp", "Tool Concept Pend."],
+        ["tdp", "Tool Design Pend."],
+        ["cp", "Concurrence Pend."],
+        ["mp", "3D Model Pend."],
+      ];
+      function render() {
+        const selected = document.getElementById("project").value,
+          status = document.getElementById("status").value;
+        const rows = data.filter((x) => selected === "ALL" || x.p === selected);
+        const tbody = document.querySelector("#projectTable tbody");
+        tbody.innerHTML = "";
+        rows.forEach((x) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML =
+            `<td><button class="btn btn-link btn-sm p-0 fw-bold text-decoration-none" onclick="pick('${x.p}')">${x.p}</button></td><td>${x.scope}</td>` +
+            cols
+              .map(
+                ([k]) =>
+                  `<td class="${k.endsWith("p") ? "pending" : ""}">${x[k]}</td>`,
+              )
+              .join("");
+          if (
+            status === "PENDING" &&
+            !Object.keys(x).some((k) => k.endsWith("p") && x[k] > 0)
+          )
+            return;
+          if (
+            status === "COMPLETE" &&
+            Object.keys(x).some((k) => k.endsWith("p") && x[k] > 0)
+          )
+            return;
+          tbody.appendChild(tr);
+        });
+      }
+      function pick(p) {
+        document.getElementById("project").value = p;
+        render();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      function refreshDashboard() {
+        render();
+      }
+      function resetAll() {
+        document.getElementById("project").value = "ALL";
+        document.getElementById("gate").value = "ALL";
+        document.getElementById("status").value = "ALL";
+        render();
+      }
+      function showGate(g) {
+        const names = {
+          G1: "Gate 1 — Project Definition & Feasibility",
+          G2: "Gate 2 — P-BOM & SST Approval",
+          G3: "Gate 3 — LAI / FPQ / Tooling Approval",
+          G4: "Gate 4 — Concurrence / TRF / 3D Model",
+        };
+        const items = {
+          G1: [
+            ["TDP Available", 1757],
+            ["TDP Pending", 2],
+            ["Feasibility Completed", 1751],
+            ["Feasibility Pending", 8],
+          ],
+          G2: [
+            ["P-BOM Complete", 1750],
+            ["P-BOM Pending", 9],
+            ["SST Approval Complete", 1755],
+            ["SST Approval Pending", 4],
+          ],
+          G3: [
+            ["LAI Approval Complete", 1702],
+            ["LAI Approval Pending", 57],
+            ["FPQ Approval Complete", 1719],
+            ["Tool Design Pending", 106],
+          ],
+          G4: [
+            ["Concurrence Complete", 1747],
+            ["Concurrence Pending", 12],
+            ["TRF Given", 1747],
+            ["3D Model Pending", 61],
+          ],
+        };
+        document.getElementById("modalTitle").textContent = names[g];
+        document.getElementById("modalBody").innerHTML =
+          '<div class="row g-3">' +
+          items[g]
+            .map(
+              (i) =>
+                `<div class="col-md-6"><div class="cardx p-3 d-flex justify-content-between"><span>${i[0]}</span><b class="${i[0].includes("Pending") ? "pending" : ""}">${i[1].toLocaleString()}</b></div></div>`,
+            )
+            .join("") +
+          "</div>";
+        new bootstrap.Modal(document.getElementById("gateModal")).show();
+      }
+      function exportCsv() {
+        const headers = ["Project", "Scope", ...cols.map((x) => x[1])];
+        const lines = [headers.join(",")];
+        data.forEach((x) =>
+          lines.push([x.p, x.scope, ...cols.map((c) => x[c[0]])].join(",")),
+        );
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(
+          new Blob([lines.join("\\n")], { type: "text/csv" }),
+        );
+        a.download = "engineering-dashboard.csv";
+        a.click();
+      }
+      render();
+      new Chart(document.getElementById("pendingChart"), {
+        type: "bar",
+        data: {
+          labels: data.map((x) => x.p.replace("ASA ", "")),
+          datasets: [
+            {
+              label: "Pending",
+              data: data.map(
+                (x) =>
+                  x.tdpp +
+                  x.fp +
+                  x.pbp +
+                  x.sstp +
+                  x.laip +
+                  x.fpqp +
+                  x.tcp +
+                  x.tdp +
+                  x.cp +
+                  x.mp,
+              ),
+              backgroundColor: "#e31b23",
+              borderRadius: 4,
+              barPercentage: 0.58,
+              categoryPercentage: 0.72,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { displayColors: false },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { maxTicksLimit: 5, font: { size: 10 } },
+              grid: { color: "#edf1f4" },
+            },
+            x: { ticks: { font: { size: 10 } }, grid: { display: false } },
+          },
+        },
+      });
+      new Chart(document.getElementById("gateChart"), {
+        type: "doughnut",
+        data: {
+          labels: ["Gate 1", "Gate 2", "Gate 3", "Gate 4"],
+          datasets: [
+            {
+              data: [99.5, 99.3, 94.0, 96.5],
+              backgroundColor: ["#1769aa", "#9b527c", "#3474a9", "#4296b4"],
+              borderWidth: 0,
+              hoverOffset: 3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "72%",
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: { boxWidth: 9, padding: 10, font: { size: 10 } },
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
