@@ -865,6 +865,19 @@
                   </div>
                 </div>
               </div>
+              <div class="mb-4">
+                <label for="plannedSubmissionDate" class="form-label">
+                  Planned Submission Date
+                </label>
+                <input
+                  type="date"
+                  id="plannedSubmissionDate"
+                  class="form-control"
+                />
+                <div class="table-meta mt-2">
+                  Select the planned submission date for this record.
+                </div>
+              </div>
               <div>
                 <label for="statusRemark" class="form-label">
                   Remarks / Information
@@ -1196,6 +1209,20 @@
       const editStatusModal = new bootstrap.Modal(
         document.getElementById("editStatusModal"),
       );
+      // Convert DD-MM-YYYY into YYYY-MM-DD for the date picker.
+      function dateToInput(dateString) {
+        if (!dateString) return "";
+        const parts = dateString.split("-");
+        if (parts.length !== 3) return "";
+        const [day, month, year] = parts;
+        return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+      }
+      // Convert YYYY-MM-DD back to DD-MM-YYYY for the table.
+      function inputToDisplay(dateString) {
+        if (!dateString) return "";
+        const [year, month, day] = dateString.split("-");
+        return `${day}-${month}-${year}`;
+      }
       function editRecord(index) {
         const record = records[index];
         if (!record) return;
@@ -1217,6 +1244,9 @@
           document.getElementById("statusPending").checked = true;
         }
         document.getElementById("statusRemark").value = record[15] || "";
+        document.getElementById("plannedSubmissionDate").value = dateToInput(
+          record[13],
+        );
         editStatusModal.show();
       }
       /* Save the selected status and remark */
@@ -1237,6 +1267,11 @@
           record[14] = selected.value;
           // Remark is stored in the new column 16 (index 15).
           record[15] = document.getElementById("statusRemark").value.trim();
+          const selectedDate = document.getElementById(
+            "plannedSubmissionDate",
+          ).value;
+
+          record[13] = inputToDisplay(selectedDate);
           editStatusModal.hide();
           // Refresh the badge, tooltip, filters, and record counters.
           render();
