@@ -541,287 +541,171 @@
         padding: 6px 10px;
       }
 
-      /* =========================================================
-  ENGINEERING COLLAPSIBLE SECTION LAYOUT
-  ========================================================= */
       .engineering-table-wrap {
-        width: 100%;
-        height: 560px;
-        overflow-x: auto;
-        overflow-y: auto;
-        background: #f5f7f9;
-        border-top: 1px solid #e1e7eb;
+        position: relative;
+        overflow: auto;
+        max-height: 570px;
+        scroll-behavior: smooth;
         scrollbar-width: thin;
+        scrollbar-color: #aebdc7 #f3f6f8;
       }
-
-      /* Main horizontal layout */
+      .engineering-table-wrap::-webkit-scrollbar {
+        height: 10px;
+        width: 10px;
+      }
+      .engineering-table-wrap::-webkit-scrollbar-track {
+        background: #f3f6f8;
+      }
+      .engineering-table-wrap::-webkit-scrollbar-thumb {
+        background: #b5c2ca;
+        border-radius: 10px;
+      }
       .engineering-table {
-        display: flex;
-        width: 100%;
-        min-width: 900px;
-        height: 100%;
-        background: #fff;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 2300px;
+        width: max-content;
+        table-layout: fixed;
       }
-
-      /* Every section */
-      .engineering-section {
-        display: flex;
-        flex: 0 0 48px;
-        height: 100%;
-        border-right: 1px solid #d5dfe5;
-        background: #fff;
-        transition:
-          flex-basis 0.28s ease,
-          width 0.28s ease;
-        overflow: hidden;
-      }
-
-      /* Expanded section */
-      .engineering-section.expanded {
-        flex: 1 1 auto;
-        min-width: 360px;
-      }
-
-      /* Project gets slightly more width */
-      .engineering-section.project-section.expanded {
-        min-width: 420px;
-      }
-
-      /* =========================================================
-  VERTICAL COLLAPSED BAR
-  ========================================================= */
-      .section-vertical-bar {
-        flex: 0 0 48px;
-        width: 48px;
-        height: 100%;
-        border: 0;
-        border-right: 1px solid rgba(7, 27, 45, 0.12);
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 13px;
-        padding: 10px 5px;
-        color: #fff;
-        transition: all 0.18s ease;
+      .engineering-table th,
+      .engineering-table td {
+        white-space: nowrap;
         position: relative;
       }
-
-      /* Vertical text */
-      .vertical-text {
-        writing-mode: vertical-rl;
-        transform: rotate(180deg);
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 0.8px;
-        white-space: nowrap;
+      .engineering-table thead {
+        position: sticky;
+        top: 0;
+        z-index: 8;
       }
-
-      /* Icon */
-      .vertical-icon {
-        font-size: 14px;
+      .engineering-table thead th {
+        border-right: 1px solid #dce4e9;
+      }
+      .engineering-table tbody td {
+        padding: 8px 10px;
+      }
+      .engineering-table tbody tr:nth-child(even) td {
+        background: #fbfcfd;
+      }
+      .engineering-table tbody tr:hover td {
+        background: #f5f9fb;
+      }
+      .section-end {
+        border-right: 2px solid #cbd7de !important;
+      }
+      .section-nav {
         display: flex;
         align-items: center;
-        justify-content: center;
+        gap: 7px;
+        padding: 10px 15px;
+        background: #f8fafb;
+        border-bottom: 1px solid #e0e7eb;
+        flex-wrap: wrap;
       }
-
-      /* Hover */
-      .section-vertical-bar:hover {
-        filter: brightness(0.94);
+      .section-label {
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: 0.65px;
+        font-weight: 800;
+        color: #6d7d88;
+        margin-right: 4px;
       }
-
-      /* =========================================================
-  SECTION COLORS
-  ========================================================= */
-      .project-bar {
-        background: #71879a;
-      }
-      .tdp-bar {
-        background: #668aaa;
-      }
-      .feas-bar {
-        background: #8b718f;
-      }
-      .bom-bar {
-        background: #7e9b67;
-      }
-      .sst-bar {
-        background: #a07b55;
-      }
-      .eng-bar {
-        background: #668f8f;
-      }
-
-      /* =========================================================
-  CONTENT AREA
-  ========================================================= */
-      .section-content {
-        flex: 1;
-        min-width: 0;
-        overflow-x: auto;
-        overflow-y: hidden;
+      .section-btn {
+        border: 1px solid #d8e1e6;
         background: #fff;
+        color: #566b78;
+        border-radius: 16px;
+        padding: 6px 11px;
+        font-size: 9px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.15s ease;
       }
-
-      /* Hide content when collapsed */
-      .engineering-section:not(.expanded) .section-content {
-        display: none;
+      .section-btn:hover {
+        background: #f2f6f8;
+        transform: translateY(-1px);
       }
-
-      /* =========================================================
-  SECTION HEADER
-  ========================================================= */
-      .section-header {
-        height: 42px;
+      .section-btn.active {
+        color: #fff;
+        border-color: var(--red);
+        background: var(--red);
+        box-shadow: 0 2px 7px #e31b2330;
+      }
+      .section-btn .dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        margin-right: 5px;
+        background: #7991a0;
+      }
+      .section-btn.tdp .dot {
+        background: #6d91b1;
+      }
+      .section-btn.feas .dot {
+        background: #8f7290;
+      }
+      .section-btn.bom .dot {
+        background: #8aa46b;
+      }
+      .section-btn.sst .dot {
+        background: #a27d55;
+      }
+      .section-btn.eng .dot {
+        background: #6d9a9a;
+      }
+      .section-helper {
+        margin-left: auto;
+        font-size: 9px;
+        color: #81909a;
+      }
+      .section-panel {
+        padding: 9px 15px;
+        background: #fff;
+        border-bottom: 1px solid #e1e7eb;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 10px;
-        color: #fff;
-        font-size: 10px;
+        gap: 10px;
+      }
+      .section-panel-title {
+        font-size: 11px;
         font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.25px;
-        position: sticky;
-        top: 0;
-        z-index: 4;
+        color: var(--navy);
       }
-
-      /* Section header colors */
-      .project-header {
-        background: #71879a;
+      .section-panel-desc {
+        font-size: 9px;
+        color: #81909a;
+        margin-top: 2px;
       }
-      .tdp-header {
-        background: #668aaa;
+      .section-actions {
+        display: flex;
+        gap: 6px;
+        align-items: center;
       }
-      .feas-header {
-        background: #8b718f;
-      }
-      .bom-header {
-        background: #7e9b67;
-      }
-      .sst-header {
-        background: #a07b55;
-      }
-      .eng-header {
-        background: #668f8f;
-      }
-
-      /* Collapse button */
-      .section-collapse {
-        width: 27px;
-        height: 27px;
-        border: 1px solid rgba(255, 255, 255, 0.35);
+      .section-toggle,
+      .show-all-btn {
+        border: 1px solid #d7e0e5;
+        background: #fff;
+        color: #627581;
         border-radius: 5px;
-        background: rgba(255, 255, 255, 0.12);
-        color: #fff;
-        cursor: pointer;
-        display: grid;
-        place-items: center;
-        transition: all 0.15s ease;
-      }
-
-      .section-collapse:hover {
-        background: rgba(255, 255, 255, 0.25);
-      }
-
-      /* =========================================================
-  INNER TABLE
-  ========================================================= */
-      .section-content table {
-        width: 100%;
-        border-collapse: collapse;
-        table-layout: auto;
-      }
-
-      .section-content th {
-        height: 43px;
-        padding: 8px 10px;
-        background: #f0f4f6;
-        border-right: 1px solid #d9e1e6;
-        border-bottom: 1px solid #ccd8df;
-        color: #536b79;
-        font-size: 8px;
-        line-height: 1.25;
+        font-size: 9px;
         font-weight: 800;
-        text-transform: uppercase;
-        white-space: nowrap;
+        padding: 6px 10px;
+        cursor: pointer;
       }
-
-      .section-content td {
-        height: 40px;
-        padding: 8px 10px;
-        border-right: 1px solid #e4eaee;
-        border-bottom: 1px solid #e5ebee;
-        color: #405463;
-        font-size: 10px;
-        white-space: nowrap;
+      .section-toggle:hover,
+      .show-all-btn:hover {
+        background: #f4f7f8;
+        color: var(--navy);
       }
-
-      .section-content tbody tr:nth-child(even) td {
-        background: #fafcfd;
+      .section-toggle:disabled {
+        cursor: default;
       }
-
-      .section-content tbody tr:hover td {
-        background: #f2f7fa;
+      .section-hidden {
+        display: none !important;
       }
-
-      /* =========================================================
-  ACTIVE SECTION
-  ========================================================= */
-      .engineering-section.expanded {
-        box-shadow: inset 0 3px 0 rgba(169, 21, 61, 0.15);
-      }
-
-      /* =========================================================
-  MOBILE
-  ========================================================= */
-      @media (max-width: 900px) {
-        .engineering-table {
-          min-width: 650px;
-        }
-        .engineering-section.expanded {
-          min-width: 300px;
-        }
-        .section-vertical-bar {
-          flex-basis: 44px;
-          width: 44px;
-        }
-      }
-
-      /* =========================================================
-  IMPROVED ACTIVE SECTION VISUAL
-  ========================================================= */
-      .engineering-section.expanded .section-vertical-bar {
-        width: 42px;
-        flex-basis: 42px;
-        opacity: 0.72;
-      }
-
-      .engineering-section:not(.expanded) .section-vertical-bar:hover {
-        opacity: 1;
-        transform: scaleX(1.04);
-      }
-
-      .engineering-section.expanded .section-content {
-        animation: sectionOpen 0.25s ease;
-      }
-
-      @keyframes sectionOpen {
-        from {
-          opacity: 0;
-          transform: translateX(-8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      .project-lock {
-        opacity: 0.65;
-        cursor: not-allowed !important;
+      .section-anchor {
+        scroll-margin-left: 12px;
       }
     </style>
   </head>
@@ -841,10 +725,13 @@
             <a href="mahindra_engineering_input_bd.html"
               ><i class="bi bi-folder2-open me-1"></i>Input BD</a
             >
-            <a href="mahindra_engineering_records.html"
+            <a href="mahindra_programs.html"
+              ><i class="bi bi-folder2-open me-1"></i>Mahindra Programs</a
+            >
+            <a href="mahindra_engineering_records.html" class="active"
               ><i class="bi bi-folder2-open me-1"></i>Engineering 1</a
             >
-            <a href="mahindra_engineering_records_new.html" class="active"
+            <a href="mahindra_engineering_records_new.html"
               ><i class="bi bi-folder2-open me-1"></i>Engineering 2</a
             >
             <a href="#"><i class="bi bi-bar-chart-line me-1"></i>Reports</a>
@@ -981,258 +868,165 @@
               <span class="table-meta">(<span id="recordCount">10</span>)</span>
             </div>
             <div class="table-meta">
-              Click any coloured section header to collapse or expand its
-              columns.
+              Fixed first four columns with section-based navigation through the
+              engineering process.
             </div>
           </div>
           <div class="table-tools">
-            <button
-              class="tool-btn"
-              onclick="expandAllSections()"
-              title="Expand all table sections"
-            >
-              <i class="bi bi-arrows-expand me-1"></i> Show all
-            </button>
             <button class="tool-btn" onclick="exportCSV()">
               <i class="bi bi-download me-1"></i>Export
             </button>
           </div>
         </div>
 
-        <div class="engineering-table-wrap">
-          <div class="engineering-table" id="engineeringTable">
-            <!-- PROJECT / MATERIAL -->
-            <div
-              class="engineering-section project-section"
-              data-section="project"
-            >
-              <button
-                class="section-vertical-bar project-bar"
-                onclick="openEngineeringSection('project')"
-              >
-                <span class="vertical-icon">
-                  <i class="bi bi-folder2-open"></i>
-                </span>
-                <span class="vertical-text">PROJECT / MATERIAL</span>
-              </button>
-              <div class="section-content">
-                <div class="section-header project-header">
-                  <span>
-                    <i class="bi bi-folder2-open me-1"></i>
-                    PROJECT / MATERIAL
-                  </span>
-                  <button
-                    class="section-collapse project-lock"
-                    onClick="collapseEngineeringSections(event)"
-                  >
-                    <i class="bi bi-chevron-left"></i>
-                  </button>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>SL. NO.</th>
-                      <th>CUSTOMER</th>
-                      <th>PART NUMBER</th>
-                      <th>CUSTOMER MATERIAL CODE</th>
-                    </tr>
-                  </thead>
-                  <tbody id="projectBody"></tbody>
-                </table>
-              </div>
+        <div class="section-nav">
+          <span class="section-label">Jump to section</span>
+          <button
+            class="section-btn active"
+            data-target="identity"
+            onclick="goSection('identity')"
+          >
+            Identity
+          </button>
+          <button
+            class="section-btn tdp"
+            data-target="tdp"
+            onclick="goSection('tdp')"
+          >
+            <span class="dot"></span>TDP
+          </button>
+          <button
+            class="section-btn feas"
+            data-target="feas"
+            onclick="goSection('feas')"
+          >
+            <span class="dot"></span>Feasibility
+          </button>
+          <button
+            class="section-btn bom"
+            data-target="bom"
+            onclick="goSection('bom')"
+          >
+            <span class="dot"></span>BOM Creation
+          </button>
+          <button
+            class="section-btn sst"
+            data-target="sst"
+            onclick="goSection('sst')"
+          >
+            <span class="dot"></span>SST / Qualification
+          </button>
+          <button
+            class="section-btn eng"
+            data-target="eng"
+            onclick="goSection('eng')"
+          >
+            <span class="dot"></span>Engineering
+          </button>
+          <span class="section-helper"
+            ><i class="bi bi-arrows-horizontal me-1"></i>Horizontal scroll
+            available</span
+          >
+        </div>
+        <div class="section-panel">
+          <div>
+            <div class="section-panel-title" id="sectionTitle">
+              Project Identity
             </div>
-
-            <!-- TDP -->
-            <div class="engineering-section" data-section="tdp">
-              <button
-                class="section-vertical-bar tdp-bar"
-                onclick="openEngineeringSection('tdp')"
-              >
-                <span class="vertical-icon">
-                  <i class="bi bi-file-earmark-text"></i>
-                </span>
-                <span class="vertical-text">TDP</span>
-              </button>
-              <div class="section-content">
-                <div class="section-header tdp-header">
-                  <span>
-                    <i class="bi bi-file-earmark-text me-1"></i>
-                    TDP
-                  </span>
-                  <button
-                    class="section-collapse"
-                    onclick="collapseEngineeringSections(event)"
-                  >
-                    <i class="bi bi-chevron-left"></i>
-                  </button>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>PROCESS</th>
-                      <th>TDP PLAN DATE</th>
-                      <th>TDP AVAILABILITY</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tdpBody"></tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- FEASIBILITY -->
-            <div class="engineering-section" data-section="feas">
-              <button
-                class="section-vertical-bar feas-bar"
-                onclick="openEngineeringSection('feas')"
-              >
-                <span class="vertical-icon">
-                  <i class="bi bi-clipboard-check"></i>
-                </span>
-                <span class="vertical-text"> FEASIBILITY STUDY </span>
-              </button>
-              <div class="section-content">
-                <div class="section-header feas-header">
-                  <span>
-                    <i class="bi bi-clipboard-check me-1"></i>
-                    FEASIBILITY STUDY
-                  </span>
-                  <button
-                    class="section-collapse"
-                    onclick="collapseEngineeringSections(event)"
-                  >
-                    <i class="bi bi-chevron-left"></i>
-                  </button>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>FEASIBILITY PLAN DATE</th>
-                      <th>FEASIBILITY ACTUAL DATE</th>
-                      <th>FEASIBILITY STUDY</th>
-                    </tr>
-                  </thead>
-                  <tbody id="feasBody"></tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- BOM -->
-            <div class="engineering-section" data-section="bom">
-              <button
-                class="section-vertical-bar bom-bar"
-                onclick="openEngineeringSection('bom')"
-              >
-                <span class="vertical-icon">
-                  <i class="bi bi-box-seam"></i>
-                </span>
-                <span class="vertical-text"> BOM CREATION </span>
-              </button>
-              <div class="section-content">
-                <div class="section-header bom-header">
-                  <span>
-                    <i class="bi bi-box-seam me-1"></i>
-                    BOM CREATION
-                  </span>
-                  <button
-                    class="section-collapse"
-                    onclick="collapseEngineeringSections(event)"
-                  >
-                    <i class="bi bi-chevron-left"></i>
-                  </button>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>RM BOM STATUS</th>
-                      <th>CONSUMABLE BOM STATUS</th>
-                      <th>HW BOM STATUS</th>
-                      <th>BOM OVERALL</th>
-                    </tr>
-                  </thead>
-                  <tbody id="bomBody"></tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- SST -->
-            <div class="engineering-section" data-section="sst">
-              <button
-                class="section-vertical-bar sst-bar"
-                onclick="openEngineeringSection('sst')"
-              >
-                <span class="vertical-icon">
-                  <i class="bi bi-shield-check"></i>
-                </span>
-                <span class="vertical-text"> SST / QUALIFICATION </span>
-              </button>
-              <div class="section-content">
-                <div class="section-header sst-header">
-                  <span>
-                    <i class="bi bi-shield-check me-1"></i>
-                    SST / QUALIFICATION
-                  </span>
-                  <button
-                    class="section-collapse"
-                    onclick="collapseEngineeringSections(event)"
-                  >
-                    <i class="bi bi-chevron-left"></i>
-                  </button>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>SST PROCESS QUALIFICATION REQUIREMENTS</th>
-                      <th>SST PROCESS NEEDED QUALIFICATION</th>
-                    </tr>
-                  </thead>
-                  <tbody id="sstBody"></tbody>
-                </table>
-              </div>
-            </div>
-
-            <!-- ENGINEERING -->
-            <div class="engineering-section" data-section="eng">
-              <button
-                class="section-vertical-bar eng-bar"
-                onclick="openEngineeringSection('eng')"
-              >
-                <span class="vertical-icon">
-                  <i class="bi bi-gear"></i>
-                </span>
-                <span class="vertical-text"> ENGINEERING </span>
-              </button>
-              <div class="section-content">
-                <div class="section-header eng-header">
-                  <span>
-                    <i class="bi bi-gear me-1"></i>
-                    ENGINEERING
-                  </span>
-                  <button
-                    class="section-collapse"
-                    onclick="collapseEngineeringSections(event)"
-                  >
-                    <i class="bi bi-chevron-left"></i>
-                  </button>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>ENGINEERING STATUS</th>
-                      <th>REMARKS</th>
-                    </tr>
-                  </thead>
-                  <tbody id="engBody"></tbody>
-                </table>
-              </div>
+            <div class="section-panel-desc" id="sectionDesc">
+              Use the section buttons to jump directly to each engineering
+              block.
             </div>
           </div>
+          <div class="section-actions">
+            <button class="show-all-btn" onclick="expandAllSections()">
+              <i class="bi bi-arrows-expand me-1"></i>Show all
+            </button>
+            <button
+              class="section-toggle"
+              id="sectionToggle"
+              onclick="toggleSection()"
+            >
+              <i class="bi bi-eye-slash me-1"></i>Collapse section
+            </button>
+          </div>
+        </div>
+        <div class="engineering-table-wrap" id="engineeringTableWrap">
+          <table class="records-table engineering-table">
+            <thead>
+              <tr class="group-head">
+                <th colspan="4" class="base-group">PROJECT / MATERIAL</th>
+                <th
+                  colspan="3"
+                  class="tdp-group section-anchor"
+                  data-group="tdp"
+                  id="group-tdp"
+                >
+                  TDP
+                </th>
+                <th
+                  colspan="3"
+                  class="feas-group section-anchor"
+                  data-group="feas"
+                  id="group-feas"
+                >
+                  FEASIBILITY STUDY
+                </th>
+                <th
+                  colspan="4"
+                  class="bom-group section-anchor"
+                  data-group="bom"
+                  id="group-bom"
+                >
+                  BOM CREATION
+                </th>
+                <th
+                  colspan="2"
+                  class="sst-group section-anchor"
+                  data-group="sst"
+                  id="group-sst"
+                >
+                  SST / QUALIFICATION
+                </th>
+                <th
+                  colspan="2"
+                  class="eng-group section-anchor"
+                  data-group="eng"
+                  id="group-eng"
+                >
+                  ENGINEERING
+                </th>
+              </tr>
+              <tr class="col-head">
+                <th>SL. No.</th>
+                <th>Customer</th>
+                <th>Part Number</th>
+                <th>Customer Material Code</th>
+                <th class="tdp-col">Process</th>
+                <th class="tdp-col">TDP Plan Date</th>
+                <th class="tdp-col section-end">TDP Availability</th>
+                <th class="feas-col">Feasibility Plan Date</th>
+                <th class="feas-col">Feasibility Actual Date</th>
+                <th class="feas-col section-end">Feasibility Study</th>
+                <th class="bom-col">RM BOM Status</th>
+                <th class="bom-col">Consumable BOM Status</th>
+                <th class="bom-col">HW BOM Status</th>
+                <th class="bom-col section-end">BOM Overall</th>
+                <th class="sst-col">SST Process Qualification Requirements</th>
+                <th class="sst-col section-end">
+                  SST Process Needed Qualification
+                </th>
+                <th class="eng-col">Engineering Status</th>
+                <th class="eng-col">Remarks</th>
+              </tr>
+            </thead>
+            <tbody id="recordBody"></tbody>
+          </table>
         </div>
 
         <div class="text-center small text-muted py-2">
-          <i class="bi bi-hand-index me-1"></i>
-          Click a vertical section to expand its details
-          <span class="mx-2">•</span>
-          Click the open section again to collapse it
+          <i class="bi bi-arrows-left-right me-1"></i>Use the section buttons or
+          the horizontal scrollbar to explore all engineering columns.
         </div>
         <div class="table-footer">
           <div>
@@ -1479,215 +1273,36 @@
       ];
 
       function render() {
-        const d = (document.getElementById("docNo")?.value || "")
-          .trim()
-          .toLowerCase();
-
-        const c = (document.getElementById("customer")?.value || "")
-          .trim()
-          .toLowerCase();
-
-        const p = (document.getElementById("project")?.value || "")
-          .trim()
-          .toLowerCase();
-
-        const m = (document.getElementById("material")?.value || "")
-          .trim()
-          .toLowerCase();
-
-        const selectedStatus = (document.getElementById("status")?.value || "")
-          .trim()
-          .toLowerCase();
-
-        /*
-         * Filter records
-         */
-        const rows = records.filter((x) => {
-          const matchesDoc = !d || x.part.toLowerCase().includes(d);
-
-          const matchesCustomer = !c || x.customer.toLowerCase().includes(c);
-
-          /*
-           * Project name does not currently exist
-           * in your record structure.
-           *
-           * Keep this ready for future project data.
-           */
-          const projectName = (x.project || "").toLowerCase();
-
-          const matchesProject = !p || projectName.includes(p);
-
-          const matchesMaterial = !m || x.material.toLowerCase().includes(m);
-
-          const statusValue = (x.eng || "").toLowerCase();
-
-          const matchesStatus =
-            !selectedStatus || statusValue.includes(selectedStatus);
-
-          return (
-            matchesDoc &&
-            matchesCustomer &&
-            matchesProject &&
-            matchesMaterial &&
-            matchesStatus
-          );
-        });
-
-        /* =========================================================
-    PROJECT / MATERIAL
-    ========================================================= */
-        const projectBody = document.getElementById("projectBody");
-
-        if (projectBody) {
-          projectBody.innerHTML = rows
-            .map(
-              (x, i) => `
-<tr>
-<td>${i + 1}</td>
-<td class="customer-code">
-             ${x.customer}
-</td>
-<td class="doc-link">
-             ${x.part}
-</td>
-<td class="material-code">
-             ${x.material}
-</td>
-</tr>
-       `,
-            )
-            .join("");
-        }
-
-        /* =========================================================
-    TDP
-    ========================================================= */
-        const tdpBody = document.getElementById("tdpBody");
-
-        if (tdpBody) {
-          tdpBody.innerHTML = rows
-            .map(
-              (x) => `
-<tr>
-<td>
-             ${x.process || "—"}
-</td>
-<td>
-             ${x.tdpPlan}
-</td>
-<td>
-             ${x.tdpAvail}
-</td>
-</tr>
-       `,
-            )
-            .join("");
-        }
-
-        /* =========================================================
-    FEASIBILITY
-    ========================================================= */
-        const feasBody = document.getElementById("feasBody");
-
-        if (feasBody) {
-          feasBody.innerHTML = rows
-            .map(
-              (x) => `
-<tr>
-<td>
-             ${x.feasPlan}
-</td>
-<td>
-             ${x.feasActual}
-</td>
-<td>
-             ${x.feas}
-</td>
-</tr>
-       `,
-            )
-            .join("");
-        }
-
-        /* =========================================================
-    BOM
-    ========================================================= */
-        const bomBody = document.getElementById("bomBody");
-
-        if (bomBody) {
-          bomBody.innerHTML = rows
-            .map(
-              (x) => `
-<tr>
-<td>
-             ${x.rm}
-</td>
-<td>
-             ${x.cons}
-</td>
-<td>
-             ${x.hw}
-</td>
-<td>
-             ${x.bom}
-</td>
-</tr>
-       `,
-            )
-            .join("");
-        }
-
-        /* =========================================================
-    SST / QUALIFICATION
-    ========================================================= */
-        const sstBody = document.getElementById("sstBody");
-
-        if (sstBody) {
-          sstBody.innerHTML = rows
-            .map(
-              (x) => `
-<tr>
-<td>
-             ${x.sstReq}
-</td>
-<td>
-             ${x.sstNeed}
-</td>
-</tr>
-       `,
-            )
-            .join("");
-        }
-
-        /* =========================================================
-    ENGINEERING
-    ========================================================= */
-        const engBody = document.getElementById("engBody");
-
-        if (engBody) {
-          engBody.innerHTML = rows
-            .map(
-              (x) => `
-<tr>
-<td>
-             ${x.eng}
-</td>
-<td>
-             ${x.remarks}
-</td>
-</tr>
-       `,
-            )
-            .join("");
-        }
-
-        /* =========================================================
-    RECORD COUNTERS
-    ========================================================= */
+        const d = (document.getElementById("docNo")?.value || "").toLowerCase();
+        const c = (
+          document.getElementById("customer")?.value || ""
+        ).toLowerCase();
+        const p = (
+          document.getElementById("project")?.value || ""
+        ).toLowerCase();
+        const m = (
+          document.getElementById("material")?.value || ""
+        ).toLowerCase();
+        const rows = records.filter(
+          (x) =>
+            (!d || x.part.toLowerCase().includes(d)) &&
+            (!c || x.customer.toLowerCase().includes(c)) &&
+            (!p || "abs".includes(p)) &&
+            (!m || x.material.toLowerCase().includes(m)),
+        );
+        const body = document.getElementById("recordBody");
+        body.innerHTML = "";
+        rows.forEach(
+          (x, i) =>
+            (body.innerHTML += `<tr>
+ <td>${i + 1}</td><td class="customer-code">${x.customer}</td><td class="doc-link">${x.part}</td><td class="material-code">${x.material}</td>
+ <td>${x.process || "—"}</td><td>${x.tdpPlan}</td><td class="section-end">${x.tdpAvail}</td>
+ <td>${x.feasPlan}</td><td>${x.feasActual}</td><td class="section-end">${x.feas}</td>
+ <td>${x.rm}</td><td>${x.cons}</td><td>${x.hw}</td><td class="section-end">${x.bom}</td>
+ <td>${x.sstReq}</td><td class="section-end">${x.sstNeed}</td><td>${x.eng}</td><td>${x.remarks}</td></tr>`),
+        );
         document.getElementById("recordCount").textContent = rows.length;
-
         document.getElementById("total").textContent = rows.length;
-
         document.getElementById("showing").textContent = rows.length
           ? `1 to ${rows.length}`
           : "0";
@@ -1697,87 +1312,109 @@
       }
       function clearFilters() {
         ["docNo", "customer", "project", "material"].forEach((id) => {
-          const element = document.getElementById(id);
-          if (element) {
-            element.value = "";
-          }
+          const e = document.getElementById(id);
+          if (e) e.value = "";
         });
-
-        const status = document.getElementById("status");
-        if (status) {
-          status.value = "";
-        }
-
         render();
       }
 
-      /* =========================================================
-  ENGINEERING SECTION CONTROLLER
-  ========================================================= */
-      let activeEngineeringSection = "project";
+      const sectionInfo = {
+        identity: [
+          "Project Identity",
+          "Customer, part number and customer material code.",
+        ],
+        tdp: ["TDP", "TDP process, plan date and availability information."],
+        feas: [
+          "Feasibility Study",
+          "Planned and actual feasibility dates and study completion status.",
+        ],
+        bom: [
+          "BOM Creation",
+          "RM, consumable, hardware and overall BOM status.",
+        ],
+        sst: [
+          "SST / Qualification",
+          "Qualification requirements and qualification status.",
+        ],
+        eng: ["Engineering", "Engineering status and remarks."],
+      };
+      const groupCols = {
+        tdp: [5, 6, 7],
+        feas: [8, 9, 10],
+        bom: [11, 12, 13, 14],
+        sst: [15, 16],
+        eng: [17, 18],
+      };
+      const sectionState = {
+        tdp: false,
+        feas: false,
+        bom: false,
+        sst: false,
+        eng: false,
+      };
 
-      function openEngineeringSection(sectionName) {
-        const sections = document.querySelectorAll(".engineering-section");
-        const selectedSection = document.querySelector(
-          `.engineering-section[data-section="${sectionName}"]`,
-        );
-        if (!selectedSection) return;
-
-        /*
-         * If the user clicks the section that is
-         * already open, collapse it.
-         */
-        if (
-          activeEngineeringSection === sectionName &&
-          selectedSection.classList.contains("expanded")
-        ) {
-          selectedSection.classList.remove("expanded");
-          activeEngineeringSection = null;
-          return;
+      function goSection(name) {
+        document
+          .querySelectorAll(".section-btn")
+          .forEach((b) =>
+            b.classList.toggle("active", b.dataset.target === name),
+          );
+        document.getElementById("sectionTitle").textContent =
+          sectionInfo[name][0];
+        document.getElementById("sectionDesc").textContent =
+          sectionInfo[name][1];
+        const wrap = document.getElementById("engineeringTableWrap");
+        const target =
+          name === "identity"
+            ? wrap.querySelector("thead tr.col-head th:nth-child(1)")
+            : document.getElementById("group-" + name);
+        if (target) {
+          const left = Math.max(0, target.offsetLeft - 15);
+          wrap.scrollTo({ left: left, behavior: "smooth" });
         }
-
-        /*
-         * Collapse every other section.
-         */
-        sections.forEach((section) => {
-          section.classList.remove("expanded");
+        updateToggleButton(name);
+      }
+      function updateToggleButton(name) {
+        const btn = document.getElementById("sectionToggle");
+        if (name === "identity") {
+          btn.disabled = true;
+          btn.innerHTML =
+            '<i class="bi bi-info-circle me-1"></i>Identity always visible';
+        } else {
+          btn.disabled = false;
+          btn.innerHTML = sectionState[name]
+            ? '<i class="bi bi-eye me-1"></i>Expand section'
+            : '<i class="bi bi-eye-slash me-1"></i>Collapse section';
+        }
+      }
+      function toggleSection() {
+        const name = document.querySelector(".section-btn.active")?.dataset
+          .target;
+        if (!name || name === "identity") return;
+        sectionState[name] = !sectionState[name];
+        (groupCols[name] || []).forEach((n) => {
+          document
+            .querySelectorAll(`.engineering-table tr>*:nth-child(${n})`)
+            .forEach((el) =>
+              el.classList.toggle("section-hidden", sectionState[name]),
+            );
         });
-
-        /*
-         * Expand the selected section.
-         */
-        selectedSection.classList.add("expanded");
-        activeEngineeringSection = sectionName;
+        updateToggleButton(name);
       }
-
-      /*
-       * Collapse button inside the expanded section.
-       */
-      function collapseEngineeringSections(event) {
-        if (event) {
-          event.stopPropagation();
-        }
-
-        const section = event?.currentTarget?.closest(".engineering-section");
-
-        if (!section) return;
-
-        section.classList.remove("expanded");
-
-        activeEngineeringSection = null;
-      }
-
-      /*
-       * Expand all sections.
-       */
       function expandAllSections() {
-        document.querySelectorAll(".engineering-section").forEach((section) => {
-          section.classList.add("expanded");
+        Object.keys(sectionState).forEach((name) => {
+          sectionState[name] = false;
+          (groupCols[name] || []).forEach((n) => {
+            document
+              .querySelectorAll(`.engineering-table tr>*:nth-child(${n})`)
+              .forEach((el) => el.classList.remove("section-hidden"));
+          });
         });
-
-        activeEngineeringSection = "all";
+        updateToggleButton(
+          document.querySelector(".section-btn.active")?.dataset.target ||
+            "identity",
+        );
       }
-
       function exportCSV() {
         let csv =
           "Customer,Part Number,Customer Material Code,Process,TDP Plan Date,TDP Availability,Feasibility Plan Date,Feasibility Actual Date,Feasibility Study,RM BOM,Consumable BOM,HW BOM,BOM Overall,SST Requirements,SST Needed Qualification,Engineering Status,Remarks\n";
@@ -1791,7 +1428,6 @@
         a.click();
       }
       render();
-      openEngineeringSection("project");
     </script>
   </body>
 </html>
