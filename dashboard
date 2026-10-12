@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mahindra Engineering Dashboard</title>
+    <title>Mahindra Engineering Dashboard – ASA All Waves</title>
     <link
       rel="stylesheet"
       href="https://fontsstorage.blob.core.windows.net/html/css/georama.css"
@@ -16,7 +16,6 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <style>
       :root {
         --red: #a9153d;
@@ -93,12 +92,12 @@
         font-size: 11px;
       }
       .profile-name {
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 800;
         text-align: left;
       }
       .profile-role {
-        font-size: 9px;
+        font-size: 11px;
         color: #7b8993;
       }
       .dropdown-menu {
@@ -112,23 +111,11 @@
       }
 
       .page {
-        padding: 22px 28px 36px;
+        padding: 22px 24px 22px;
       }
       .title {
         font-weight: 800;
         color: var(--navy);
-      }
-      .accent {
-        height: 3px;
-        width: 48px;
-        background: var(--red);
-        border-radius: 3px;
-      }
-      .cardx {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        box-shadow: 0 2px 9px #071b2d0d;
       }
       .section-kicker {
         font-size: 10px;
@@ -137,261 +124,29 @@
         color: var(--red);
         font-weight: 800;
       }
+      .accent {
+        height: 3px;
+        width: 48px;
+        background: var(--red);
+        border-radius: 3px;
+      }
       .section-title-row {
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
+        gap: 12px;
       }
-      .soft-red {
-        background: #fff3f3;
-        border: 1px solid #f3c7ca;
+      .cardx {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        box-shadow: 0 2px 9px #071b2d0d;
       }
-      .soft-blue {
-        background: #eef6fb;
-        border: 1px solid #cfe2ef;
-      }
-      .soft-teal {
-        background: #edf8f8;
-        border: 1px solid #cbe8e9;
-      }
-
-      .filter {
-        padding: 14px;
-      }
-      .form-label {
-        font-size: 10px;
-        text-transform: uppercase;
-        font-weight: 800;
-        color: var(--muted);
-        letter-spacing: 0.55px;
-      }
-      .form-select {
-        font-size: 13px;
-        border-color: #cbd5df;
-      }
-      .btn-red {
-        background: var(--red);
-        color: #fff;
-        border-color: var(--red);
-      }
-      .btn-red:hover {
-        background: #c7131a;
-        color: #fff;
-      }
-      .kpi {
-        padding: 17px 18px;
-        position: relative;
-        overflow: hidden;
-        height: 100%;
-      }
-      .kpi:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 4px;
-        background: var(--red);
-      }
-      .kpi-label {
-        font-size: 10px;
-        text-transform: uppercase;
-        font-weight: 800;
-        color: var(--muted);
-      }
-      .kpi-value {
-        font-size: 28px;
-        font-weight: 900;
-        color: var(--navy);
-      }
-      .kpi-note {
-        font-size: 11px;
-        color: var(--muted);
-      }
-      .iconbox {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        display: grid;
-        place-items: center;
-        background: #edf4f8;
-        color: var(--navy);
-        font-size: 18px;
-      }
-      .panel-head {
-        padding: 14px 17px;
-        border-bottom: 1px solid var(--border);
-      }
-      .panel-body {
-        padding: 17px;
-      }
-      .gate {
-        cursor: pointer;
-        transition: 0.15s;
-        height: 100%;
-        overflow: hidden;
-      }
-      .gate:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 18px #071b2d18;
-      }
-      .gate-head {
-        padding: 10px 13px;
-        font-weight: 800;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 12px;
-      }
-      .g1 {
-        background: #e8f0f6;
-        color: #315a78;
-        border-left: 4px solid #5f89a6;
-      }
-      .g2 {
-        background: #f4e9ed;
-        color: #7d4055;
-        border-left: 4px solid #b47a8d;
-      }
-      .g3 {
-        background: #e9eef7;
-        color: #3f5f8a;
-        border-left: 4px solid #7894b8;
-      }
-      .g4 {
-        background: #e7f2f1;
-        color: #3e706b;
-        border-left: 4px solid #6ca39c;
-      }
-      .gate-head i {
-        opacity: 0.75;
-      }
-      .stat {
-        padding: 9px 12px;
-        border-bottom: 1px solid #edf1f4;
-      }
-      .stat:last-child {
-        border: 0;
-      }
-      .stat small {
-        color: var(--muted);
-      }
-      .pending {
-        color: var(--danger);
-        font-weight: 800;
-      }
-      .complete {
-        color: var(--green);
-        font-weight: 800;
-      }
-      .progress {
-        height: 7px;
-      }
-      .table-wrap {
-        overflow: auto;
-      }
-      .table {
-        margin: 0;
-        min-width: 1200px;
-      }
-      .table thead th {
-        background: var(--navy);
-        color: #fff;
-        font-size: 10px;
-        text-transform: uppercase;
-        white-space: nowrap;
-        vertical-align: middle;
-      }
-      .table td {
-        font-size: 12px;
-        vertical-align: middle;
-      }
-      .table tbody tr:hover {
-        background: #f5f9fb;
-      }
-      .total td {
-        background: #e8f2f7 !important;
-        font-weight: 900;
-        border-top: 2px solid var(--navy);
-      }
-      .badge-p {
-        background: #fff4d5;
-        color: #8a6500;
-      }
-      .badge-c {
-        background: #e7f5ed;
-        color: #147a46;
-      }
-      .clickhint {
-        font-size: 11px;
-        color: var(--muted);
-      }
-      .hidden {
-        display: none !important;
-      }
-      .modal-header {
-        background: var(--navy);
-        color: #fff;
-      }
-      .modal-header .btn-close {
-        filter: invert(1);
-      }
-      .alertbar {
-        border-left: 4px solid var(--red);
-        background: #fff8f8;
-      }
-      .chart-row {
-        align-items: stretch;
-      }
-      .chart-card {
-        height: 285px;
-        overflow: hidden;
-      }
-      .chart-head {
-        min-height: 55px;
-        padding: 11px 15px;
-      }
-      .chart-body {
-        height: 215px;
-        padding: 7px 14px 12px;
-      }
-      .donut-body {
-        padding: 3px 18px 7px;
-      }
-      .chart-body canvas {
-        width: 100% !important;
-        height: 100% !important;
-      }
-      @media (max-width: 991px) {
-        .chart-card {
-          height: 270px;
-        }
-      }
-      @media (max-width: 991px) {
-        .top-menu {
-          display: none;
-        }
-        .profile-name {
-          display: none;
-        }
-      }
-      @media (max-width: 767px) {
-        .page {
-          padding: 16px;
-        }
-        .topbar .container-fluid {
-          padding: 10px 16px !important;
-        }
-        .logo-caption {
-          display: none;
-        }
-      }
-
       .table-section-head {
         padding: 18px 18px 12px;
       }
       .table-section-title {
-        font-size: 19px;
+        font-size: 16px;
         font-weight: 700;
         color: var(--navy);
         margin: 0;
@@ -400,12 +155,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 14px;
+        flex-wrap: wrap;
+        gap: 12px;
         padding: 0 18px 13px;
       }
       .table-search {
         position: relative;
-        width: 340px;
+        width: 300px;
         max-width: 100%;
       }
       .table-search i {
@@ -414,81 +170,168 @@
         top: 50%;
         transform: translateY(-50%);
         color: #8a99a5;
-        font-size: 13px;
       }
       .table-search input {
         width: 100%;
         height: 36px;
         padding: 7px 12px 7px 34px;
-        border: 1px solid #dce4e9;
+        border: 1px solid var(--border);
         border-radius: 6px;
-        background: #fff;
+        background: white;
         font-size: 11px;
       }
-      .table-search input:focus {
-        outline: none;
-        border-color: #b77b91;
-        box-shadow: 0 0 0 3px rgba(169, 21, 61, 0.07);
+      .table-toolbar-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 12px;
       }
-      .table-count {
+      .table-count,
+      .table-note,
+      .table-date {
         color: #657786;
-        font-size: 11px;
+        font-size: 10px;
         white-space: nowrap;
+      }
+      .table-note {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .legend-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .legend-dot.complete {
+        background: #477463;
+      }
+      .legend-dot.pending {
+        background: #a15b6f;
       }
       .eng-table-wrap {
         overflow: auto;
         border-top: 1px solid #e1e7eb;
+        max-height: 72vh;
       }
       .eng-table {
-        width: 100%;
-        min-width: 1450px;
+        width: max-content;
+        min-width: 100%;
         border-collapse: separate;
         border-spacing: 0;
         margin: 0;
+        table-layout: fixed;
+      }
+      .eng-table th,
+      .eng-table td {
+        border-right: 1px solid #e4eaf0;
+        border-bottom: 1px solid #e7ecef;
+        text-align: center;
+        vertical-align: middle;
       }
       .eng-table thead th {
-        background: #f6f8fa;
-        color: #657786;
-        border-bottom: 1px solid #dfe6eb;
-        border-right: 1px solid #edf1f4;
-        padding: 10px 11px;
-        font-size: 9px;
-        line-height: 1.25;
-        text-transform: uppercase;
-        letter-spacing: 0.35px;
+        font-size: 11px;
+        line-height: 1.2;
         font-weight: 800;
-        white-space: nowrap;
+        white-space: normal;
+        min-width: 78px;
+        max-width: 115px;
+        padding: 9px 7px;
+        color: #344b5a;
+        background: #f6f8fa;
+        position: sticky;
+        top: 35px;
+        z-index: 4;
+      }
+      .eng-table thead .gate-group-row th {
         position: sticky;
         top: 0;
-        z-index: 2;
+        z-index: 7;
+        text-align: center;
+        padding: 9px 7px;
+        font-size: 12px;
+        color: #243746;
+        min-width: unset;
+        max-width: none;
       }
-      .eng-table thead th:first-child {
-        padding-left: 18px;
-      }
-      .eng-table tbody td {
-        background: #fff;
-        color: #405463;
-        border-bottom: 1px solid #e7ecef;
-        border-right: 1px solid #f0f3f5;
-        padding: 10px 11px;
-        font-size: 10.5px;
-        line-height: 1.35;
+      .eng-table tbody td,
+      .eng-table tfoot td {
+        padding: 9px 7px;
+        font-size: 12px;
         white-space: nowrap;
-      }
-      .eng-table tbody td:first-child {
-        padding-left: 18px;
+        background: #fff;
       }
       .eng-table tbody tr:hover td {
         background: #fbfcfd;
+      }
+      .eng-table .project-col {
+        min-width: 145px;
+        width: 145px;
+        text-align: left;
+      }
+      .eng-table .scope-col {
+        min-width: 75px;
+        width: 75px;
+      }
+      .project-group {
+        background: #dce7ee !important;
+      }
+      .g1 {
+        background: #c5e2f1 !important;
+      }
+      .g2 {
+        background: #f3e1e7 !important;
+      }
+      .g3 {
+        background: #dce6f4 !important;
+      }
+      .cust {
+        background: #dce6e9 !important;
+      }
+      .g4 {
+        background: #cde8ef !important;
+      }
+      .g5 {
+        background: #e9d7ef !important;
+      }
+      .g6 {
+        background: #f6dfd1 !important;
+      }
+      .g7 {
+        background: #dcebd5 !important;
+      }
+      .g8 {
+        background: #d8e7f5 !important;
+      }
+      .eng-table tbody td:first-child,
+      .eng-table thead tr:nth-child(2) th:first-child,
+      .eng-table tfoot td:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 5;
+        text-align: left;
+        min-width: 145px;
+        background: #fff;
+      }
+      .eng-table tbody td:nth-child(2),
+      .eng-table thead tr:nth-child(2) th:nth-child(2),
+      .eng-table tfoot td:nth-child(2) {
+        position: sticky;
+        left: 145px;
+        z-index: 5;
+        background: #fff;
+      }
+      .eng-table thead tr:nth-child(2) th:first-child,
+      .eng-table thead tr:nth-child(2) th:nth-child(2) {
+        z-index: 9;
+        background: #f6f8fa;
       }
       .project-link {
         color: #3b6f9c;
         font-weight: 700;
         text-decoration: none;
-      }
-      .project-link:hover {
-        color: #9f183c;
-        text-decoration: underline;
       }
       .cell-complete {
         color: #477463;
@@ -501,263 +344,80 @@
       .cell-zero {
         color: #98a4ad;
       }
-      .table-action {
-        width: 30px;
-        height: 27px;
-        border: 1px solid #e0e6ea;
-        background: #fff;
-        color: #72828e;
-        border-radius: 5px;
-        display: inline-grid;
-        place-items: center;
-        margin-right: 3px;
+      .eng-table tfoot td {
+        background: #e8f2f7;
+        color: var(--navy);
+        border-top: 2px solid var(--navy);
+        font-weight: 900;
       }
-      .table-action:hover {
-        background: #f6eaf0;
-        color: #9f183c;
-        border-color: #e4cbd5;
+      .eng-table tfoot td:first-child,
+      .eng-table tfoot td:nth-child(2) {
+        background: #e8f2f7;
       }
-      .project-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
+      .total-label {
+        color: var(--red);
       }
-      .project-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: #a9153d;
-        display: inline-block;
+      .eng-table thead th[data-sort-key] {
+        cursor: pointer;
+      }
+      .eng-table thead th[data-sort-key]:hover {
+        filter: brightness(0.96);
+        color: var(--red);
+      }
+      .sort-indicator {
+        margin-left: 4px;
+        color: var(--red);
       }
       .table-footer {
         display: flex;
-        align-items: center;
         justify-content: space-between;
         padding: 11px 18px;
         color: #7a8994;
         font-size: 10px;
       }
-      .table-note {
-        display: flex;
+      .notice {
+        margin: 12px 18px 16px;
+        padding: 9px 11px;
+        border-left: 3px solid #c99500;
+        background: #fff9e7;
+        color: #66521b;
+        font-size: 10px;
+      }
+      .export-icon-btn {
+        width: 34px;
+        height: 34px;
+        display: inline-flex;
         align-items: center;
-        gap: 10px;
+        justify-content: center;
+        padding: 0;
       }
-      .legend-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        display: inline-block;
-      }
-      .legend-dot.pending {
-        background: #a15b6f;
-      }
-      .legend-dot.complete {
-        background: #477463;
-      }
-      /* Project & Scope Details: collapse/expand */
-      .project-scope-content.collapsed {
-        display: none;
-      }
-      .project-scope-toggle {
-        border: 1px solid var(--border);
-        background: #fff;
-        color: var(--navy);
+      .tool-btn {
+        height: 32px;
+        border: 1px solid #d7e0e5;
+        background: white;
         border-radius: 6px;
-        padding: 7px 11px;
-        font-size: 11px;
+        color: #617481;
+        font-size: 10px;
+        padding: 0 11px;
         font-weight: 700;
       }
-      .project-scope-toggle:hover {
-        background: var(--red-soft);
-        color: var(--red);
-      }
-      /* Sortable column headers */
-      .eng-table thead th[data-sort-key] {
-        cursor: pointer;
-        user-select: none;
-      }
-      .eng-table thead th[data-sort-key]:hover {
-        background: #e9eef2;
-        color: var(--red);
-      }
-      .sort-indicator {
-        display: inline-block;
-        margin-left: 5px;
-        color: #a9153d;
-        font-size: 10px;
-      }
-      /* Stable widths for the two frozen columns */
-      .eng-table {
-        table-layout: fixed;
-      }
-      .eng-table th:nth-child(1),
-      .eng-table td:nth-child(1) {
-        width: 170px;
-        min-width: 170px;
-        max-width: 170px;
-      }
-      .eng-table th:nth-child(2),
-      .eng-table td:nth-child(2) {
-        width: 95px;
-        min-width: 95px;
-        max-width: 95px;
-      }
-      /* Freeze Project and Scope during horizontal scrolling */
-      .eng-table thead th:nth-child(1),
-      .eng-table thead th:nth-child(2) {
-        position: sticky;
-        background: #f6f8fa;
-        z-index: 6;
-      }
-      .eng-table thead th:nth-child(1) {
-        left: 0;
-      }
-      .eng-table thead th:nth-child(2) {
-        left: 170px;
-        box-shadow: 3px 0 4px -3px #071b2d55;
-      }
-      .eng-table tbody td:nth-child(1),
-      .eng-table tbody td:nth-child(2),
-      .eng-table tfoot td:nth-child(1),
-      .eng-table tfoot td:nth-child(2) {
-        position: sticky;
-        background: #fff;
-        z-index: 3;
-      }
-      .eng-table tbody td:nth-child(1),
-      .eng-table tfoot td:nth-child(1) {
-        left: 0;
-      }
-      .eng-table tbody td:nth-child(2),
-      .eng-table tfoot td:nth-child(2) {
-        left: 170px;
-        box-shadow: 3px 0 4px -3px #071b2d55;
-      }
-      /* Preserve row hover and alternating backgrounds on frozen cells */
-      .eng-table tbody tr:hover td:nth-child(1),
-      .eng-table tbody tr:hover td:nth-child(2) {
-        background: #fbfcfd;
-      }
-      .eng-table tbody tr:nth-child(even) td:nth-child(1),
-      .eng-table tbody tr:nth-child(even) td:nth-child(2) {
-        background: #fbfcfd;
-      }
-      /* Calculated total row */
-      .eng-table tfoot td {
-        padding: 12px 11px;
-        background: #e8f2f7;
-        color: var(--navy);
-        border-top: 2px solid var(--navy);
-        border-bottom: 1px solid #d4e0e7;
-        font-size: 10.5px;
-        font-weight: 900;
-        white-space: nowrap;
-      }
-      .eng-table tfoot td:nth-child(1),
-      .eng-table tfoot td:nth-child(2) {
-        background: #e8f2f7;
-      }
-      .eng-table tfoot td:nth-child(2) {
-        box-shadow: 3px 0 4px -3px #071b2d55;
-      }
-      .eng-table tfoot .total-label {
-        color: var(--red);
-      }
-      .table-toolbar .btn {
-        font-size: 11px;
-        white-space: nowrap;
-      }
-      /* Hide dashboard filter section */
-      .page > .cardx.filter {
-        display: none !important;
-      }
-      /* Keep the toolbar compact and aligned */
-      .table-toolbar {
-        display: flex;
+      .tool-icon-btn {
+        width: 34px;
+        padding: 0;
+        display: inline-flex;
         align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 12px;
-        padding: 0 18px 13px;
+        justify-content: center;
+        font-size: 14px;
       }
-      .table-toolbar-right {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .table-footer {
-        display: none;
-      }
-      /* Multi-level engineering table headers */
-      .eng-table thead .gate-group-row th {
-        position: sticky;
-        top: 0;
-        z-index: 8;
-        text-align: center;
-        padding: 9px 6px;
-        color: #243746;
-        font-size: 10px;
-        border-right: 1px solid #d5dfe6;
-        border-bottom: 1px solid #d5dfe6;
-      }
-      .eng-table thead tr:nth-child(2) th {
-        top: 34px;
-        z-index: 7;
-        white-space: normal;
-        text-align: center;
-        padding: 8px 6px;
-        font-size: 9px;
-      }
-      .eng-table thead .group-project {
-        background: #dce7ee;
-      }
-      .eng-table thead .group-g1 {
-        background: #c5e2f1;
-      }
-      .eng-table thead .group-g2 {
-        background: #eadfe9;
-      }
-      .eng-table thead .group-g3 {
-        background: #d9d9f2;
-      }
-      .eng-table thead .group-g4 {
-        background: #d5e8dc;
-      }
-      /* Keep the frozen Project and Scope headers above other cells */
-      .eng-table thead tr:nth-child(2) th:nth-child(1),
-      .eng-table thead tr:nth-child(2) th:nth-child(2) {
-        z-index: 10;
-      }
-      .eng-table thead .gate-group-row th:first-child {
-        position: sticky;
-        left: 0;
-        z-index: 12;
-      }
-      @media (max-width: 767px) {
-        .table-toolbar {
-          align-items: stretch;
-          flex-direction: column;
+      @media (max-width: 991px) {
+        .top-menu {
+          display: none;
         }
-        .table-search {
-          width: 100%;
+        .profile-name {
+          display: none;
         }
-        .table-toolbar-right {
-          justify-content: flex-start;
-        }
-      }
-      @media (max-width: 767px) {
-        .eng-table th:nth-child(1),
-        .eng-table td:nth-child(1) {
-          width: 145px;
-          min-width: 145px;
-          max-width: 145px;
-        }
-        .eng-table thead th:nth-child(2),
-        .eng-table tbody td:nth-child(2),
-        .eng-table tfoot td:nth-child(2) {
-          left: 145px;
+        .page {
+          padding: 16px;
         }
       }
       @media (max-width: 767px) {
@@ -768,8 +428,12 @@
         .table-search {
           width: 100%;
         }
+        .table-toolbar-right {
+          justify-content: flex-start;
+        }
       }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
   </head>
   <body>
     <header class="topbar">
@@ -831,250 +495,16 @@
         </div>
       </div>
     </header>
-
     <main class="page container-fluid">
       <div class="section-title-row mb-3">
         <div>
-          <div class="section-kicker">Engineering • Portfolio</div>
           <h5 class="title mb-1">Portfolio Overview</h5>
           <div class="accent"></div>
         </div>
-        <div class="small text-muted">
-          <i class="bi bi-clock me-1"></i>Last refreshed: 07-Oct-2026
+        <div class="text-muted small">
+          <i class="bi bi-clock me-1"></i>Last refreshed: 12-Oct-2026
         </div>
       </div>
-
-      <section class="cardx filter mb-4">
-        <div class="row g-3 align-items-end">
-          <div class="col-12 col-md-3">
-            <label class="form-label">Project</label>
-            <select id="project" class="form-select">
-              <option value="ALL">All Projects</option>
-              <option>ASA NP1.1</option>
-              <option>ASA W1</option>
-              <option>ASA W2</option>
-              <option>ASA W3A</option>
-              <option>ASA W3B</option>
-              <option>ASA W3C</option>
-            </select>
-          </div>
-          <div class="col-12 col-md-3">
-            <label class="form-label">Gate</label>
-            <select id="gate" class="form-select">
-              <option value="ALL">All Gates</option>
-              <option value="G1">Gate 1</option>
-              <option value="G2">Gate 2</option>
-              <option value="G3">Gate 3</option>
-              <option value="G4">Gate 4</option>
-            </select>
-          </div>
-          <div class="col-12 col-md-3">
-            <label class="form-label">Status</label>
-            <select id="status" class="form-select">
-              <option value="ALL">All Items</option>
-              <option value="PENDING">Pending / Action Required</option>
-              <option value="COMPLETE">Completed</option>
-            </select>
-          </div>
-          <div class="col-12 col-md-3 d-flex gap-2">
-            <button class="btn btn-red flex-fill" onclick="refreshDashboard()">
-              <i class="bi bi-funnel"></i> Apply</button
-            ><button class="btn btn-outline-secondary" onclick="resetAll()">
-              <i class="bi bi-arrow-counterclockwise"></i>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section class="row g-3 mb-4">
-        <div class="col-6 col-xl-3">
-          <div class="cardx kpi soft-blue">
-            <div class="d-flex justify-content-between">
-              <div>
-                <div class="kpi-label">Total Scope</div>
-                <div class="kpi-value">1,759</div>
-                <div class="kpi-note">6 projects</div>
-              </div>
-              <div class="iconbox"><i class="bi bi-diagram-3"></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-xl-3">
-          <div class="cardx kpi soft-teal">
-            <div class="d-flex justify-content-between">
-              <div>
-                <div class="kpi-label">TDP Available</div>
-                <div class="kpi-value">1,757</div>
-                <div class="kpi-note">
-                  <span class="complete">99.9%</span> readiness
-                </div>
-              </div>
-              <div class="iconbox"><i class="bi bi-check2-circle"></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-xl-3">
-          <div class="cardx kpi soft-blue">
-            <div class="d-flex justify-content-between">
-              <div>
-                <div class="kpi-label">FPQ Complete</div>
-                <div class="kpi-value">1,719</div>
-                <div class="kpi-note">6 pending</div>
-              </div>
-              <div class="iconbox"><i class="bi bi-person-check"></i></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-xl-3">
-          <div class="cardx kpi soft-red">
-            <div class="d-flex justify-content-between">
-              <div>
-                <div class="kpi-label">3D Model Pending</div>
-                <div class="kpi-value">61</div>
-                <div class="kpi-note">
-                  <span class="pending">Action required</span>
-                </div>
-              </div>
-              <div class="iconbox">
-                <i class="bi bi-exclamation-triangle"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="section-title-row mb-3">
-        <div>
-          <div class="section-kicker">Stage Governance</div>
-          <h5 class="title mb-1">Gate Readiness</h5>
-          <div class="accent"></div>
-        </div>
-        <span class="clickhint"
-          ><i class="bi bi-hand-index-thumb me-1"></i>Click a gate for detailed
-          status</span
-        >
-      </div>
-      <section class="row g-3 mb-4">
-        <div class="col-12 col-md-6 col-xl-3">
-          <div class="cardx gate" onclick="showGate('G1')">
-            <div class="gate-head g1">
-              <span>GATE 1</span><i class="bi bi-flag"></i>
-            </div>
-            <div>
-              <div class="stat d-flex justify-content-between">
-                <small>TDP Available</small><b>1,757</b>
-              </div>
-              <div class="px-3 pt-2">
-                <div class="progress">
-                  <div
-                    class="progress-bar"
-                    style="width: 99.9%; background: #8fb0c7"
-                  ></div>
-                </div>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>TDP Pending</small><b class="pending">2</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>Feasibility Completed</small><b>1,751</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>Feasibility Pending</small><b class="pending">8</b>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-xl-3">
-          <div class="cardx gate" onclick="showGate('G2')">
-            <div class="gate-head g2">
-              <span>GATE 2</span><i class="bi bi-clipboard-check"></i>
-            </div>
-            <div>
-              <div class="stat d-flex justify-content-between">
-                <small>P-BOM Complete</small><b>1,750</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>P-BOM Pending</small><b class="pending">9</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>SST Approval Complete</small><b>1,755</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>SST Approval Pending</small><b class="pending">4</b>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-xl-3">
-          <div class="cardx gate" onclick="showGate('G3')">
-            <div class="gate-head g3">
-              <span>GATE 3</span><i class="bi bi-shield-check"></i>
-            </div>
-            <div>
-              <div class="stat d-flex justify-content-between">
-                <small>LAI Approval Complete</small><b>1,702</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>LAI Approval Pending</small><b class="pending">57</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>FPQ Approval Complete</small><b>1,719</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>Tool Design Pending</small><b class="pending">106</b>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 col-xl-3">
-          <div class="cardx gate" onclick="showGate('G4')">
-            <div class="gate-head g4">
-              <span>GATE 4</span><i class="bi bi-award"></i>
-            </div>
-            <div>
-              <div class="stat d-flex justify-content-between">
-                <small>Concurrence Complete</small><b>1,747</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>Concurrence Pending</small><b class="pending">12</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>TRF Given</small><b>1,747</b>
-              </div>
-              <div class="stat d-flex justify-content-between">
-                <small>3D Model Pending</small><b class="pending">61</b>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="row g-3 mb-4 chart-row">
-        <div class="col-lg-7">
-          <div class="cardx chart-card">
-            <div
-              class="panel-head chart-head d-flex justify-content-between align-items-center"
-            >
-              <div>
-                <b class="title">Pending Items by Project</b>
-                <div class="small text-muted">Primary action areas</div>
-              </div>
-              <span class="badge badge-p">Needs attention</span>
-            </div>
-            <div class="chart-body"><canvas id="pendingChart"></canvas></div>
-          </div>
-        </div>
-        <div class="col-lg-5">
-          <div class="cardx chart-card">
-            <div class="panel-head chart-head">
-              <b class="title">Gate Completion</b>
-            </div>
-            <div class="chart-body donut-body">
-              <canvas id="gateChart"></canvas>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section class="cardx mb-3" id="projectScopeSection">
         <div
@@ -1082,126 +512,342 @@
         >
           <div>
             <div class="table-section-title">Project &amp; Scope Details</div>
-            <div class="small text-muted mt-1">
-              Engineering project status and approval readiness
-            </div>
           </div>
           <button
-            type="button"
-            class="project-scope-toggle"
-            id="projectScopeToggle"
-            aria-expanded="true"
-            onclick="toggleProjectScope()"
+            class="btn btn-sm btn-outline-secondary"
+            id="collapseBtn"
+            onclick="toggleTable()"
           >
             <i class="bi bi-chevron-up me-1"></i>Collapse
           </button>
         </div>
-        <div id="projectScopeContent" class="project-scope-content">
+        <div id="tableContent">
           <div class="table-toolbar">
-            <!-- Search -->
             <div class="table-search">
-              <i class="bi bi-search"></i>
-              <input
-                id="tableSearch"
-                type="text"
-                placeholder="Search project or status..."
+              <i class="bi bi-search"></i
+              ><input
+                id="search"
+                type="search"
+                placeholder="Search..."
                 oninput="render()"
               />
             </div>
-            <!-- Count, Export, Legend and Update Date -->
             <div class="table-toolbar-right">
               <div class="table-note">
-                <span>
-                  <span class="legend-dot complete"></span>
-                  Completed
-                </span>
-                <span>
-                  <span class="legend-dot pending"></span>
-                  Pending
-                </span>
+                <span><span class="legend-dot complete"></span> Completed</span
+                ><span><span class="legend-dot pending"></span> Pending</span>
               </div>
-              <div class="text-muted">
-                <i class="bi bi-clock me-1"></i>
-                Engineering Portfolio • Updated 07-Oct-2026
+              <div class="table-date">
+                <i class="bi bi-clock me-1"></i>Engineering Portfolio • Updated
+                12-Oct-2026
               </div>
               <div class="table-count">
-                <strong id="tableCount">0</strong> projects
+                <strong id="count">6</strong> projects
               </div>
               <button
                 type="button"
-                class="btn btn-outline-secondary btn-sm"
+                class="tool-btn tool-icon-btn"
                 onclick="exportCsv()"
+                title="Export CSV"
+                aria-label="Export CSV"
+                data-bs-toggle="tooltip"
               >
-                <i class="bi bi-download me-1"></i>Export CSV
+                <i class="bi bi-download"></i>
               </button>
             </div>
           </div>
           <div class="eng-table-wrap">
             <table class="eng-table" id="projectTable">
-              <thead>
-                <tr class="gate-group-row">
-                  <th colspan="2" class="group-project">Project &amp; Scope</th>
-                  <th colspan="4" class="group-g1">Gate 1</th>
-                  <th colspan="4" class="group-g2">Gate 2</th>
-                  <th colspan="4" class="group-g3">Gate 3</th>
-                  <th colspan="4" class="group-g4">Gate 4</th>
-                </tr>
-                <tr>
-                  <th>Project</th>
-                  <th>Scope</th>
-                  <th>TDP<br />Available</th>
-                  <th>TDP<br />Pending</th>
-                  <th>Feasibility<br />Complete</th>
-                  <th>Feasibility<br />Pending</th>
-                  <th>P-BOM<br />Complete</th>
-                  <th>P-BOM<br />Pending</th>
-                  <th>SST<br />Complete</th>
-                  <th>SST<br />Pending</th>
-                  <th>LAI<br />Complete</th>
-                  <th>LAI<br />Pending</th>
-                  <th>FPQ<br />Complete</th>
-                  <th>FPQ<br />Pending</th>
-                  <th>Tool Concept<br />Pending</th>
-                  <th>Tool Design<br />Pending</th>
-                  <th>Concurrence<br />Pending</th>
-                  <th>3D Model<br />Pending</th>
-                </tr>
-              </thead>
+              <thead id="tableHead"></thead>
               <tbody></tbody>
-              <tfoot id="projectTableFoot"></tfoot>
+              <tfoot id="tableFoot"></tfoot>
             </table>
-          </div>
-          <div class="table-footer">
-            <div class="table-note">
-              <span><span class="legend-dot complete"></span> Completed</span
-              ><span><span class="legend-dot pending"></span> Pending</span>
-            </div>
-            <div>Engineering portfolio • Updated 07-Oct-2026</div>
           </div>
         </div>
       </section>
-      <div class="text-end text-muted small mt-3">
-        Mahindra-inspired enterprise UI • Bootstrap 5 • Dashboard prototype
-      </div>
-    </main>
 
-    <div class="modal fade" id="gateModal" tabindex="-1">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalTitle"></h5>
-            <button class="btn-close" data-bs-dismiss="modal"></button>
+      <!-- Portfolio KPI cards retained from the original dashboard -->
+      <section class="row g-3 mb-4">
+        <div class="col-6 col-xl-3">
+          <div
+            class="cardx p-3"
+            style="background: #eef6fb; border: 1px solid #cfe2ef"
+          >
+            <div class="d-flex justify-content-between">
+              <div>
+                <div
+                  class="text-uppercase text-muted fw-bold"
+                  style="font-size: 10px"
+                >
+                  Total Scope
+                </div>
+                <div class="fw-bold" style="font-size: 28px; color: #071b2d">
+                  1,759
+                </div>
+                <div class="text-muted">6 projects</div>
+              </div>
+              <div class="fs-3 text-primary">
+                <i class="bi bi-diagram-3"></i>
+              </div>
+            </div>
           </div>
-          <div class="modal-body" id="modalBody"></div>
         </div>
-      </div>
-    </div>
+        <div class="col-6 col-xl-3">
+          <div
+            class="cardx p-3"
+            style="background: #edf8f8; border: 1px solid #cbe8e9"
+          >
+            <div class="d-flex justify-content-between">
+              <div>
+                <div
+                  class="text-uppercase text-muted fw-bold"
+                  style="font-size: 10px"
+                >
+                  TDP Available
+                </div>
+                <div class="fw-bold" style="font-size: 28px; color: #071b2d">
+                  1,757
+                </div>
+                <div class="text-muted">
+                  <span style="color: #477463; font-weight: 800">99.9%</span>
+                  readiness
+                </div>
+              </div>
+              <div class="fs-3 text-info">
+                <i class="bi bi-check2-circle"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div
+            class="cardx p-3"
+            style="background: #eef6fb; border: 1px solid #cfe2ef"
+          >
+            <div class="d-flex justify-content-between">
+              <div>
+                <div
+                  class="text-uppercase text-muted fw-bold"
+                  style="font-size: 10px"
+                >
+                  FPQ Complete
+                </div>
+                <div class="fw-bold" style="font-size: 28px; color: #071b2d">
+                  1,719
+                </div>
+                <div class="text-muted">6 pending</div>
+              </div>
+              <div class="fs-3 text-primary">
+                <i class="bi bi-person-check"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div
+            class="cardx p-3"
+            style="background: #fff3f3; border: 1px solid #f3c7ca"
+          >
+            <div class="d-flex justify-content-between">
+              <div>
+                <div
+                  class="text-uppercase text-muted fw-bold"
+                  style="font-size: 10px"
+                >
+                  3D Model Pending
+                </div>
+                <div class="fw-bold" style="font-size: 28px; color: #071b2d">
+                  61
+                </div>
+                <div class="text-muted">
+                  <span style="color: #a15b6f; font-weight: 800"
+                    >Action required</span
+                  >
+                </div>
+              </div>
+              <div class="fs-3 text-danger">
+                <i class="bi bi-exclamation-triangle"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
+      <!-- Gate readiness cards from the original dashboard -->
+      <div class="section-title-row mb-3">
+        <div>
+          <h5 class="title mb-1">Gate Readiness</h5>
+          <div class="accent"></div>
+        </div>
+        <span class="text-muted small"
+          ><i class="bi bi-hand-index-thumb me-1"></i>Click a gate for detailed
+          status</span
+        >
+      </div>
+      <section class="row g-3 mb-4">
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="cardx h-100 overflow-hidden">
+            <div
+              class="p-3 fw-bold"
+              style="
+                background: #e8f0f6;
+                color: #315a78;
+                border-left: 4px solid #5f89a6;
+              "
+            >
+              GATE 1 <i class="bi bi-flag float-end"></i>
+            </div>
+            <div class="p-3">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">TDP Available</span><b>1,757</b>
+              </div>
+              <div class="progress mb-3" style="height: 7px">
+                <div
+                  class="progress-bar"
+                  style="width: 99.9%; background: #8fb0c7"
+                ></div>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">TDP Pending</span
+                ><b style="color: #a15b6f">2</b>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Feasibility Completed</span
+                ><b>1,751</b>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">Feasibility Pending</span
+                ><b style="color: #a15b6f">8</b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="cardx h-100 overflow-hidden">
+            <div
+              class="p-3 fw-bold"
+              style="
+                background: #f4e9ed;
+                color: #7d4055;
+                border-left: 4px solid #b47a8d;
+              "
+            >
+              GATE 2 <i class="bi bi-clipboard-check float-end"></i>
+            </div>
+            <div class="p-3">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">P-BOM Complete</span><b>1,750</b>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">P-BOM Pending</span
+                ><b style="color: #a15b6f">9</b>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">SST Approval Complete</span
+                ><b>1,755</b>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">SST Approval Pending</span
+                ><b style="color: #a15b6f">4</b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="cardx h-100 overflow-hidden">
+            <div
+              class="p-3 fw-bold"
+              style="
+                background: #e9eef7;
+                color: #3f5f8a;
+                border-left: 4px solid #7894b8;
+              "
+            >
+              GATE 3 <i class="bi bi-shield-check float-end"></i>
+            </div>
+            <div class="p-3">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">LAI Approval Complete</span
+                ><b>1,702</b>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">LAI Approval Pending</span
+                ><b style="color: #a15b6f">57</b>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">FPQ Approval Complete</span
+                ><b>1,719</b>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">Tool Design Pending</span
+                ><b style="color: #a15b6f">106</b>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="cardx h-100 overflow-hidden">
+            <div
+              class="p-3 fw-bold"
+              style="
+                background: #e7f2f1;
+                color: #3e706b;
+                border-left: 4px solid #6ca39c;
+              "
+            >
+              GATE 4 <i class="bi bi-award float-end"></i>
+            </div>
+            <div class="p-3">
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Concurrence Complete</span><b>1,747</b>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Concurrence Pending</span
+                ><b style="color: #a15b6f">12</b>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">TRF Given</span><b>1,747</b>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">3D Model Pending</span
+                ><b style="color: #a15b6f">61</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Original dashboard charts -->
+      <section class="row g-3 mb-4">
+        <div class="col-lg-7">
+          <div class="cardx p-3" style="height: 285px; overflow: hidden">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <b class="title">Pending Items by Project</b>
+                <div class="small text-muted">Primary action areas</div>
+              </div>
+              <span class="badge" style="background: #fff4d5; color: #8a6500"
+                >Needs attention</span
+              >
+            </div>
+            <div style="height: 215px"><canvas id="pendingChart"></canvas></div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="cardx p-3" style="height: 285px; overflow: hidden">
+            <div class="mb-2"><b class="title">Gate Completion</b></div>
+            <div style="height: 215px"><canvas id="gateChart"></canvas></div>
+          </div>
+        </div>
+      </section>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+      /* Source: CIO_Templates_v_3 1.pdf, page 1. Existing core values retained;
+   downstream values below are transcribed from the PDF's visible rows. */
       const data = [
         {
-          p: "ASA NP1.1",
+          p: "ASA NPI-1.1",
           scope: 148,
           tdpa: 146,
           tdpp: 2,
@@ -1215,10 +861,34 @@
           laip: 0,
           fpqc: 142,
           fpqp: 0,
-          tcp: 6,
-          tdp: 6,
-          cp: 12,
-          mp: 6,
+          toolConceptApprovalPending: 6,
+          toolDesignApprovalPending: 6,
+          toolConceptPending: 6,
+          toolDesignPending: 12,
+          concurrencePending: 0,
+          trfGiven: 136,
+          trfPending: 0,
+          modelComplete: 136,
+          modelPending: 6,
+          ncpComplete: 136,
+          ncpPending: 6,
+          toolConceptG5: 136,
+          toolDesignG5: 6,
+          toolFabComplete: 131,
+          toolFabPending: 131,
+          materialCut: 17,
+          lcPending: 11,
+          meWip: 6,
+          rmDep: 0,
+          boiDep: 0,
+          cpWip: 0,
+          lcGiven: 0,
+          tqDep: 130,
+          otherPending: 18,
+          dossier: 0,
+          faIComplete: 13,
+          faIPending: 117,
+          productionHandover: 68,
         },
         {
           p: "ASA W1",
@@ -1235,10 +905,34 @@
           laip: 1,
           fpqc: 53,
           fpqp: 0,
-          tcp: 0,
-          tdp: 0,
-          cp: 0,
-          mp: 0,
+          toolConceptApprovalPending: 0,
+          toolDesignApprovalPending: 0,
+          toolConceptPending: 0,
+          toolDesignPending: 0,
+          concurrencePending: 0,
+          trfGiven: 53,
+          trfPending: 0,
+          modelComplete: 53,
+          modelPending: 0,
+          ncpComplete: 53,
+          ncpPending: 0,
+          toolConceptG5: 53,
+          toolDesignG5: 0,
+          toolFabComplete: 53,
+          toolFabPending: 0,
+          materialCut: 51,
+          lcPending: 2,
+          meWip: 0,
+          rmDep: 1,
+          boiDep: 0,
+          cpWip: 0,
+          lcGiven: 0,
+          tqDep: 50,
+          otherPending: 3,
+          dossier: 2,
+          faIComplete: 0,
+          faIPending: 50,
+          productionHandover: 5,
         },
         {
           p: "ASA W2",
@@ -1255,10 +949,34 @@
           laip: 8,
           fpqc: 618,
           fpqp: 4,
-          tcp: 0,
-          tdp: 2,
-          cp: 0,
-          mp: 2,
+          toolConceptApprovalPending: 0,
+          toolDesignApprovalPending: 2,
+          toolConceptPending: 0,
+          toolDesignPending: 2,
+          concurrencePending: 0,
+          trfGiven: 618,
+          trfPending: 0,
+          modelComplete: 618,
+          modelPending: 0,
+          ncpComplete: 616,
+          ncpPending: 2,
+          toolConceptG5: 618,
+          toolDesignG5: 0,
+          toolFabComplete: 617,
+          toolFabPending: 1,
+          materialCut: 615,
+          lcPending: 3,
+          meWip: 0,
+          rmDep: 0,
+          boiDep: 0,
+          cpWip: 0,
+          lcGiven: 0,
+          tqDep: 599,
+          otherPending: 19,
+          dossier: 0,
+          faIComplete: 8,
+          faIPending: 591,
+          productionHandover: 163,
         },
         {
           p: "ASA W3A",
@@ -1275,10 +993,34 @@
           laip: 6,
           fpqc: 311,
           fpqp: 2,
-          tcp: 0,
-          tdp: 0,
-          cp: 0,
-          mp: 0,
+          toolConceptApprovalPending: 0,
+          toolDesignApprovalPending: 0,
+          toolConceptPending: 0,
+          toolDesignPending: 0,
+          concurrencePending: 0,
+          trfGiven: 313,
+          trfPending: 0,
+          modelComplete: 313,
+          modelPending: 0,
+          ncpComplete: 313,
+          ncpPending: 0,
+          toolConceptG5: 313,
+          toolDesignG5: 0,
+          toolFabComplete: 313,
+          toolFabPending: 2,
+          materialCut: 296,
+          lcPending: 17,
+          meWip: 0,
+          rmDep: 1,
+          boiDep: 1,
+          cpWip: 1,
+          lcGiven: 41,
+          tqDep: 274,
+          otherPending: 39,
+          dossier: 3,
+          faIComplete: 36,
+          faIPending: 238,
+          productionHandover: 0,
         },
         {
           p: "ASA W3B",
@@ -1294,11 +1036,35 @@
           laic: 275,
           laip: 1,
           fpqc: 274,
-          fpqp: 2,
-          tcp: 0,
-          tdp: 64,
-          cp: 0,
-          mp: 26,
+          fpqp: 0,
+          toolConceptApprovalPending: 0,
+          toolDesignApprovalPending: 64,
+          toolConceptPending: 0,
+          toolDesignPending: 64,
+          concurrencePending: 0,
+          trfGiven: 276,
+          trfPending: 0,
+          modelComplete: 276,
+          modelPending: 0,
+          ncpComplete: 250,
+          ncpPending: 26,
+          toolConceptG5: 276,
+          toolDesignG5: 0,
+          toolFabComplete: 261,
+          toolFabPending: 15,
+          materialCut: 250,
+          lcPending: 48,
+          meWip: 0,
+          rmDep: 9,
+          boiDep: 2,
+          cpWip: 0,
+          lcGiven: 232,
+          tqDep: 167,
+          otherPending: 109,
+          dossier: 2,
+          faIComplete: 60,
+          faIPending: 107,
+          productionHandover: 0,
         },
         {
           p: "ASA W3C",
@@ -1315,413 +1081,404 @@
           laip: 41,
           fpqc: 321,
           fpqp: 0,
-          tcp: 0,
-          tdp: 34,
-          cp: 0,
-          mp: 27,
+          toolConceptApprovalPending: 0,
+          toolDesignApprovalPending: 34,
+          toolConceptPending: 0,
+          toolDesignPending: 34,
+          concurrencePending: 0,
+          trfGiven: 351,
+          trfPending: 0,
+          modelComplete: 351,
+          modelPending: 0,
+          ncpComplete: 324,
+          ncpPending: 27,
+          toolConceptG5: 351,
+          toolDesignG5: 0,
+          toolFabComplete: 317,
+          toolFabPending: 34,
+          materialCut: 317,
+          lcPending: 34,
+          meWip: 0,
+          rmDep: 4,
+          boiDep: 0,
+          cpWip: 0,
+          lcGiven: 307,
+          tqDep: 184,
+          otherPending: 167,
+          dossier: 15,
+          faIComplete: 179,
+          faIPending: 5,
+          productionHandover: 0,
         },
       ];
       const cols = [
-        ["tdpa", "TDP Avail."],
-        ["tdpp", "TDP Pend."],
-        ["fc", "Feas. Comp."],
-        ["fp", "Feas. Pend."],
-        ["pbc", "P-BOM Comp."],
-        ["pbp", "P-BOM Pend."],
-        ["sstc", "SST Comp."],
-        ["sstp", "SST Pend."],
-        ["laic", "LAI Comp."],
-        ["laip", "LAI Pend."],
-        ["fpqc", "FPQ Comp."],
-        ["fpqp", "FPQ Pend."],
-        ["tcp", "Tool Concept Pend."],
-        ["tdp", "Tool Design Pend."],
-        ["cp", "Concurrence Pend."],
-        ["mp", "3D Model Pend."],
+        ["tdpa", "TDP Available", "g1", false],
+        ["tdpp", "TDP Pending", "g1", true],
+        ["fc", "Feasibility Complete", "g1", false],
+        ["fp", "Feasibility Pending", "g1", true],
+        ["pbc", "P-BOM Creation Complete", "g2", false],
+        ["pbp", "P-BOM Pending", "g2", true],
+        ["sstc", "SST Approval Complete", "g2", false],
+        ["sstp", "SST Approval Pending", "g2", true],
+        ["laic", "LAI Approval Complete", "cust", false],
+        ["laip", "LAI Approval Pending", "cust", true],
+        ["fpqc", "FPQ Approval Complete", "cust", false],
+        ["fpqp", "FPQ Approval Pending", "cust", true],
+        [
+          "toolConceptApprovalPending",
+          "Tool Concept Approval Pending",
+          "cust",
+          true,
+        ],
+        [
+          "toolDesignApprovalPending",
+          "Tool Design Approval Pending",
+          "cust",
+          true,
+        ],
+        ["toolConceptPending", "Tool Concept Pending", "g4", true],
+        ["toolDesignPending", "Tool Design Pending", "g4", true],
+        ["concurrencePending", "Concurrence Pending", "g4", true],
+        ["trfGiven", "TRF Given", "g4", false],
+        ["trfPending", "TRF Not Given", "g4", true],
+        ["modelComplete", "3D Model Complete", "g4", false],
+        ["modelPending", "3D Model Pending", "g4", true],
+        ["ncpComplete", "NCP Complete", "g5", false],
+        ["ncpPending", "NCP Pending", "g5", true],
+        ["toolConceptG5", "Tool Concept Complete", "g5", false],
+        ["toolDesignG5", "Tool Design Pending", "g5", true],
+        ["toolFabComplete", "Tool Fab. Complete", "g5", false],
+        ["toolFabPending", "Tool Fab. Pending", "g5", true],
+        ["materialCut", "Material Cut", "g6", false],
+        ["lcPending", "LC Pending", "g6", true],
+        ["meWip", "ME WIP", "g6", true],
+        ["rmDep", "RM Dep.", "g6", true],
+        ["boiDep", "BOI Dep.", "g6", true],
+        ["cpWip", "CP WIP", "g6", true],
+        ["lcGiven", "LC Given (Launch)", "g6", false],
+        ["tqDep", "TQ Dep. (Dossier)", "g7", true],
+        ["otherPending", "Other Pending", "g7", true],
+        ["dossier", "Dossier Submitted", "g7", false],
+        ["faIComplete", "FAI Complete", "g8", false],
+        ["faIPending", "FAI Pending", "g8", true],
+        ["productionHandover", "Production Handover", "g8", false],
       ];
-
-      const projectScopeSection = document.getElementById(
-        "projectScopeSection",
-      );
-      const dashboardMain = document.querySelector("main.page");
-      const filterSection = dashboardMain.querySelector(".cardx.filter");
-      if (projectScopeSection && filterSection) {
-        filterSection.after(projectScopeSection);
-      }
-
-      function pick(p) {
-        document.getElementById("project").value = p;
-        render();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-      let sortState = {
-        key: null,
-        direction: "asc",
-      };
-      const gatePendingColumns = {
-        G1: ["tdpp", "fp"],
-        G2: ["pbp", "sstp"],
-        G3: ["laip", "fpqp", "tcp", "tdp"],
-        G4: ["cp", "mp"],
-      };
-      function setupSortableHeaders() {
-        const headers = document.querySelectorAll("#projectTable thead th");
-        headers.forEach((th, index) => {
-          // Project, Scope, and all numeric data columns are sortable.
-          if (index === 0) {
-            th.dataset.sortKey = "p";
-          } else if (index === 1) {
-            th.dataset.sortKey = "scope";
-          } else if (index >= 2 && index < 2 + cols.length) {
-            th.dataset.sortKey = cols[index - 2][0];
-          } else {
-            delete th.dataset.sortKey;
-            return; // Do not sort the Action column.
-          }
-          th.setAttribute("title", "Click to sort ascending or descending");
-          if (!th.querySelector(".sort-indicator")) {
-            const indicator = document.createElement("span");
-            indicator.className = "sort-indicator";
-            indicator.textContent = "↕";
-            th.appendChild(indicator);
-          }
-          th.onclick = () => {
+      const groups = [
+        ["Project & Scope", 2, "project-group"],
+        ["Gate 1", 4, "g1"],
+        ["Gate 2", 4, "g2"],
+        ["Gate 3 / Customer Approvals", 6, "cust"],
+        ["Gate 4", 7, "g4"],
+        ["Gate 5", 6, "g5"],
+        ["Gate 6 (Launch Clearance)", 7, "g6"],
+        ["Gate 7", 3, "g7"],
+        ["Gate 8", 3, "g8"],
+      ];
+      let sortState = { key: null, direction: "asc" };
+      function buildHeader() {
+        const head = document.getElementById("tableHead"),
+          top = document.createElement("tr");
+        top.className = "gate-group-row";
+        groups.forEach(([label, span, cls]) => {
+          const th = document.createElement("th");
+          th.colSpan = span;
+          th.className = cls;
+          th.textContent = label;
+          top.appendChild(th);
+        });
+        head.appendChild(top);
+        const sub = document.createElement("tr");
+        [
+          ["p", "Project"],
+          ["scope", "Scope"],
+        ].forEach(([key, label], i) => {
+          const th = document.createElement("th");
+          th.textContent = label;
+          th.className = i === 0 ? "project-col" : "scope-col";
+          th.dataset.sortKey = key;
+          sub.appendChild(th);
+        });
+        cols.forEach(([key, label]) => {
+          const th = document.createElement("th");
+          th.textContent = label;
+          th.dataset.sortKey = key;
+          sub.appendChild(th);
+        });
+        head.appendChild(sub);
+        head.querySelectorAll("th[data-sort-key]").forEach((th) =>
+          th.addEventListener("click", () => {
             const key = th.dataset.sortKey;
-            if (sortState.key === key) {
-              sortState.direction =
-                sortState.direction === "asc" ? "desc" : "asc";
-            } else {
-              sortState.key = key;
-              sortState.direction = "asc";
-            }
-            updateSortIndicators();
+            sortState.direction =
+              sortState.key === key
+                ? sortState.direction === "asc"
+                  ? "desc"
+                  : "asc"
+                : "asc";
+            sortState.key = key;
             render();
-          };
-        });
-        updateSortIndicators();
+          }),
+        );
       }
-      function updateSortIndicators() {
-        document
-          .querySelectorAll("#projectTable thead th[data-sort-key]")
-          .forEach((th) => {
-            const indicator = th.querySelector(".sort-indicator");
-            if (!indicator) return;
-            if (th.dataset.sortKey !== sortState.key) {
-              indicator.textContent = "↕";
-              indicator.setAttribute("aria-label", "Not sorted");
-            } else {
-              indicator.textContent = sortState.direction === "asc" ? "↑" : "↓";
-              indicator.setAttribute(
-                "aria-label",
-                sortState.direction === "asc" ? "Ascending" : "Descending",
-              );
-            }
-          });
-      }
-      function getFilteredRows() {
-        const selectedProject = document.getElementById("project").value;
-        const selectedGate = document.getElementById("gate").value;
-        const selectedStatus = document.getElementById("status").value;
-        const query = (document.getElementById("tableSearch")?.value || "")
-          .trim()
-          .toLowerCase();
-        return data.filter((x) => {
-          const projectMatch =
-            selectedProject === "ALL" || x.p === selectedProject;
-          const textMatch =
-            !query ||
-            [x.p, ...cols.map(([key]) => x[key])].some((value) =>
-              String(value ?? "")
+      function filteredRows() {
+        const q = document.getElementById("search").value.trim().toLowerCase();
+        return data.filter(
+          (r) =>
+            !q ||
+            [r.p, ...cols.map((c) => c[1]), ...Object.values(r)].some((v) =>
+              String(v ?? "")
                 .toLowerCase()
-                .includes(query),
-            );
-          const pendingKeys =
-            selectedGate === "ALL"
-              ? [
-                  "tdpp",
-                  "fp",
-                  "pbp",
-                  "sstp",
-                  "laip",
-                  "fpqp",
-                  "tcp",
-                  "tdp",
-                  "cp",
-                  "mp",
-                ]
-              : gatePendingColumns[selectedGate];
-          const hasPending = pendingKeys.some((key) => Number(x[key]) > 0);
-          const statusMatch =
-            selectedStatus === "ALL" ||
-            (selectedStatus === "PENDING" && hasPending) ||
-            (selectedStatus === "COMPLETE" && !hasPending);
-          return projectMatch && textMatch && statusMatch;
-        });
-      }
-      function getSortedRows(rows) {
-        const sorted = [...rows];
-        if (!sortState.key) return sorted;
-        sorted.sort((a, b) => {
-          const av = a[sortState.key];
-          const bv = b[sortState.key];
-          let result;
-          if (typeof av === "number" && typeof bv === "number") {
-            result = av - bv;
-          } else {
-            result = String(av ?? "").localeCompare(
-              String(bv ?? ""),
-              undefined,
-              { numeric: true, sensitivity: "base" },
-            );
-          }
-          return sortState.direction === "asc" ? result : -result;
-        });
-        return sorted;
+                .includes(q),
+            ),
+        );
       }
       function render() {
-        const rows = getFilteredRows();
-        const sortedRows = getSortedRows(rows);
-        const tbody = document.querySelector("#projectTable tbody");
-        tbody.innerHTML = "";
-        sortedRows.forEach((x) => {
+        let rows = filteredRows();
+        if (sortState.key) {
+          const k = sortState.key;
+          rows = [...rows].sort((a, b) => {
+            const av = a[k] ?? 0,
+              bv = b[k] ?? 0;
+            const n =
+              typeof av === "number" && typeof bv === "number"
+                ? av - bv
+                : String(av).localeCompare(String(bv), undefined, {
+                    numeric: true,
+                    sensitivity: "base",
+                  });
+            return sortState.direction === "asc" ? n : -n;
+          });
+        }
+        const body = document.querySelector("#projectTable tbody");
+        body.replaceChildren();
+        rows.forEach((r) => {
           const tr = document.createElement("tr");
-          const projectCell = document.createElement("td");
-          const projectButton = document.createElement("button");
-          projectButton.type = "button";
-          projectButton.className = "btn btn-link btn-sm p-0 project-link";
-          projectButton.textContent = x.p;
-          projectButton.onclick = () => pick(x.p);
-          const projectPill = document.createElement("span");
-          projectPill.className = "project-pill";
-          const dot = document.createElement("span");
-          dot.className = "project-dot";
-          projectPill.append(dot, projectButton);
-          projectCell.appendChild(projectPill);
-          tr.appendChild(projectCell);
-          const scopeCell = document.createElement("td");
-          scopeCell.textContent = Number(x.scope).toLocaleString("en-IN");
-          tr.appendChild(scopeCell);
-          cols.forEach(([key]) => {
+          const p = document.createElement("td");
+          p.className = "project-col";
+          p.innerHTML =
+            '<span style="color:#a9153d;margin-right:6px">●</span><span class="project-link"></span>';
+          p.querySelector("span.project-link").textContent = r.p;
+          tr.appendChild(p);
+          const s = document.createElement("td");
+          s.className = "scope-col";
+          s.textContent = fmt(r.scope);
+          tr.appendChild(s);
+          cols.forEach(([key, label, group, pending]) => {
             const td = document.createElement("td");
-            const value = Number(x[key]) || 0;
-            const isPending = key.endsWith("p");
-            td.className = isPending
-              ? value > 0
+            const v = r[key];
+            td.textContent = v === undefined || v === null ? "—" : fmt(v);
+            td.className = pending
+              ? Number(v) > 0
                 ? "cell-pending"
                 : "cell-zero"
               : "cell-complete";
-            td.textContent = value.toLocaleString("en-IN");
             tr.appendChild(td);
           });
-
-          tbody.appendChild(tr);
+          body.appendChild(tr);
         });
-        renderTotals(rows);
-        document.getElementById("tableCount").textContent = rows.length;
-        updateSortIndicators();
-      }
-      function renderTotals(rows) {
-        const foot = document.getElementById("projectTableFoot");
-        if (!foot) return;
-        const totals = {};
-        // Calculate each numeric column from the filtered records.
-        ["scope", ...cols.map(([key]) => key)].forEach((key) => {
-          totals[key] = rows.reduce(
-            (sum, row) => sum + (Number(row[key]) || 0),
-            0,
-          );
-        });
-        const tr = document.createElement("tr");
-        const label = document.createElement("td");
-        label.className = "total-label";
-        label.textContent = `TOTAL (${rows.length} projects)`;
-        tr.appendChild(label);
+        const foot = document.getElementById("tableFoot");
+        foot.replaceChildren();
+        const tr = document.createElement("tr"),
+          lab = document.createElement("td");
+        lab.className = "total-label";
+        lab.textContent = `TOTAL (${rows.length} projects)`;
+        tr.appendChild(lab);
         const scope = document.createElement("td");
-        scope.textContent = totals.scope.toLocaleString("en-IN");
+        scope.textContent = fmt(rows.reduce((s, r) => s + r.scope, 0));
         tr.appendChild(scope);
         cols.forEach(([key]) => {
           const td = document.createElement("td");
-          td.textContent = totals[key].toLocaleString("en-IN");
+          const vals = rows.filter((r) => Number.isFinite(r[key]));
+          td.textContent = vals.length
+            ? fmt(vals.reduce((s, r) => s + r[key], 0))
+            : "—";
           tr.appendChild(td);
         });
-        foot.replaceChildren(tr);
+        foot.appendChild(tr);
+        document.getElementById("count").textContent = rows.length;
+        document
+          .querySelectorAll("#tableHead th[data-sort-key]")
+          .forEach((th) => {
+            const old = th.querySelector(".sort-indicator");
+            if (old) old.remove();
+            if (th.dataset.sortKey === sortState.key) {
+              const span = document.createElement("span");
+              span.className = "sort-indicator";
+              span.textContent = sortState.direction === "asc" ? "↑" : "↓";
+              th.appendChild(span);
+            }
+          });
       }
-      function toggleProjectScope() {
-        const content = document.getElementById("projectScopeContent");
-        const button = document.getElementById("projectScopeToggle");
-        const collapsed = content.classList.toggle("collapsed");
-        button.setAttribute("aria-expanded", String(!collapsed));
-        button.innerHTML = collapsed
+      function fmt(v) {
+        return Number(v).toLocaleString("en-IN");
+      }
+      function toggleTable() {
+        const c = document.getElementById("tableContent"),
+          b = document.getElementById("collapseBtn");
+        c.classList.toggle("d-none");
+        const hide = c.classList.contains("d-none");
+        b.innerHTML = hide
           ? '<i class="bi bi-chevron-down me-1"></i>Expand'
           : '<i class="bi bi-chevron-up me-1"></i>Collapse';
       }
-      function refreshDashboard() {
-        render();
-      }
-      function resetAll() {
-        document.getElementById("project").value = "ALL";
-        document.getElementById("gate").value = "ALL";
-        document.getElementById("status").value = "ALL";
-        document.getElementById("tableSearch").value = "";
-        sortState = { key: null, direction: "asc" };
-        updateSortIndicators();
-        render();
-      }
       function exportCsv() {
-        const rows = getSortedRows(getFilteredRows());
-        const headers = [
-          "Project",
-          "Scope",
-          ...cols.map(([key, label]) => label),
-        ];
-        function csvEscape(value) {
-          return `"${String(value ?? "").replace(/"/g, '""')}"`;
+        const rows = filteredRows();
+        if (sortState.key) {
+          const k = sortState.key;
+          rows.sort((a, b) => {
+            const n = (a[k] ?? 0) - (b[k] ?? 0);
+            return sortState.direction === "asc" ? n : -n;
+          });
         }
-        const lines = [headers.map(csvEscape).join(",")];
-        rows.forEach((row) => {
+        const esc = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"',
+          lines = [
+            ["Project", "Scope", ...cols.map((c) => c[1])].map(esc).join(","),
+          ];
+        rows.forEach((r) =>
           lines.push(
-            [row.p, row.scope, ...cols.map(([key]) => row[key])]
-              .map(csvEscape)
+            [r.p, r.scope, ...cols.map((c) => r[c[0]] ?? "")]
+              .map(esc)
               .join(","),
-          );
-        });
-        const totals = [
-          `TOTAL (${rows.length} projects)`,
-          ...["scope", ...cols.map(([key]) => key)].map((key) =>
-            rows.reduce((sum, row) => sum + (Number(row[key]) || 0), 0),
           ),
-        ];
-        lines.push(totals.map(csvEscape).join(","));
+        );
+        lines.push(
+          [
+            `TOTAL (${rows.length} projects)`,
+            rows.reduce((s, r) => s + r.scope, 0),
+            ...cols.map((c) =>
+              rows.reduce((s, r) => s + (Number(r[c[0]]) || 0), 0),
+            ),
+          ]
+            .map(esc)
+            .join(","),
+        );
         const blob = new Blob(["\uFEFF" + lines.join("\r\n")], {
-          type: "text/csv;charset=utf-8;",
-        });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "mahindra-engineering-dashboard.csv";
-        link.click();
+            type: "text/csv;charset=utf-8;",
+          }),
+          url = URL.createObjectURL(blob),
+          a = document.createElement("a");
+        a.href = url;
+        a.download = "mahindra-engineering-asa-all-waves-gate-1-to-8.csv";
+        a.click();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
       }
-      // Initialize the table after the data and column definitions.
-      setupSortableHeaders();
+      buildHeader();
       render();
+    </script>
 
-      function showGate(g) {
-        const names = {
-          G1: "Gate 1 — Project Definition & Feasibility",
-          G2: "Gate 2 — P-BOM & SST Approval",
-          G3: "Gate 3 — LAI / FPQ / Tooling Approval",
-          G4: "Gate 4 — Concurrence / TRF / 3D Model",
-        };
-        const items = {
-          G1: [
-            ["TDP Available", 1757],
-            ["TDP Pending", 2],
-            ["Feasibility Completed", 1751],
-            ["Feasibility Pending", 8],
-          ],
-          G2: [
-            ["P-BOM Complete", 1750],
-            ["P-BOM Pending", 9],
-            ["SST Approval Complete", 1755],
-            ["SST Approval Pending", 4],
-          ],
-          G3: [
-            ["LAI Approval Complete", 1702],
-            ["LAI Approval Pending", 57],
-            ["FPQ Approval Complete", 1719],
-            ["Tool Design Pending", 106],
-          ],
-          G4: [
-            ["Concurrence Complete", 1747],
-            ["Concurrence Pending", 12],
-            ["TRF Given", 1747],
-            ["3D Model Pending", 61],
-          ],
-        };
-        document.getElementById("modalTitle").textContent = names[g];
-        document.getElementById("modalBody").innerHTML =
-          '<div class="row g-3">' +
-          items[g]
-            .map(
-              (i) =>
-                `<div class="col-md-6"><div class="cardx p-3 d-flex justify-content-between"><span>${i[0]}</span><b class="${i[0].includes("Pending") ? "pending" : ""}">${i[1].toLocaleString()}</b></div></div>`,
-            )
-            .join("") +
-          "</div>";
-        new bootstrap.Modal(document.getElementById("gateModal")).show();
-      }
+    <script>
+      (function () {
+        function initDashboardCharts() {
+          if (typeof Chart === "undefined") {
+            const chartAreas = document.querySelectorAll(
+              "#pendingChart, #gateChart",
+            );
+            chartAreas.forEach(function (canvas) {
+              const msg = document.createElement("div");
+              msg.className = "small text-muted text-center p-3";
+              msg.textContent =
+                "Charts could not load. Check your internet connection and reload this page.";
+              canvas.parentElement.replaceChild(msg, canvas);
+            });
+            return;
+          }
 
-      render();
-      new Chart(document.getElementById("pendingChart"), {
-        type: "bar",
-        data: {
-          labels: data.map((x) => x.p.replace("ASA ", "")),
-          datasets: [
-            {
-              label: "Pending",
-              data: data.map(
-                (x) =>
-                  x.tdpp +
-                  x.fp +
-                  x.pbp +
-                  x.sstp +
-                  x.laip +
-                  x.fpqp +
-                  x.tcp +
-                  x.tdp +
-                  x.cp +
-                  x.mp,
-              ),
-              backgroundColor: "#b85d76",
-              borderRadius: 4,
-              barPercentage: 0.58,
-              categoryPercentage: 0.72,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: { displayColors: false },
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: { maxTicksLimit: 5, font: { size: 10 } },
-              grid: { color: "#edf1f4" },
-            },
-            x: { ticks: { font: { size: 10 } }, grid: { display: false } },
-          },
-        },
-      });
-      new Chart(document.getElementById("gateChart"), {
-        type: "doughnut",
-        data: {
-          labels: ["Gate 1", "Gate 2", "Gate 3", "Gate 4"],
-          datasets: [
-            {
-              data: [99.5, 99.3, 94.0, 96.5],
-              backgroundColor: ["#8fb0c7", "#c79aaa", "#9eafd0", "#91bcb7"],
-              borderWidth: 0,
-              hoverOffset: 3,
-            },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: "72%",
-          plugins: {
-            legend: {
-              position: "bottom",
-              labels: { boxWidth: 9, padding: 10, font: { size: 10 } },
-            },
-          },
-        },
-      });
+          // Use the same six project records as the engineering table.
+          const chartProjects = [
+            { name: "ASA NP1.1", pending: 61 },
+            { name: "ASA W1", pending: 1 },
+            { name: "ASA W2", pending: 20 },
+            { name: "ASA W3A", pending: 8 },
+            { name: "ASA W3B", pending: 100 },
+            { name: "ASA W3C", pending: 109 },
+          ];
+          const pendingCanvas = document.getElementById("pendingChart");
+          if (pendingCanvas) {
+            new Chart(pendingCanvas, {
+              type: "bar",
+              data: {
+                labels: chartProjects.map(function (x) {
+                  return x.name.replace("ASA ", "");
+                }),
+                datasets: [
+                  {
+                    label: "Pending items",
+                    data: chartProjects.map(function (x) {
+                      return x.pending;
+                    }),
+                    backgroundColor: "#b85d76",
+                    borderRadius: 4,
+                    barPercentage: 0.58,
+                    categoryPercentage: 0.72,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { display: false },
+                  tooltip: { displayColors: false },
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    ticks: { maxTicksLimit: 5, font: { size: 10 } },
+                    grid: { color: "#edf1f4" },
+                  },
+                  x: {
+                    ticks: { font: { size: 10 } },
+                    grid: { display: false },
+                  },
+                },
+              },
+            });
+          }
+
+          const gateCanvas = document.getElementById("gateChart");
+          if (gateCanvas) {
+            new Chart(gateCanvas, {
+              type: "doughnut",
+              data: {
+                labels: ["Gate 1", "Gate 2", "Gate 3", "Gate 4"],
+                datasets: [
+                  {
+                    data: [99.5, 99.3, 94.0, 96.5],
+                    backgroundColor: [
+                      "#8fb0c7",
+                      "#c79aaa",
+                      "#9eafd0",
+                      "#91bcb7",
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 3,
+                  },
+                ],
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "72%",
+                plugins: {
+                  legend: {
+                    position: "bottom",
+                    labels: { boxWidth: 9, padding: 10, font: { size: 10 } },
+                  },
+                },
+              },
+            });
+          }
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", initDashboardCharts);
+        } else {
+          initDashboardCharts();
+        }
+      })();
+
+      document
+        .querySelectorAll('[data-bs-toggle="tooltip"]')
+        .forEach((el) => bootstrap.Tooltip.getOrCreateInstance(el));
     </script>
   </body>
 </html>
