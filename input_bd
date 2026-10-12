@@ -92,12 +92,12 @@
         font-size: 11px;
       }
       .profile-name {
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 800;
         text-align: left;
       }
       .profile-role {
-        font-size: 9px;
+        font-size: 11px;
         color: #7b8993;
       }
       .dropdown-menu {
@@ -129,11 +129,9 @@
         align-items: flex-start;
         margin-bottom: 16px;
       }
-      .page-title {
-        font-size: 23px;
+      .title{
         font-weight: 800;
         color: var(--navy);
-        margin: 0;
       }
       .page-subtitle {
         font-size: 11px;
@@ -218,7 +216,7 @@
         align-items: end;
       }
       .filter-label {
-        font-size: 9px;
+        font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         font-weight: 800;
@@ -229,7 +227,7 @@
         height: 37px;
         border: 1px solid #d5dfe6;
         border-radius: 6px;
-        font-size: 11px;
+        font-size: 12px;
         color: #415563;
         background: #fff;
       }
@@ -246,7 +244,7 @@
         background: var(--red);
         color: #fff;
         border: 1px solid var(--red);
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 800;
         padding: 0 16px;
         border-radius: 6px;
@@ -312,19 +310,19 @@
         color: #627582;
         border-right: 1px solid #edf1f4;
         border-bottom: 1px solid #dce4e9;
-        padding: 10px 9px;
-        font-size: 8px;
+        padding: 9px 7px;
+        font-size: 11px;
         line-height: 1.25;
         text-transform: uppercase;
         letter-spacing: 0.3px;
         white-space: nowrap;
       }
       .records-table td {
-        padding: 10px 9px;
+        padding: 9px 7px;
         color: #405463;
         border-right: 1px solid #f0f3f5;
         border-bottom: 1px solid #e8edf0;
-        font-size: 10px;
+        font-size: 12px;
         white-space: nowrap;
       }
       .records-table tbody tr:hover td {
@@ -790,39 +788,11 @@
     </header>
 
     <main class="page">
-      <div class="breadcrumb">
-        <span>Home</span> <i class="bi bi-chevron-right mx-1"></i>
-        <strong>Input BD Records</strong>
-      </div>
-
       <div class="page-title-row">
         <div>
-          <h1 class="page-title">Input BD Records</h1>
-          <div class="page-subtitle">
-            Search, review and manage Input BD document submissions and project
-            material information.
-          </div>
+          <h5 class="title mb-1">Input BD Records</h1>
           <div class="title-accent"></div>
         </div>
-        <div class="header-actions">
-          <button class="btn-light-action">
-            <i class="bi bi-download me-1"></i>Download Template
-          </button>
-          <button class="btn-light-action">
-            <i class="bi bi-upload me-1"></i>Upload Excel
-          </button>
-          <button class="btn-primary-mahindra">
-            <i class="bi bi-plus-lg me-1"></i>New Record
-          </button>
-        </div>
-      </div>
-
-      <div class="tabs">
-        <a href="#" class="active">All Records</a>
-        <a href="#">Pending Review</a>
-        <a href="#">Approved</a>
-        <a href="#">In Progress</a>
-        <a href="#">Completed</a>
       </div>
 
       <section class="filter-card">
@@ -884,11 +854,6 @@
           <div>
             <div class="table-title">
               Engineering Records
-              <span class="table-meta">(<span id="recordCount">10</span>)</span>
-            </div>
-            <div class="table-meta">
-              Document and material details captured from the engineering input
-              data.
             </div>
           </div>
           <div class="table-tools">
@@ -984,7 +949,7 @@
           </div>
           <form id="editStatusForm">
             <div class="modal-body">
-              <div class="mb-4">
+              <div class="mb-4 d-none">
                 <label class="form-label d-block">Select Status</label>
                 <div class="status-options">
                   <div class="status-option">
@@ -1084,15 +1049,15 @@
       <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <div class="progress-project-info">
+            <div class="progress-project-info d-flex gap-2 align-items-center">
               <h5 class="modal-title" id="programProgressModalLabel">
                 Project Progress
               </h5>
               <div
-                class="progress-record-details"
+                class="progress-record-details mt-0"
                 id="progressRecordDetails"
               ></div>
-              <span class="review-indicator" id="progressReviewStatus">
+              <span class="review-indicator mt-0" id="progressReviewStatus">
                 In Review
               </span>
             </div>
@@ -1568,39 +1533,6 @@
             : "In Review — " + programStages[currentStage - 1];
         document.getElementById("progressReviewStatus").textContent =
           statusText;
-        // Do not allow approval beyond the final stage.
-        const approveButton = document.querySelector(
-          "#programProgressModal .approve-action",
-        );
-        approveButton.disabled = currentStage === programStages.length;
-      }
-      function approveProgress() {
-        if (activeProgressIndex === null) return;
-        const currentStage = getProgressStage(activeProgressIndex);
-        if (currentStage < programStages.length) {
-          progressByRecord[activeProgressIndex] = currentStage + 1;
-          renderProgramProgress(activeProgressIndex);
-        }
-      }
-      function sendBackProgress() {
-        if (activeProgressIndex === null) return;
-        const currentStage = getProgressStage(activeProgressIndex);
-        if (currentStage > 1) {
-          progressByRecord[activeProgressIndex] = currentStage - 1;
-          renderProgramProgress(activeProgressIndex);
-        }
-      }
-      function editProgressRecord() {
-        if (activeProgressIndex === null) return;
-        const index = activeProgressIndex;
-        // Open the existing status and remarks modal after this modal closes.
-        document
-          .getElementById("programProgressModal")
-          .addEventListener("hidden.bs.modal", function openEditAfterClose() {
-            this.removeEventListener("hidden.bs.modal", openEditAfterClose);
-            editRecord(index);
-          });
-        programProgressModal.hide();
       }
 
       function applyFilters() {
