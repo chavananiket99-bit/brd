@@ -682,6 +682,69 @@
         background: white;
         border: 1px solid #cbd5dc;
       }
+      /* Search field in table toolbar */
+.table-tools {
+ display: flex;
+ align-items: center;
+ gap: 7px;
+}
+.table-search {
+ width: 235px;
+ height: 32px;
+}
+.table-search .form-control,
+.table-search .input-group-text {
+ border-color: #d7e0e5;
+ font-size: 11px;
+}
+/* Icon-only Export, Upload and Columns buttons */
+.tool-icon-btn {
+ width: 34px;
+ height: 32px;
+ padding: 0;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 14px;
+}
+/* Column selector dropdown */
+.column-menu {
+ min-width: 220px;
+ max-height: 350px;
+ overflow-y: auto;
+ border: 1px solid var(--border);
+ border-radius: 8px;
+ box-shadow: 0 8px 24px #071b2d22;
+}
+.column-menu .form-check {
+ margin: 8px 0;
+ font-size: 11px;
+}
+.column-menu .form-check-input:checked {
+ background-color: var(--red);
+ border-color: var(--red);
+}
+/* Table footer and pagination */
+.table-footer {
+ gap: 14px;
+ flex-wrap: wrap;
+}
+/* Responsive layout */
+@media (max-width: 700px) {
+ .table-head {
+   align-items: flex-start;
+   flex-direction: column;
+   gap: 12px;
+ }
+ .table-tools {
+   width: 100%;
+   flex-wrap: wrap;
+ }
+ .table-search {
+   flex: 1;
+   min-width: 160px;
+ }
+}
       @media (max-width: 700px) {
         .progress-modal .modal-header {
           align-items: flex-start;
@@ -851,20 +914,84 @@
 
       <section class="table-card">
         <div class="table-head">
-          <div>
-            <div class="table-title">
-              Engineering Records
-            </div>
-          </div>
-          <div class="table-tools">
-            <button class="tool-btn" onclick="exportCSV()">
-              <i class="bi bi-download me-1"></i>Export</button
-            ><button class="tool-btn">
-              <i class="bi bi-layout-three-columns me-1"></i>Columns
-              <i class="bi bi-chevron-down ms-1"></i>
-            </button>
-          </div>
-        </div>
+<div>
+<div class="table-title">Engineering Records</div>
+<div class="table-meta">Input BD record management</div>
+</div>
+<div class="table-tools">
+<div class="input-group input-group-sm table-search">
+<span class="input-group-text bg-white">
+<i class="bi bi-search"></i>
+</span>
+<input
+       type="search"
+       id="globalSearch"
+       class="form-control"
+       placeholder="Search all records..."
+       aria-label="Search all records"
+       oninput="handleSearch()"
+     />
+</div>
+<button
+     type="button"
+     class="tool-btn tool-icon-btn"
+     onclick="exportCSV()"
+     title="Export CSV"
+     aria-label="Export CSV"
+     data-bs-toggle="tooltip"
+>
+<i class="bi bi-download"></i>
+</button>
+<button
+     type="button"
+     class="tool-btn tool-icon-btn"
+     onclick="document.getElementById('excelUpload').click()"
+     title="Upload Excel"
+     aria-label="Upload Excel"
+     data-bs-toggle="tooltip"
+>
+<i class="bi bi-file-earmark-excel"></i>
+</button>
+<input
+     type="file"
+     id="excelUpload"
+     accept=".xlsx,.xls,.csv"
+     hidden
+     onchange="uploadExcel(event)"
+   />
+<div class="dropdown">
+<button
+       type="button"
+       class="tool-btn tool-icon-btn"
+       data-bs-toggle="dropdown"
+       data-bs-auto-close="outside"
+       title="Choose columns"
+       aria-label="Choose columns"
+>
+<i class="bi bi-layout-three-columns"></i>
+</button>
+<div
+       class="dropdown-menu dropdown-menu-end p-3 column-menu"
+       id="columnMenu"
+>
+<div class="d-flex justify-content-between align-items-center mb-2">
+<strong>Visible Columns</strong>
+<button
+           type="button"
+           class="btn btn-sm btn-link p-0"
+           onclick="toggleAllColumns(true)"
+>All</button>
+</div>
+<div id="columnOptions"></div>
+<button
+         type="button"
+         class="btn btn-sm btn-outline-secondary mt-2 w-100"
+         onclick="toggleAllColumns(false)"
+>Reset Columns</button>
+</div>
+</div>
+</div>
+</div>
         <div class="table-wrap">
           <table class="records-table">
             <thead>
@@ -892,32 +1019,22 @@
           </table>
         </div>
         <div class="table-footer">
-          <div>
-            Showing <strong id="showing">1 to 10</strong> of
-            <strong id="total">10</strong> records
-          </div>
-          <div class="page-size">
-            10 <span>per page</span>
-            <select>
-              <option>10</option>
-              <option>25</option>
-              <option>50</option>
-            </select>
-          </div>
-          <nav>
-            <ul class="pagination pagination-sm mb-0">
-              <li class="page-item disabled">
-                <a class="page-link" href="#">‹</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item disabled">
-                <a class="page-link" href="#">›</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+<div>
+   Showing <strong id="showing">0</strong>
+   of <strong id="total">0</strong> records
+</div>
+<div class="page-size">
+<span>Rows per page</span>
+<select id="pageSize" onchange="changePageSize()">
+<option value="10">10</option>
+<option value="25">25</option>
+<option value="50">50</option>
+</select>
+</div>
+<nav aria-label="Records pagination">
+<ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+</nav>
+</div>
       </section>
     </main>
 
@@ -1085,6 +1202,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+ 
     <script>
       const records = [
         [
