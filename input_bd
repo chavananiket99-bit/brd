@@ -729,6 +729,129 @@
  gap: 14px;
  flex-wrap: wrap;
 }
+
+.table-heading {
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ gap: 10px;
+}
+.table-search {
+ width: 280px;
+ max-width: 100%;
+}
+.table-tools {
+ display: flex;
+ align-items: center;
+ gap: 7px;
+}
+.records-table .column-hidden {
+ display: none !important;
+}
+.table-wrap {
+ overflow: auto;
+ position: relative;
+ max-width: 100%;
+ border-top: 1px solid #e2e8ec;
+}
+.records-table {
+ --sr-width: 75px;
+ --doctype-width: 110px;
+ --docno-width: 245px;
+ min-width: 1550px;
+ border-collapse: separate;
+ border-spacing: 0;
+}
+.records-table th:nth-child(1),
+.records-table td:nth-child(1) {
+ position: sticky;
+ left: 0;
+ min-width: var(--sr-width);
+ width: var(--sr-width);
+ z-index: 3;
+ background: #fff;
+}
+.records-table th:nth-child(2),
+.records-table td:nth-child(2) {
+ position: sticky;
+ left: var(--sr-width);
+ min-width: var(--doctype-width);
+ width: var(--doctype-width);
+ z-index: 3;
+ background: #fff;
+}
+.records-table th:nth-child(3),
+.records-table td:nth-child(3) {
+ position: sticky;
+ left: calc(var(--sr-width) + var(--doctype-width));
+ min-width: var(--docno-width);
+ width: var(--docno-width);
+ z-index: 3;
+ background: #fff;
+ box-shadow: 3px 0 5px #071b2d12;
+}
+.records-table thead th:nth-child(-n+3) {
+ background: #f5f7f9;
+ z-index: 5;
+}
+.records-table tbody tr:hover td:nth-child(-n+3) {
+ background: #fbfcfd;
+}
+.table-footer {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ gap: 14px;
+ padding: 11px 17px;
+ color: #7a8994;
+ font-size: 10px;
+}
+.footer-controls {
+ display: flex;
+ align-items: center;
+ justify-content: flex-end;
+ gap: 18px;
+ margin-left: auto;
+}
+.page-size {
+ display: flex;
+ align-items: center;
+ gap: 7px;
+ white-space: nowrap;
+}
+.page-size select {
+ height: 29px;
+ border: 1px solid #d9e2e7;
+ border-radius: 5px;
+ font-size: 10px;
+ padding: 0 8px;
+}
+.pagination .page-link {
+ font-size: 10px;
+ color: #617481;
+ border-color: #e0e6ea;
+}
+.pagination .active .page-link {
+ background: var(--red);
+ border-color: var(--red);
+ color: #fff;
+}
+@media (max-width: 700px) {
+ .table-footer,
+ .footer-controls {
+   align-items: flex-start;
+   flex-direction: column;
+ }
+ .footer-controls {
+   margin-left: 0;
+   width: 100%;
+ }
+}
+@media (max-width: 700px) {
+ .table-search {
+   width: 100%;
+ }
+}
 /* Responsive layout */
 @media (max-width: 700px) {
  .table-head {
@@ -915,8 +1038,22 @@
       <section class="table-card">
         <div class="table-head">
 <div>
+<div class="table-heading">
 <div class="table-title">Engineering Records</div>
-<div class="table-meta">Input BD record management</div>
+<div class="input-group input-group-sm table-search">
+<span class="input-group-text bg-white">
+<i class="bi bi-search"></i>
+</span>
+<input
+     type="search"
+     id="globalSearch"
+     class="form-control"
+     placeholder="Search all records..."
+     aria-label="Search all records"
+     oninput="handleSearch()"
+   />
+</div>
+</div>
 </div>
 <div class="table-tools">
 <div class="input-group input-group-sm table-search">
@@ -961,34 +1098,17 @@
    />
 <div class="dropdown">
 <button
-       type="button"
-       class="tool-btn tool-icon-btn"
-       data-bs-toggle="dropdown"
-       data-bs-auto-close="outside"
-       title="Choose columns"
-       aria-label="Choose columns"
+ type="button"
+ class="tool-btn"
+ data-bs-toggle="dropdown"
+ data-bs-auto-close="outside"
+ title="Choose visible columns"
 >
-<i class="bi bi-layout-three-columns"></i>
+<i class="bi bi-layout-three-columns me-1"></i>
+ Columns
+<i class="bi bi-chevron-down ms-1"></i>
 </button>
-<div
-       class="dropdown-menu dropdown-menu-end p-3 column-menu"
-       id="columnMenu"
->
-<div class="d-flex justify-content-between align-items-center mb-2">
-<strong>Visible Columns</strong>
-<button
-           type="button"
-           class="btn btn-sm btn-link p-0"
-           onclick="toggleAllColumns(true)"
->All</button>
-</div>
-<div id="columnOptions"></div>
-<button
-         type="button"
-         class="btn btn-sm btn-outline-secondary mt-2 w-100"
-         onclick="toggleAllColumns(false)"
->Reset Columns</button>
-</div>
+
 </div>
 </div>
 </div>
@@ -1019,10 +1139,14 @@
           </table>
         </div>
         <div class="table-footer">
-<div>
+<div class="footer-count">
    Showing <strong id="showing">0</strong>
    of <strong id="total">0</strong> records
 </div>
+<div class="footer-controls">
+<nav aria-label="Records pagination">
+<ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+</nav>
 <div class="page-size">
 <span>Rows per page</span>
 <select id="pageSize" onchange="changePageSize()">
@@ -1031,9 +1155,7 @@
 <option value="50">50</option>
 </select>
 </div>
-<nav aria-label="Records pagination">
-<ul class="pagination pagination-sm mb-0" id="pagination"></ul>
-</nav>
+</div>
 </div>
       </section>
     </main>
@@ -1378,6 +1500,133 @@
         ],
       ];
 
+      let currentPage = 1;
+let pageSize = 10;
+let sortColumn = -1;
+let sortDirection = "asc";
+function getFilteredRows() {
+ const d = document.getElementById("docNo").value.trim().toLowerCase();
+ const c = document.getElementById("customer").value.trim().toLowerCase();
+ const p = document.getElementById("project").value.trim().toLowerCase();
+ const m = document.getElementById("material").value.trim().toLowerCase();
+ const s = document.getElementById("status").value;
+ const q = (document.getElementById("globalSearch").value || "")
+   .trim()
+   .toLowerCase();
+ const rows = records
+   .map((record, originalIndex) => ({ record, originalIndex }))
+   .filter(({ record: x }) => {
+     const globalMatch = !q ||
+       x.some(value => String(value ?? "").toLowerCase().includes(q));
+     return (
+       globalMatch &&
+       (!d || String(x[1]).toLowerCase().includes(d)) &&
+       (!c || String(x[4]).toLowerCase().includes(c)) &&
+       (!p || String(x[5]).toLowerCase().includes(p)) &&
+       (!m || String(x[6]).toLowerCase().includes(m)) &&
+       (!s || normalizeStatus(x[14]) === s)
+     );
+   });
+ if (sortColumn >= 1 && sortColumn <= 15) {
+   const dataIndex = sortColumn - 1;
+   rows.sort((a, b) => {
+     const av = String(a.record[dataIndex] ?? "");
+     const bv = String(b.record[dataIndex] ?? "");
+     const an = Number(av);
+     const bn = Number(bv);
+     let comparison;
+     if (av.trim() !== "" && bv.trim() !== "" &&
+         Number.isFinite(an) && Number.isFinite(bn)) {
+       comparison = an - bn;
+     } else {
+       comparison = av.localeCompare(bv, undefined, {
+         numeric: true,
+         sensitivity: "base"
+       });
+     }
+     return sortDirection === "asc" ? comparison : -comparison;
+   });
+ }
+ return rows;
+}
+function sortByColumn(columnIndex) {
+ if (sortColumn === columnIndex) {
+   sortDirection = sortDirection === "asc" ? "desc" : "asc";
+ } else {
+   sortColumn = columnIndex;
+   sortDirection = "asc";
+ }
+ currentPage = 1;
+ updateSortIndicators();
+ render();
+}
+function updateSortIndicators() {
+ document.querySelectorAll(".records-table thead th").forEach((th, index) => {
+   const baseLabel = th.dataset.baseLabel ||
+     th.textContent.replace(/[↑↓↕]/g, "").trim();
+   th.dataset.baseLabel = baseLabel;
+   if (index === 0 || index === 16) {
+     th.textContent = baseLabel;
+     return;
+   }
+   const icon = index === sortColumn
+     ? (sortDirection === "asc" ? " ↑" : " ↓")
+     : " ↕";
+   th.textContent = baseLabel + icon;
+   th.style.cursor = "pointer";
+   th.title = "Click to sort ascending or descending";
+ });
+}
+function handleSearch() {
+ currentPage = 1;
+ render();
+}
+function changePageSize() {
+ pageSize = Number(document.getElementById("pageSize").value) || 10;
+ currentPage = 1;
+ render();
+}
+function goToPage(page) {
+ const totalPages = Math.max(
+   1,
+   Math.ceil(getFilteredRows().length / pageSize)
+ );
+ if (page < 1 || page > totalPages) return;
+ currentPage = page;
+ render();
+}
+function renderPagination(totalPages) {
+ const pagination = document.getElementById("pagination");
+ let html = `
+<li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+<button class="page-link" ${currentPage === 1 ? "disabled" : ""}
+       onclick="goToPage(${currentPage - 1})">‹</button>
+</li>`;
+ for (let page = 1; page <= totalPages; page++) {
+   html += `
+<li class="page-item ${page === currentPage ? "active" : ""}">
+<button class="page-link" onclick="goToPage(${page})">${page}</button>
+</li>`;
+ }
+ html += `
+<li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
+<button class="page-link"
+       ${currentPage === totalPages ? "disabled" : ""}
+       onclick="goToPage(${currentPage + 1})">›</button>
+</li>`;
+ pagination.innerHTML = html;
+}
+
+function initSortableHeaders() {
+ document.querySelectorAll(".records-table thead th").forEach((th, index) => {
+   if (index === 0 || index === 16) return;
+   th.style.cursor = "pointer";
+   th.title = "Click to sort ascending or descending";
+   th.addEventListener("click", () => sortByColumn(index));
+ });
+ updateSortIndicators();
+}
+
       function escapeHTML(value) {
         return String(value ?? "").replace(
           /[&<>"']/g,
@@ -1404,37 +1653,19 @@
         return "pending";
       }
       function render() {
-        const d = (document.getElementById("docNo").value || "")
-          .trim()
-          .toLowerCase();
-        const c = (document.getElementById("customer").value || "")
-          .trim()
-          .toLowerCase();
-        const p = (document.getElementById("project").value || "")
-          .trim()
-          .toLowerCase();
-        const m = (document.getElementById("material").value || "")
-          .trim()
-          .toLowerCase();
-        const selectedStatus = document.getElementById("status").value;
-        const rows = records
-          .map((record, originalIndex) => ({ record, originalIndex }))
-          .filter(
-            ({ record: x }) =>
-              (!d || x[1].toLowerCase().includes(d)) &&
-              (!c || x[4].toLowerCase().includes(c)) &&
-              (!p || x[5].toLowerCase().includes(p)) &&
-              (!m || x[6].toLowerCase().includes(m)) &&
-              (!selectedStatus || normalizeStatus(x[14]) === selectedStatus),
-          );
-        const body = document.getElementById("recordBody");
-        body.innerHTML = rows
-          .map(({ record: x, originalIndex }, i) => {
-            const currentStatus = normalizeStatus(x[14]);
-            const remark = x[15] || "";
-            return `
+ const rows = getFilteredRows();
+ const totalRows = rows.length;
+ const totalPages = Math.max(1, Math.ceil(totalRows / pageSize));
+ currentPage = Math.min(currentPage, totalPages);
+ const startIndex = (currentPage - 1) * pageSize;
+ const pageRows = rows.slice(startIndex, startIndex + pageSize);
+ document.getElementById("recordBody").innerHTML = pageRows
+   .map(({ record: x, originalIndex }, i) => {
+     const currentStatus = normalizeStatus(x[14]);
+     const remark = x[15] || "";
+     return `
 <tr>
-<td>${i + 1}</td>
+<td>${startIndex + i + 1}</td>
 <td>${escapeHTML(x[0])}</td>
 <td class="doc-link">${escapeHTML(x[1])}</td>
 <td>${escapeHTML(x[2])}</td>
@@ -1450,52 +1681,46 @@
 <td>${escapeHTML(x[12])}</td>
 <td>${escapeHTML(x[13])}</td>
 <td>
-<span
-           class="status ${statusClass(currentStatus)}"
-           title="${escapeHTML(remark || "No remarks added")}"
-           aria-label="Status: ${escapeHTML(currentStatus)}. Remark: ${escapeHTML(remark || "No remarks added")}"
-           tabindex="0"
->${escapeHTML(currentStatus)}</span>
+<span class="status ${statusClass(currentStatus)}"
+             title="${escapeHTML(remark || "No remarks added")}"
+             tabindex="0">
+             ${escapeHTML(currentStatus)}
+</span>
 </td>
 <td>
 <div class="action-group">
-<button
-             type="button"
-             class="action"
-             title="View record"
-             onclick="viewRecord(${originalIndex})"
->
+<button type="button" class="action" title="View record"
+               onclick="viewRecord(${originalIndex})">
 <i class="bi bi-eye"></i>
 </button>
-<button
-             type="button"
-             class="action edit-record-btn"
-             title="Edit status and remarks"
-             onclick="editRecord(${originalIndex})"
->
+<button type="button" class="action edit-record-btn"
+               title="Edit status and remarks"
+               onclick="editRecord(${originalIndex})">
 <i class="bi bi-pencil"></i>
 </button>
-<button
- type="button"
- class="action"
- title="View program progress"
- aria-label="View program progress"
- onclick="openProgressModal(${originalIndex})"
->
+<button type="button" class="action" title="View program progress"
+               onclick="openProgressModal(${originalIndex})">
 <i class="bi bi-three-dots"></i>
 </button>
 </div>
 </td>
-</tr>
-   `;
-          })
-          .join("");
-        document.getElementById("recordCount").textContent = rows.length;
-        document.getElementById("total").textContent = rows.length;
-        document.getElementById("showing").textContent = rows.length
-          ? `1 to ${rows.length}`
-          : "0";
-      }
+</tr>`;
+   })
+   .join("");
+ document.getElementById("total").textContent = totalRows;
+ document.getElementById("showing").textContent = totalRows
+   ? `${startIndex + 1}–${Math.min(startIndex + pageSize, totalRows)}`
+   : "0";
+ renderPagination(totalPages);
+ updateSortIndicators();
+ // Reapply column visibility after every table refresh.
+ document.querySelectorAll(".column-toggle").forEach(input => {
+   setColumnVisibility(
+     Number(input.dataset.column),
+     input.checked
+   );
+ });
+}
       /* =========================================================
   EDIT STATUS MODAL
   ========================================================= */
@@ -1655,15 +1880,23 @@
       }
 
       function applyFilters() {
-        render();
-      }
-      function clearFilters() {
-        ["docNo", "customer", "project", "material"].forEach((id) => {
-          document.getElementById(id).value = "";
-        });
-        document.getElementById("status").value = "";
-        render();
-      }
+ currentPage = 1;
+ render();
+}
+function clearFilters() {
+ [
+   "docNo",
+   "customer",
+   "project",
+   "material",
+   "globalSearch"
+ ].forEach(id => {
+   document.getElementById(id).value = "";
+ });
+ document.getElementById("status").value = "";
+ currentPage = 1;
+ render();
+}
 
       function exportCSV() {
         const headers = [
@@ -1701,7 +1934,54 @@
         link.click();
         URL.revokeObjectURL(link.href);
       }
-      render();
+      initColumnSelector();
+initSortableHeaders();
+render();
+document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(element => {
+ bootstrap.Tooltip.getOrCreateInstance(element);
+});
+
+      function initColumnSelector() {
+ const headers = [
+   ...document.querySelectorAll(".records-table thead th")
+ ];
+ const container = document.getElementById("columnOptions");
+ container.innerHTML = headers.map((th, index) => `
+<div class="form-check">
+<input
+       class="form-check-input column-toggle"
+       type="checkbox"
+       id="column-${index}"
+       data-column="${index}"
+       checked
+     />
+<label class="form-check-label" for="column-${index}">
+       ${escapeHTML(th.textContent.trim())}
+</label>
+</div>
+ `).join("");
+ container.querySelectorAll(".column-toggle").forEach(input => {
+   input.addEventListener("change", () => {
+     setColumnVisibility(
+       Number(input.dataset.column),
+       input.checked
+     );
+   });
+ });
+}
+function setColumnVisibility(index, visible) {
+ document.querySelectorAll(".records-table tr").forEach(row => {
+   if (row.children[index]) {
+     row.children[index].classList.toggle("column-hidden", !visible);
+   }
+ });
+}
+function toggleAllColumns(visible) {
+ document.querySelectorAll(".column-toggle").forEach(input => {
+   input.checked = visible;
+   setColumnVisibility(Number(input.dataset.column), visible);
+ });
+}
     </script>
   </body>
 </html>
