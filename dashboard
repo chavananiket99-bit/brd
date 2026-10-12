@@ -19,21 +19,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <style>
       :root {
-        --red: #e31b23;
-        --red-dark: #c9151c;
+        --red: #a9153d;
+        --red-soft: #f7e9ee;
         --navy: #071b2d;
-        --navy-2: #0d2b43;
-        --blue: #1769aa;
-        --sky: #5db7e8;
-        --teal: #168b9c;
-        --steel: #607789;
-        --bg: #f1f5f7;
+        --ink: #243746;
+        --muted: #71818d;
+        --bg: #f3f6f8;
         --surface: #fff;
-        --border: #d7e0e7;
-        --muted: #687988;
-        --green: #16864a;
-        --amber: #c99500;
-        --danger: #d92d3b;
+        --border: #dce4e9;
       }
       * {
         box-sizing: border-box;
@@ -41,98 +34,72 @@
       body {
         margin: 0;
         background: var(--bg);
-        color: #17212b;
-        font-family: "Georama-Regular";
+        color: var(--ink);
+        font-family: "Georama-Regular", Arial, sans-serif;
+        font-size: 12px;
       }
       .topbar {
-        background: linear-gradient(
-          90deg,
-          var(--navy),
-          var(--navy-2) 65%,
-          #103953
-        );
-        color: #fff;
-        border-bottom: 3px solid var(--red);
+        height: 68px;
+        background: #fff;
+        border-bottom: 2px solid #a9153d;
+        box-shadow: 0 1px 5px rgba(7, 27, 45, 0.06);
       }
       .header-inner {
-        min-height: 68px;
-      }
-      .mahindra-logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: #fff;
+        height: 68px;
       }
       .mahindra-logo img {
-        width: 200px;
-      }
-      .logo-symbol {
-        width: 42px;
-        height: 42px;
-        border-radius: 7px;
-        background: var(--red);
-        display: grid;
-        place-items: center;
-        color: #fff;
-        font-weight: 900;
-        font-size: 22px;
-        letter-spacing: -2px;
-        box-shadow: 0 2px 8px #0003;
-      }
-      .logo-word {
-        font-size: 17px;
-        font-weight: 800;
-      }
-      .logo-caption {
-        font-size: 10px;
-        color: #b9c8d3;
-        letter-spacing: 0.4px;
+        width: 170px;
+        height: auto;
       }
       .top-menu {
         display: flex;
-        align-items: center;
         gap: 4px;
+        align-items: center;
       }
       .top-menu a {
-        color: #dce6ed;
+        color: #465967;
         text-decoration: none;
-        padding: 11px 17px;
+        padding: 11px 16px;
         border-radius: 6px;
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 700;
       }
       .top-menu a:hover,
       .top-menu a.active {
-        background: #ffffff16;
-        color: #fff;
+        background: #f5eaf0;
+        color: var(--red);
       }
       .top-menu a.active {
-        box-shadow: inset 0 -3px 0 var(--red);
+        box-shadow: inset 0 -2px 0 var(--red);
       }
       .profile-btn {
-        border: none;
-        background: #ffffff0d;
-        color: #fff;
-        border-radius: 7px;
-        padding: 7px 10px;
+        border: 0;
+        background: transparent;
+        color: var(--ink);
         display: flex;
         align-items: center;
         gap: 9px;
+        padding: 5px 7px;
       }
       .avatar {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
-        background: #fff;
-        color: var(--navy);
+        background: #a9153d;
+        color: #fff;
         display: grid;
         place-items: center;
         font-weight: 800;
+        font-size: 11px;
       }
       .profile-name {
-        font-size: 12px;
-        font-weight: 700;
+        font-size: 11px;
+        font-weight: 800;
+        text-align: left;
+      }
+      .profile-role {
+        font-size: 9px;
+        color: #7b8993;
       }
       .dropdown-menu {
         border: 1px solid var(--border);
@@ -140,12 +107,8 @@
         border-radius: 8px;
       }
       .dropdown-item {
-        font-size: 13px;
+        font-size: 12px;
         padding: 9px 14px;
-      }
-      .dropdown-item:hover {
-        background: #f2f6f8;
-        color: var(--navy);
       }
 
       .page {
@@ -184,11 +147,11 @@
         border: 1px solid #f3c7ca;
       }
       .soft-blue {
-        background: #fff;
+        background: #eef6fb;
         border: 1px solid #cfe2ef;
       }
       .soft-teal {
-        background: #fff;
+        background: #edf8f8;
         border: 1px solid #cbe8e9;
       }
 
@@ -273,23 +236,35 @@
         box-shadow: 0 5px 18px #071b2d18;
       }
       .gate-head {
-        color: #fff;
         padding: 10px 13px;
         font-weight: 800;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
       }
       .g1 {
-        background: #1976a8;
+        background: #e8f0f6;
+        color: #315a78;
+        border-left: 4px solid #5f89a6;
       }
       .g2 {
-        background: #b9616b;
+        background: #f4e9ed;
+        color: #7d4055;
+        border-left: 4px solid #b47a8d;
       }
       .g3 {
-        background: #3474a9;
+        background: #e9eef7;
+        color: #3f5f8a;
+        border-left: 4px solid #7894b8;
       }
       .g4 {
-        background: #4296b4;
+        background: #e7f2f1;
+        color: #3e706b;
+        border-left: 4px solid #6ca39c;
+      }
+      .gate-head i {
+        opacity: 0.75;
       }
       .stat {
         padding: 9px 12px;
@@ -411,6 +386,183 @@
           display: none;
         }
       }
+
+      .table-section-head {
+        padding: 18px 18px 12px;
+      }
+      .table-section-title {
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--navy);
+        margin: 0;
+      }
+      .table-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 0 18px 13px;
+      }
+      .table-search {
+        position: relative;
+        width: 340px;
+        max-width: 100%;
+      }
+      .table-search i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #8a99a5;
+        font-size: 13px;
+      }
+      .table-search input {
+        width: 100%;
+        height: 36px;
+        padding: 7px 12px 7px 34px;
+        border: 1px solid #dce4e9;
+        border-radius: 6px;
+        background: #fff;
+        font-size: 11px;
+      }
+      .table-search input:focus {
+        outline: none;
+        border-color: #b77b91;
+        box-shadow: 0 0 0 3px rgba(169, 21, 61, 0.07);
+      }
+      .table-count {
+        color: #657786;
+        font-size: 11px;
+        white-space: nowrap;
+      }
+      .eng-table-wrap {
+        overflow: auto;
+        border-top: 1px solid #e1e7eb;
+      }
+      .eng-table {
+        width: 100%;
+        min-width: 1450px;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin: 0;
+      }
+      .eng-table thead th {
+        background: #f6f8fa;
+        color: #657786;
+        border-bottom: 1px solid #dfe6eb;
+        border-right: 1px solid #edf1f4;
+        padding: 10px 11px;
+        font-size: 9px;
+        line-height: 1.25;
+        text-transform: uppercase;
+        letter-spacing: 0.35px;
+        font-weight: 800;
+        white-space: nowrap;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+      .eng-table thead th:first-child {
+        padding-left: 18px;
+      }
+      .eng-table tbody td {
+        background: #fff;
+        color: #405463;
+        border-bottom: 1px solid #e7ecef;
+        border-right: 1px solid #f0f3f5;
+        padding: 10px 11px;
+        font-size: 10.5px;
+        line-height: 1.35;
+        white-space: nowrap;
+      }
+      .eng-table tbody td:first-child {
+        padding-left: 18px;
+      }
+      .eng-table tbody tr:hover td {
+        background: #fbfcfd;
+      }
+      .project-link {
+        color: #3b6f9c;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .project-link:hover {
+        color: #9f183c;
+        text-decoration: underline;
+      }
+      .cell-complete {
+        color: #477463;
+        font-weight: 700;
+      }
+      .cell-pending {
+        color: #a15b6f;
+        font-weight: 800;
+      }
+      .cell-zero {
+        color: #98a4ad;
+      }
+      .table-action {
+        width: 30px;
+        height: 27px;
+        border: 1px solid #e0e6ea;
+        background: #fff;
+        color: #72828e;
+        border-radius: 5px;
+        display: inline-grid;
+        place-items: center;
+        margin-right: 3px;
+      }
+      .table-action:hover {
+        background: #f6eaf0;
+        color: #9f183c;
+        border-color: #e4cbd5;
+      }
+      .project-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .project-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #a9153d;
+        display: inline-block;
+      }
+      .table-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 18px;
+        color: #7a8994;
+        font-size: 10px;
+      }
+      .table-note {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .legend-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .legend-dot.pending {
+        background: #a15b6f;
+      }
+      .legend-dot.complete {
+        background: #477463;
+      }
+      @media (max-width: 767px) {
+        .table-toolbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .table-search {
+          width: 100%;
+        }
+      }
     </style>
   </head>
   <body>
@@ -419,24 +571,37 @@
         <div
           class="header-inner d-flex align-items-center justify-content-between gap-3"
         >
-          <a class="mahindra-logo" href="#" aria-label="Mahindra Home">
-            <img src="mahindra_rise_white.png" />
-          </a>
-          <nav class="top-menu" aria-label="Primary navigation">
-            <a href="#" class="active"
+          <a class="mahindra-logo" href="#"
+            ><img src="mahindra_rise_red.png" alt="Mahindra"
+          /></a>
+          <nav class="top-menu">
+            <a href="mahindra_engineering_dashboard.html" class="active"
               ><i class="bi bi-grid-1x2 me-1"></i>Dashboard</a
             >
-            <a href="#"><i class="bi bi-kanban me-1"></i>Projects</a>
+            <a href="mahindra_engineering_input_bd.html"
+              ><i class="bi bi-folder2-open me-1"></i>Input BD</a
+            >
+            <a href="mahindra_programs.html"
+              ><i class="bi bi-folder2-open me-1"></i>Mahindra Programs</a
+            >
+            <a href="mahindra_engineering_records.html"
+              ><i class="bi bi-folder2-open me-1"></i>Engineering 1</a
+            >
+            <a href="mahindra_engineering_records_new.html"
+              ><i class="bi bi-folder2-open me-1"></i>Engineering 2</a
+            >
             <a href="#"><i class="bi bi-bar-chart-line me-1"></i>Reports</a>
           </nav>
           <div class="dropdown">
             <button
               class="profile-btn dropdown-toggle"
               data-bs-toggle="dropdown"
-              aria-expanded="false"
             >
-              <span class="avatar">PJ</span
-              ><span class="profile-name">Priyank Jain</span>
+              <div>
+                <div class="profile-name">Priyank Jain</div>
+                <div class="profile-role">Engineering User</div>
+              </div>
+              <span class="avatar">PJ</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end mt-2">
               <li>
@@ -596,7 +761,7 @@
                 <div class="progress">
                   <div
                     class="progress-bar"
-                    style="width: 99.9%; background: #1976a8"
+                    style="width: 99.9%; background: #8fb0c7"
                   ></div>
                 </div>
               </div>
@@ -705,48 +870,60 @@
       </section>
 
       <section class="cardx">
-        <div
-          class="panel-head d-flex justify-content-between align-items-center"
-        >
-          <div>
-            <b class="title">Project & Scope Details</b>
-            <div class="small text-muted">
-              Click a project name to filter the dashboard
-            </div>
+        <div class="table-section-head">
+          <div class="table-section-title">Project &amp; Scope Details</div>
+          <div class="small text-muted mt-1">
+            Engineering project status and approval readiness
           </div>
-          <button
-            class="btn btn-sm btn-outline-secondary"
-            onclick="exportCsv()"
-          >
-            <i class="bi bi-download"></i> Export CSV
-          </button>
         </div>
-        <div class="table-wrap">
-          <table class="table table-sm align-middle" id="projectTable">
+        <div class="table-toolbar">
+          <div class="table-search">
+            <i class="bi bi-search"></i
+            ><input
+              id="tableSearch"
+              type="text"
+              placeholder="Search project or status..."
+              oninput="render()"
+            />
+          </div>
+          <div class="table-count">
+            <strong id="tableCount">0</strong> projects
+          </div>
+        </div>
+        <div class="eng-table-wrap">
+          <table class="eng-table" id="projectTable">
             <thead>
               <tr>
                 <th>Project</th>
                 <th>Scope</th>
-                <th>TDP Avail.</th>
-                <th>TDP Pend.</th>
-                <th>Feas. Comp.</th>
-                <th>Feas. Pend.</th>
-                <th>P-BOM Comp.</th>
-                <th>P-BOM Pend.</th>
-                <th>SST Comp.</th>
-                <th>SST Pend.</th>
-                <th>LAI Comp.</th>
-                <th>LAI Pend.</th>
-                <th>FPQ Comp.</th>
-                <th>FPQ Pend.</th>
-                <th>Tool Concept Pend.</th>
-                <th>Tool Design Pend.</th>
-                <th>Concurrence Pend.</th>
-                <th>3D Model Pend.</th>
+                <th>TDP<br />Available</th>
+                <th>TDP<br />Pending</th>
+                <th>Feasibility<br />Complete</th>
+                <th>Feasibility<br />Pending</th>
+                <th>P-BOM<br />Complete</th>
+                <th>P-BOM<br />Pending</th>
+                <th>SST<br />Complete</th>
+                <th>SST<br />Pending</th>
+                <th>LAI<br />Complete</th>
+                <th>LAI<br />Pending</th>
+                <th>FPQ<br />Complete</th>
+                <th>FPQ<br />Pending</th>
+                <th>Tool Concept<br />Pending</th>
+                <th>Tool Design<br />Pending</th>
+                <th>Concurrence<br />Pending</th>
+                <th>3D Model<br />Pending</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody></tbody>
           </table>
+        </div>
+        <div class="table-footer">
+          <div class="table-note">
+            <span><span class="legend-dot complete"></span> Completed</span
+            ><span><span class="legend-dot pending"></span> Pending</span>
+          </div>
+          <div>Engineering portfolio • Updated 07-Oct-2026</div>
         </div>
       </section>
       <div class="text-end text-muted small mt-3">
@@ -909,33 +1086,46 @@
         ["mp", "3D Model Pend."],
       ];
       function render() {
-        const selected = document.getElementById("project").value,
-          status = document.getElementById("status").value;
-        const rows = data.filter((x) => selected === "ALL" || x.p === selected);
+        const selected = document.getElementById("project").value;
+        const status = document.getElementById("status").value;
+        const query = (document.getElementById("tableSearch")?.value || "")
+          .trim()
+          .toLowerCase();
+        const rows = data.filter((x) => {
+          const projectMatch = selected === "ALL" || x.p === selected;
+          const textMatch = !query || x.p.toLowerCase().includes(query);
+          const hasPending = Object.keys(x).some(
+            (k) => k.endsWith("p") && x[k] > 0,
+          );
+          const statusMatch =
+            status === "ALL" ||
+            (status === "PENDING" && hasPending) ||
+            (status === "COMPLETE" && !hasPending);
+          return projectMatch && textMatch && statusMatch;
+        });
         const tbody = document.querySelector("#projectTable tbody");
         tbody.innerHTML = "";
         rows.forEach((x) => {
           const tr = document.createElement("tr");
           tr.innerHTML =
-            `<td><button class="btn btn-link btn-sm p-0 fw-bold text-decoration-none" onclick="pick('${x.p}')">${x.p}</button></td><td>${x.scope}</td>` +
+            `<td><span class="project-pill"><span class="project-dot"></span><button class="btn btn-link btn-sm p-0 project-link" onclick="pick('${x.p}')">${x.p}</button></span></td><td>${x.scope.toLocaleString()}</td>` +
             cols
-              .map(
-                ([k]) =>
-                  `<td class="${k.endsWith("p") ? "pending" : ""}">${x[k]}</td>`,
-              )
-              .join("");
-          if (
-            status === "PENDING" &&
-            !Object.keys(x).some((k) => k.endsWith("p") && x[k] > 0)
-          )
-            return;
-          if (
-            status === "COMPLETE" &&
-            Object.keys(x).some((k) => k.endsWith("p") && x[k] > 0)
-          )
-            return;
+              .map(([k]) => {
+                const value = x[k],
+                  pending = k.endsWith("p"),
+                  cls = pending
+                    ? value > 0
+                      ? "cell-pending"
+                      : "cell-zero"
+                    : "cell-complete";
+                return `<td class="${cls}">${value.toLocaleString()}</td>`;
+              })
+              .join("") +
+            `<td><button class="table-action" title="View project" onclick="pick('${x.p}')"><i class="bi bi-arrow-up-right"></i></button><button class="table-action" title="View gate status" onclick="showGate('G3')"><i class="bi bi-eye"></i></button></td>`;
           tbody.appendChild(tr);
         });
+        const count = document.getElementById("tableCount");
+        if (count) count.textContent = rows.length;
       }
       function pick(p) {
         document.getElementById("project").value = p;
@@ -1030,7 +1220,7 @@
                   x.cp +
                   x.mp,
               ),
-              backgroundColor: "#e31b23",
+              backgroundColor: "#b85d76",
               borderRadius: 4,
               barPercentage: 0.58,
               categoryPercentage: 0.72,
@@ -1061,7 +1251,7 @@
           datasets: [
             {
               data: [99.5, 99.3, 94.0, 96.5],
-              backgroundColor: ["#1769aa", "#9b527c", "#3474a9", "#4296b4"],
+              backgroundColor: ["#8fb0c7", "#c79aaa", "#9eafd0", "#91bcb7"],
               borderWidth: 0,
               hoverOffset: 3,
             },
