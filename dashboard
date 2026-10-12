@@ -667,6 +667,41 @@
         font-size: 11px;
         white-space: nowrap;
       }
+      /* Hide dashboard filter section */
+      .page > .cardx.filter {
+        display: none !important;
+      }
+      /* Keep the toolbar compact and aligned */
+      .table-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 0 18px 13px;
+      }
+      .table-toolbar-right {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .table-footer {
+        display: none;
+      }
+      @media (max-width: 767px) {
+        .table-toolbar {
+          align-items: stretch;
+          flex-direction: column;
+        }
+        .table-search {
+          width: 100%;
+        }
+        .table-toolbar-right {
+          justify-content: flex-start;
+        }
+      }
       @media (max-width: 767px) {
         .eng-table th:nth-child(1),
         .eng-table td:nth-child(1) {
@@ -753,6 +788,17 @@
     </header>
 
     <main class="page container-fluid">
+      <div class="section-title-row mb-3">
+        <div>
+          <div class="section-kicker">Engineering • Portfolio</div>
+          <h5 class="title mb-1">Portfolio Overview</h5>
+          <div class="accent"></div>
+        </div>
+        <div class="small text-muted">
+          <i class="bi bi-clock me-1"></i>Last refreshed: 07-Oct-2026
+        </div>
+      </div>
+
       <section class="cardx filter mb-4">
         <div class="row g-3 align-items-end">
           <div class="col-12 col-md-3">
@@ -795,16 +841,6 @@
         </div>
       </section>
 
-      <div class="section-title-row mb-3">
-        <div>
-          <div class="section-kicker">Engineering • Portfolio</div>
-          <h5 class="title mb-1">Portfolio Overview</h5>
-          <div class="accent"></div>
-        </div>
-        <div class="small text-muted">
-          <i class="bi bi-clock me-1"></i>Last refreshed: 07-Oct-2026
-        </div>
-      </div>
       <section class="row g-3 mb-4">
         <div class="col-6 col-xl-3">
           <div class="cardx kpi soft-blue">
@@ -995,7 +1031,7 @@
         </div>
       </section>
 
-      <section class="cardx" id="projectScopeSection">
+      <section class="cardx mb-3" id="projectScopeSection">
         <div
           class="table-section-head d-flex justify-content-between align-items-center gap-3"
         >
@@ -1017,16 +1053,32 @@
         </div>
         <div id="projectScopeContent" class="project-scope-content">
           <div class="table-toolbar">
+            <!-- Search -->
             <div class="table-search">
-              <i class="bi bi-search"></i
-              ><input
+              <i class="bi bi-search"></i>
+              <input
                 id="tableSearch"
                 type="text"
                 placeholder="Search project or status..."
                 oninput="render()"
               />
             </div>
-            <div class="d-flex align-items-center flex-wrap gap-2">
+            <!-- Count, Export, Legend and Update Date -->
+            <div class="table-toolbar-right">
+              <div class="table-note">
+                <span>
+                  <span class="legend-dot complete"></span>
+                  Completed
+                </span>
+                <span>
+                  <span class="legend-dot pending"></span>
+                  Pending
+                </span>
+              </div>
+              <div class="text-muted">
+                <i class="bi bi-clock me-1"></i>
+                Engineering Portfolio • Updated 07-Oct-2026
+              </div>
               <div class="table-count">
                 <strong id="tableCount">0</strong> projects
               </div>
@@ -1061,7 +1113,6 @@
                   <th>Tool Design<br />Pending</th>
                   <th>Concurrence<br />Pending</th>
                   <th>3D Model<br />Pending</th>
-                  <th>Action</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -1410,23 +1461,7 @@
             td.textContent = value.toLocaleString("en-IN");
             tr.appendChild(td);
           });
-          const actionCell = document.createElement("td");
-          actionCell.innerHTML = `
-<button class="table-action" title="View project">
-<i class="bi bi-arrow-up-right"></i>
-</button>
-<button class="table-action" title="View gate status">
-<i class="bi bi-eye"></i>
-</button>
-   `;
-          actionCell.children[0].onclick = () => pick(x.p);
-          actionCell.children[1].onclick = () =>
-            showGate(
-              document.getElementById("gate").value === "ALL"
-                ? "G3"
-                : document.getElementById("gate").value,
-            );
-          tr.appendChild(actionCell);
+
           tbody.appendChild(tr);
         });
         renderTotals(rows);
@@ -1457,9 +1492,6 @@
           td.textContent = totals[key].toLocaleString("en-IN");
           tr.appendChild(td);
         });
-        const action = document.createElement("td");
-        action.textContent = "—";
-        tr.appendChild(action);
         foot.replaceChildren(tr);
       }
       function toggleProjectScope() {
@@ -1485,35 +1517,37 @@
       }
       function exportCsv() {
         const rows = getSortedRows(getFilteredRows());
-        const headers = ["Project", "Scope", ...cols.map((x) => x[1])];
+        const headers = [
+          "Project",
+          "Scope",
+          ...cols.map(([key, label]) => label),
+        ];
         function csvEscape(value) {
-          const text = String(value ?? "");
-          return `"${text.replace(/"/g, '""')}"`;
+          return `"${String(value ?? "").replace(/"/g, '""')}"`;
         }
         const lines = [headers.map(csvEscape).join(",")];
-        rows.forEach((x) => {
+        rows.forEach((row) => {
           lines.push(
-            [x.p, x.scope, ...cols.map(([key]) => x[key])]
+            [row.p, row.scope, ...cols.map(([key]) => row[key])]
               .map(csvEscape)
               .join(","),
           );
         });
         const totals = [
-          "TOTAL",
-          ...headers.slice(1).map((_, index) => {
-            const key = index === 0 ? "scope" : cols[index - 1][0];
-            return rows.reduce((sum, row) => sum + (Number(row[key]) || 0), 0);
-          }),
+          `TOTAL (${rows.length} projects)`,
+          ...["scope", ...cols.map(([key]) => key)].map((key) =>
+            rows.reduce((sum, row) => sum + (Number(row[key]) || 0), 0),
+          ),
         ];
         lines.push(totals.map(csvEscape).join(","));
         const blob = new Blob(["\uFEFF" + lines.join("\r\n")], {
           type: "text/csv;charset=utf-8;",
         });
         const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "mahindra-engineering-dashboard.csv";
-        a.click();
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "mahindra-engineering-dashboard.csv";
+        link.click();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
       }
       // Initialize the table after the data and column definitions.
