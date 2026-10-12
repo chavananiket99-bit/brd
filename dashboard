@@ -554,6 +554,132 @@
       .legend-dot.complete {
         background: #477463;
       }
+      /* Project & Scope Details: collapse/expand */
+      .project-scope-content.collapsed {
+        display: none;
+      }
+      .project-scope-toggle {
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--navy);
+        border-radius: 6px;
+        padding: 7px 11px;
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .project-scope-toggle:hover {
+        background: var(--red-soft);
+        color: var(--red);
+      }
+      /* Sortable column headers */
+      .eng-table thead th[data-sort-key] {
+        cursor: pointer;
+        user-select: none;
+      }
+      .eng-table thead th[data-sort-key]:hover {
+        background: #e9eef2;
+        color: var(--red);
+      }
+      .sort-indicator {
+        display: inline-block;
+        margin-left: 5px;
+        color: #a9153d;
+        font-size: 10px;
+      }
+      /* Stable widths for the two frozen columns */
+      .eng-table {
+        table-layout: fixed;
+      }
+      .eng-table th:nth-child(1),
+      .eng-table td:nth-child(1) {
+        width: 170px;
+        min-width: 170px;
+        max-width: 170px;
+      }
+      .eng-table th:nth-child(2),
+      .eng-table td:nth-child(2) {
+        width: 95px;
+        min-width: 95px;
+        max-width: 95px;
+      }
+      /* Freeze Project and Scope during horizontal scrolling */
+      .eng-table thead th:nth-child(1),
+      .eng-table thead th:nth-child(2) {
+        position: sticky;
+        background: #f6f8fa;
+        z-index: 6;
+      }
+      .eng-table thead th:nth-child(1) {
+        left: 0;
+      }
+      .eng-table thead th:nth-child(2) {
+        left: 170px;
+        box-shadow: 3px 0 4px -3px #071b2d55;
+      }
+      .eng-table tbody td:nth-child(1),
+      .eng-table tbody td:nth-child(2),
+      .eng-table tfoot td:nth-child(1),
+      .eng-table tfoot td:nth-child(2) {
+        position: sticky;
+        background: #fff;
+        z-index: 3;
+      }
+      .eng-table tbody td:nth-child(1),
+      .eng-table tfoot td:nth-child(1) {
+        left: 0;
+      }
+      .eng-table tbody td:nth-child(2),
+      .eng-table tfoot td:nth-child(2) {
+        left: 170px;
+        box-shadow: 3px 0 4px -3px #071b2d55;
+      }
+      /* Preserve row hover and alternating backgrounds on frozen cells */
+      .eng-table tbody tr:hover td:nth-child(1),
+      .eng-table tbody tr:hover td:nth-child(2) {
+        background: #fbfcfd;
+      }
+      .eng-table tbody tr:nth-child(even) td:nth-child(1),
+      .eng-table tbody tr:nth-child(even) td:nth-child(2) {
+        background: #fbfcfd;
+      }
+      /* Calculated total row */
+      .eng-table tfoot td {
+        padding: 12px 11px;
+        background: #e8f2f7;
+        color: var(--navy);
+        border-top: 2px solid var(--navy);
+        border-bottom: 1px solid #d4e0e7;
+        font-size: 10.5px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+      .eng-table tfoot td:nth-child(1),
+      .eng-table tfoot td:nth-child(2) {
+        background: #e8f2f7;
+      }
+      .eng-table tfoot td:nth-child(2) {
+        box-shadow: 3px 0 4px -3px #071b2d55;
+      }
+      .eng-table tfoot .total-label {
+        color: var(--red);
+      }
+      .table-toolbar .btn {
+        font-size: 11px;
+        white-space: nowrap;
+      }
+      @media (max-width: 767px) {
+        .eng-table th:nth-child(1),
+        .eng-table td:nth-child(1) {
+          width: 145px;
+          min-width: 145px;
+          max-width: 145px;
+        }
+        .eng-table thead th:nth-child(2),
+        .eng-table tbody td:nth-child(2),
+        .eng-table tfoot td:nth-child(2) {
+          left: 145px;
+        }
+      }
       @media (max-width: 767px) {
         .table-toolbar {
           align-items: flex-start;
@@ -869,61 +995,86 @@
         </div>
       </section>
 
-      <section class="cardx">
-        <div class="table-section-head">
-          <div class="table-section-title">Project &amp; Scope Details</div>
-          <div class="small text-muted mt-1">
-            Engineering project status and approval readiness
+      <section class="cardx" id="projectScopeSection">
+        <div
+          class="table-section-head d-flex justify-content-between align-items-center gap-3"
+        >
+          <div>
+            <div class="table-section-title">Project &amp; Scope Details</div>
+            <div class="small text-muted mt-1">
+              Engineering project status and approval readiness
+            </div>
           </div>
+          <button
+            type="button"
+            class="project-scope-toggle"
+            id="projectScopeToggle"
+            aria-expanded="true"
+            onclick="toggleProjectScope()"
+          >
+            <i class="bi bi-chevron-up me-1"></i>Collapse
+          </button>
         </div>
-        <div class="table-toolbar">
-          <div class="table-search">
-            <i class="bi bi-search"></i
-            ><input
-              id="tableSearch"
-              type="text"
-              placeholder="Search project or status..."
-              oninput="render()"
-            />
+        <div id="projectScopeContent" class="project-scope-content">
+          <div class="table-toolbar">
+            <div class="table-search">
+              <i class="bi bi-search"></i
+              ><input
+                id="tableSearch"
+                type="text"
+                placeholder="Search project or status..."
+                oninput="render()"
+              />
+            </div>
+            <div class="d-flex align-items-center flex-wrap gap-2">
+              <div class="table-count">
+                <strong id="tableCount">0</strong> projects
+              </div>
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm"
+                onclick="exportCsv()"
+              >
+                <i class="bi bi-download me-1"></i>Export CSV
+              </button>
+            </div>
           </div>
-          <div class="table-count">
-            <strong id="tableCount">0</strong> projects
+          <div class="eng-table-wrap">
+            <table class="eng-table" id="projectTable">
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Scope</th>
+                  <th>TDP<br />Available</th>
+                  <th>TDP<br />Pending</th>
+                  <th>Feasibility<br />Complete</th>
+                  <th>Feasibility<br />Pending</th>
+                  <th>P-BOM<br />Complete</th>
+                  <th>P-BOM<br />Pending</th>
+                  <th>SST<br />Complete</th>
+                  <th>SST<br />Pending</th>
+                  <th>LAI<br />Complete</th>
+                  <th>LAI<br />Pending</th>
+                  <th>FPQ<br />Complete</th>
+                  <th>FPQ<br />Pending</th>
+                  <th>Tool Concept<br />Pending</th>
+                  <th>Tool Design<br />Pending</th>
+                  <th>Concurrence<br />Pending</th>
+                  <th>3D Model<br />Pending</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot id="projectTableFoot"></tfoot>
+            </table>
           </div>
-        </div>
-        <div class="eng-table-wrap">
-          <table class="eng-table" id="projectTable">
-            <thead>
-              <tr>
-                <th>Project</th>
-                <th>Scope</th>
-                <th>TDP<br />Available</th>
-                <th>TDP<br />Pending</th>
-                <th>Feasibility<br />Complete</th>
-                <th>Feasibility<br />Pending</th>
-                <th>P-BOM<br />Complete</th>
-                <th>P-BOM<br />Pending</th>
-                <th>SST<br />Complete</th>
-                <th>SST<br />Pending</th>
-                <th>LAI<br />Complete</th>
-                <th>LAI<br />Pending</th>
-                <th>FPQ<br />Complete</th>
-                <th>FPQ<br />Pending</th>
-                <th>Tool Concept<br />Pending</th>
-                <th>Tool Design<br />Pending</th>
-                <th>Concurrence<br />Pending</th>
-                <th>3D Model<br />Pending</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div class="table-footer">
-          <div class="table-note">
-            <span><span class="legend-dot complete"></span> Completed</span
-            ><span><span class="legend-dot pending"></span> Pending</span>
+          <div class="table-footer">
+            <div class="table-note">
+              <span><span class="legend-dot complete"></span> Completed</span
+              ><span><span class="legend-dot pending"></span> Pending</span>
+            </div>
+            <div>Engineering portfolio • Updated 07-Oct-2026</div>
           </div>
-          <div>Engineering portfolio • Updated 07-Oct-2026</div>
         </div>
       </section>
       <div class="text-end text-muted small mt-3">
@@ -1085,52 +1236,240 @@
         ["cp", "Concurrence Pend."],
         ["mp", "3D Model Pend."],
       ];
-      function render() {
-        const selected = document.getElementById("project").value;
-        const status = document.getElementById("status").value;
-        const query = (document.getElementById("tableSearch")?.value || "")
-          .trim()
-          .toLowerCase();
-        const rows = data.filter((x) => {
-          const projectMatch = selected === "ALL" || x.p === selected;
-          const textMatch = !query || x.p.toLowerCase().includes(query);
-          const hasPending = Object.keys(x).some(
-            (k) => k.endsWith("p") && x[k] > 0,
-          );
-          const statusMatch =
-            status === "ALL" ||
-            (status === "PENDING" && hasPending) ||
-            (status === "COMPLETE" && !hasPending);
-          return projectMatch && textMatch && statusMatch;
-        });
-        const tbody = document.querySelector("#projectTable tbody");
-        tbody.innerHTML = "";
-        rows.forEach((x) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML =
-            `<td><span class="project-pill"><span class="project-dot"></span><button class="btn btn-link btn-sm p-0 project-link" onclick="pick('${x.p}')">${x.p}</button></span></td><td>${x.scope.toLocaleString()}</td>` +
-            cols
-              .map(([k]) => {
-                const value = x[k],
-                  pending = k.endsWith("p"),
-                  cls = pending
-                    ? value > 0
-                      ? "cell-pending"
-                      : "cell-zero"
-                    : "cell-complete";
-                return `<td class="${cls}">${value.toLocaleString()}</td>`;
-              })
-              .join("") +
-            `<td><button class="table-action" title="View project" onclick="pick('${x.p}')"><i class="bi bi-arrow-up-right"></i></button><button class="table-action" title="View gate status" onclick="showGate('G3')"><i class="bi bi-eye"></i></button></td>`;
-          tbody.appendChild(tr);
-        });
-        const count = document.getElementById("tableCount");
-        if (count) count.textContent = rows.length;
+
+      const projectScopeSection = document.getElementById(
+        "projectScopeSection",
+      );
+      const dashboardMain = document.querySelector("main.page");
+      const filterSection = dashboardMain.querySelector(".cardx.filter");
+      if (projectScopeSection && filterSection) {
+        filterSection.after(projectScopeSection);
       }
+
       function pick(p) {
         document.getElementById("project").value = p;
         render();
         window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      let sortState = {
+        key: null,
+        direction: "asc",
+      };
+      const gatePendingColumns = {
+        G1: ["tdpp", "fp"],
+        G2: ["pbp", "sstp"],
+        G3: ["laip", "fpqp", "tcp", "tdp"],
+        G4: ["cp", "mp"],
+      };
+      function setupSortableHeaders() {
+        const headers = document.querySelectorAll("#projectTable thead th");
+        headers.forEach((th, index) => {
+          // Project, Scope, and all numeric data columns are sortable.
+          if (index === 0) {
+            th.dataset.sortKey = "p";
+          } else if (index === 1) {
+            th.dataset.sortKey = "scope";
+          } else if (index >= 2 && index < 2 + cols.length) {
+            th.dataset.sortKey = cols[index - 2][0];
+          } else {
+            delete th.dataset.sortKey;
+            return; // Do not sort the Action column.
+          }
+          th.setAttribute("title", "Click to sort ascending or descending");
+          if (!th.querySelector(".sort-indicator")) {
+            const indicator = document.createElement("span");
+            indicator.className = "sort-indicator";
+            indicator.textContent = "↕";
+            th.appendChild(indicator);
+          }
+          th.onclick = () => {
+            const key = th.dataset.sortKey;
+            if (sortState.key === key) {
+              sortState.direction =
+                sortState.direction === "asc" ? "desc" : "asc";
+            } else {
+              sortState.key = key;
+              sortState.direction = "asc";
+            }
+            updateSortIndicators();
+            render();
+          };
+        });
+        updateSortIndicators();
+      }
+      function updateSortIndicators() {
+        document
+          .querySelectorAll("#projectTable thead th[data-sort-key]")
+          .forEach((th) => {
+            const indicator = th.querySelector(".sort-indicator");
+            if (!indicator) return;
+            if (th.dataset.sortKey !== sortState.key) {
+              indicator.textContent = "↕";
+              indicator.setAttribute("aria-label", "Not sorted");
+            } else {
+              indicator.textContent = sortState.direction === "asc" ? "↑" : "↓";
+              indicator.setAttribute(
+                "aria-label",
+                sortState.direction === "asc" ? "Ascending" : "Descending",
+              );
+            }
+          });
+      }
+      function getFilteredRows() {
+        const selectedProject = document.getElementById("project").value;
+        const selectedGate = document.getElementById("gate").value;
+        const selectedStatus = document.getElementById("status").value;
+        const query = (document.getElementById("tableSearch")?.value || "")
+          .trim()
+          .toLowerCase();
+        return data.filter((x) => {
+          const projectMatch =
+            selectedProject === "ALL" || x.p === selectedProject;
+          const textMatch =
+            !query ||
+            [x.p, ...cols.map(([key]) => x[key])].some((value) =>
+              String(value ?? "")
+                .toLowerCase()
+                .includes(query),
+            );
+          const pendingKeys =
+            selectedGate === "ALL"
+              ? [
+                  "tdpp",
+                  "fp",
+                  "pbp",
+                  "sstp",
+                  "laip",
+                  "fpqp",
+                  "tcp",
+                  "tdp",
+                  "cp",
+                  "mp",
+                ]
+              : gatePendingColumns[selectedGate];
+          const hasPending = pendingKeys.some((key) => Number(x[key]) > 0);
+          const statusMatch =
+            selectedStatus === "ALL" ||
+            (selectedStatus === "PENDING" && hasPending) ||
+            (selectedStatus === "COMPLETE" && !hasPending);
+          return projectMatch && textMatch && statusMatch;
+        });
+      }
+      function getSortedRows(rows) {
+        const sorted = [...rows];
+        if (!sortState.key) return sorted;
+        sorted.sort((a, b) => {
+          const av = a[sortState.key];
+          const bv = b[sortState.key];
+          let result;
+          if (typeof av === "number" && typeof bv === "number") {
+            result = av - bv;
+          } else {
+            result = String(av ?? "").localeCompare(
+              String(bv ?? ""),
+              undefined,
+              { numeric: true, sensitivity: "base" },
+            );
+          }
+          return sortState.direction === "asc" ? result : -result;
+        });
+        return sorted;
+      }
+      function render() {
+        const rows = getFilteredRows();
+        const sortedRows = getSortedRows(rows);
+        const tbody = document.querySelector("#projectTable tbody");
+        tbody.innerHTML = "";
+        sortedRows.forEach((x) => {
+          const tr = document.createElement("tr");
+          const projectCell = document.createElement("td");
+          const projectButton = document.createElement("button");
+          projectButton.type = "button";
+          projectButton.className = "btn btn-link btn-sm p-0 project-link";
+          projectButton.textContent = x.p;
+          projectButton.onclick = () => pick(x.p);
+          const projectPill = document.createElement("span");
+          projectPill.className = "project-pill";
+          const dot = document.createElement("span");
+          dot.className = "project-dot";
+          projectPill.append(dot, projectButton);
+          projectCell.appendChild(projectPill);
+          tr.appendChild(projectCell);
+          const scopeCell = document.createElement("td");
+          scopeCell.textContent = Number(x.scope).toLocaleString("en-IN");
+          tr.appendChild(scopeCell);
+          cols.forEach(([key]) => {
+            const td = document.createElement("td");
+            const value = Number(x[key]) || 0;
+            const isPending = key.endsWith("p");
+            td.className = isPending
+              ? value > 0
+                ? "cell-pending"
+                : "cell-zero"
+              : "cell-complete";
+            td.textContent = value.toLocaleString("en-IN");
+            tr.appendChild(td);
+          });
+          const actionCell = document.createElement("td");
+          actionCell.innerHTML = `
+<button class="table-action" title="View project">
+<i class="bi bi-arrow-up-right"></i>
+</button>
+<button class="table-action" title="View gate status">
+<i class="bi bi-eye"></i>
+</button>
+   `;
+          actionCell.children[0].onclick = () => pick(x.p);
+          actionCell.children[1].onclick = () =>
+            showGate(
+              document.getElementById("gate").value === "ALL"
+                ? "G3"
+                : document.getElementById("gate").value,
+            );
+          tr.appendChild(actionCell);
+          tbody.appendChild(tr);
+        });
+        renderTotals(rows);
+        document.getElementById("tableCount").textContent = rows.length;
+        updateSortIndicators();
+      }
+      function renderTotals(rows) {
+        const foot = document.getElementById("projectTableFoot");
+        if (!foot) return;
+        const totals = {};
+        // Calculate each numeric column from the filtered records.
+        ["scope", ...cols.map(([key]) => key)].forEach((key) => {
+          totals[key] = rows.reduce(
+            (sum, row) => sum + (Number(row[key]) || 0),
+            0,
+          );
+        });
+        const tr = document.createElement("tr");
+        const label = document.createElement("td");
+        label.className = "total-label";
+        label.textContent = `TOTAL (${rows.length} projects)`;
+        tr.appendChild(label);
+        const scope = document.createElement("td");
+        scope.textContent = totals.scope.toLocaleString("en-IN");
+        tr.appendChild(scope);
+        cols.forEach(([key]) => {
+          const td = document.createElement("td");
+          td.textContent = totals[key].toLocaleString("en-IN");
+          tr.appendChild(td);
+        });
+        const action = document.createElement("td");
+        action.textContent = "—";
+        tr.appendChild(action);
+        foot.replaceChildren(tr);
+      }
+      function toggleProjectScope() {
+        const content = document.getElementById("projectScopeContent");
+        const button = document.getElementById("projectScopeToggle");
+        const collapsed = content.classList.toggle("collapsed");
+        button.setAttribute("aria-expanded", String(!collapsed));
+        button.innerHTML = collapsed
+          ? '<i class="bi bi-chevron-down me-1"></i>Expand'
+          : '<i class="bi bi-chevron-up me-1"></i>Collapse';
       }
       function refreshDashboard() {
         render();
@@ -1139,8 +1478,48 @@
         document.getElementById("project").value = "ALL";
         document.getElementById("gate").value = "ALL";
         document.getElementById("status").value = "ALL";
+        document.getElementById("tableSearch").value = "";
+        sortState = { key: null, direction: "asc" };
+        updateSortIndicators();
         render();
       }
+      function exportCsv() {
+        const rows = getSortedRows(getFilteredRows());
+        const headers = ["Project", "Scope", ...cols.map((x) => x[1])];
+        function csvEscape(value) {
+          const text = String(value ?? "");
+          return `"${text.replace(/"/g, '""')}"`;
+        }
+        const lines = [headers.map(csvEscape).join(",")];
+        rows.forEach((x) => {
+          lines.push(
+            [x.p, x.scope, ...cols.map(([key]) => x[key])]
+              .map(csvEscape)
+              .join(","),
+          );
+        });
+        const totals = [
+          "TOTAL",
+          ...headers.slice(1).map((_, index) => {
+            const key = index === 0 ? "scope" : cols[index - 1][0];
+            return rows.reduce((sum, row) => sum + (Number(row[key]) || 0), 0);
+          }),
+        ];
+        lines.push(totals.map(csvEscape).join(","));
+        const blob = new Blob(["\uFEFF" + lines.join("\r\n")], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "mahindra-engineering-dashboard.csv";
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+      // Initialize the table after the data and column definitions.
+      setupSortableHeaders();
+      render();
+
       function showGate(g) {
         const names = {
           G1: "Gate 1 — Project Definition & Feasibility",
@@ -1186,19 +1565,7 @@
           "</div>";
         new bootstrap.Modal(document.getElementById("gateModal")).show();
       }
-      function exportCsv() {
-        const headers = ["Project", "Scope", ...cols.map((x) => x[1])];
-        const lines = [headers.join(",")];
-        data.forEach((x) =>
-          lines.push([x.p, x.scope, ...cols.map((c) => x[c[0]])].join(",")),
-        );
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(
-          new Blob([lines.join("\\n")], { type: "text/csv" }),
-        );
-        a.download = "engineering-dashboard.csv";
-        a.click();
-      }
+
       render();
       new Chart(document.getElementById("pendingChart"), {
         type: "bar",
