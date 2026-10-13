@@ -256,9 +256,9 @@
         color: #627582;
         border-right: 1px solid #edf1f4;
         border-bottom: 1px solid #dce4e9;
-        padding: 11px 10px;
-        font-size: 8px;
-        line-height: 1.3;
+        padding: 9px 7px;
+        font-size: 11px;
+        line-height: 1.25;
         text-transform: uppercase;
         white-space: nowrap;
       }
@@ -267,7 +267,7 @@
         color: #405463;
         border-right: 1px solid #f0f3f5;
         border-bottom: 1px solid #e8edf0;
-        font-size: 10px;
+        font-size: 12px;
         white-space: nowrap;
       }
       .records-table tbody tr:hover td {
@@ -385,6 +385,154 @@
         border-top: 1px solid var(--border);
         background: #fff;
         flex-shrink: 0;
+      }
+      /* Table tools matching the Input BD page */
+      .table-heading {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .table-search {
+        position: relative;
+        width: 300px;
+        max-width: 100%;
+      }
+      .table-search i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #8a99a5;
+      }
+      .table-search input {
+        width: 100%;
+        height: 36px;
+        padding: 7px 12px 7px 34px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 11px;
+      }
+      .tool-icon-btn {
+        width: 34px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+      }
+      .column-menu {
+        min-width: 230px;
+        max-height: 350px;
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: 0 8px 24px #071b2d22;
+        padding: 10px 12px;
+        z-index: 1080;
+      }
+      .column-menu .form-check {
+        margin: 5px 0;
+        font-size: 12px;
+      }
+      .column-menu .form-check-input:checked {
+        background-color: var(--red);
+        border-color: var(--red);
+      }
+      .records-table {
+        width: max-content;
+        min-width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      .records-table th {
+        position: relative;
+        user-select: none;
+      }
+      .records-table th[data-sort-index] {
+        cursor: pointer;
+      }
+      .records-table th[data-sort-index]:hover {
+        color: var(--red);
+        background: #f0f3f6;
+      }
+      .records-table th .sort-indicator {
+        margin-left: 5px;
+        color: var(--red);
+        font-weight: 800;
+      }
+      .records-table .column-hidden {
+        display: none !important;
+      }
+      /* Keep the first three visible columns frozen */
+      .records-table th.sticky-col,
+      .records-table td.sticky-col {
+        position: sticky !important;
+        background: #fff;
+      }
+      .records-table thead th.sticky-col {
+        background: #f5f7f9;
+        z-index: 6 !important;
+      }
+      .records-table tbody td.sticky-col {
+        z-index: 3 !important;
+      }
+      .records-table .sticky-col-3 {
+        box-shadow: 3px 0 5px #071b2d12;
+      }
+      .table-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .footer-controls {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 18px;
+        margin-left: auto;
+      }
+      .page-size {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        white-space: nowrap;
+      }
+      .page-size select {
+        height: 29px;
+        border: 1px solid #d9e2e7;
+        border-radius: 5px;
+        font-size: 10px;
+        padding: 0 8px;
+      }
+      .pagination .page-link {
+        font-size: 10px;
+        color: #617481;
+        border-color: #e0e6ea;
+      }
+      .pagination .active .page-link {
+        background: var(--red);
+        border-color: var(--red);
+        color: #fff;
+      }
+      .show-hide-search {
+        font-size: 13px;
+      }
+      @media (max-width: 700px) {
+        .table-tools {
+          width: 100%;
+        }
+        .table-search {
+          width: 100%;
+        }
+        .footer-controls {
+          width: 100%;
+          margin-left: 0;
+          justify-content: space-between;
+          flex-wrap: wrap;
+        }
       }
       @media (max-width: 1000px) {
         .top-menu {
@@ -537,21 +685,93 @@
       </section>
       <section class="table-card">
         <div class="table-head">
-          <div>
-            <div class="table-title">
-              Program Records (<span id="recordCount">11</span>)
-            </div>
-            <div class="table-meta">
-              Select the pencil icon to edit a row. Grey fields are locked; pale
-              yellow fields are editable.
+          <div class="table-heading">
+            <div class="table-title">Program Records</div>
+            <div class="table-search">
+              <i class="bi bi-search"></i>
+              <input
+                type="search"
+                id="globalSearch"
+                placeholder="Search..."
+                aria-label="Search all program records"
+                oninput="handleSearch()"
+              />
             </div>
           </div>
           <div class="table-tools">
-            <button class="btn-light-action" onclick="exportCSV()">
-              <i class="bi bi-download me-1"></i>Export CSV</button
-            ><button class="tool-btn" onclick="renderTable()">
-              <i class="bi bi-arrow-clockwise me-1"></i>Refresh view
+            <button
+              type="button"
+              class="tool-btn tool-icon-btn"
+              onclick="exportCSV()"
+              title="Download CSV"
+              aria-label="Download CSV"
+            >
+              <i class="bi bi-download"></i>
             </button>
+            <button
+              type="button"
+              class="tool-btn tool-icon-btn"
+              onclick="document.getElementById('programExcelUpload').click()"
+              title="Upload Excel or CSV"
+              aria-label="Upload Excel or CSV"
+            >
+              <i class="bi bi-file-earmark-excel"></i>
+            </button>
+            <input
+              type="file"
+              id="programExcelUpload"
+              accept=".xlsx,.xls,.csv"
+              hidden
+              onchange="uploadProgramsExcel(event)"
+            />
+            <div class="dropdown">
+              <button
+                type="button"
+                class="tool-btn dropdown-toggle"
+                id="programColumnsDropdown"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="outside"
+                aria-expanded="false"
+              >
+                <i class="bi bi-layout-three-columns me-1"></i>
+                Columns
+              </button>
+              <div
+                class="dropdown-menu dropdown-menu-end column-menu"
+                id="programColumnMenu"
+                aria-labelledby="programColumnsDropdown"
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2 show-hide-search"
+                >
+                  <strong>Show / hide columns</strong>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-link p-0"
+                    onclick="toggleAllProgramColumns(true)"
+                  >
+                    Show all
+                  </button>
+                </div>
+                <!-- <button
+                  type="button"
+                  class="btn btn-sm btn-link p-0 mb-2"
+                  onclick="toggleAllProgramColumns(false)"
+                >
+                  Hide optional columns
+                </button> -->
+                <div id="programColumnCheckboxes"></div>
+              </div>
+            </div>
+            <!-- <button
+              type="button"
+              class="tool-btn"
+              onclick="renderTable()"
+              title="Refresh view"
+            >
+              <i class="bi bi-arrow-clockwise me-1"></i>
+              Refresh
+            </button> -->
           </div>
         </div>
         <div class="table-wrap">
@@ -578,8 +798,24 @@
         </div>
         <div class="table-footer">
           <div>
-            Showing <strong id="showing">1 to 11</strong> of
-            <strong id="total">11</strong> records
+            Showing <strong id="showing">0</strong> of
+            <strong id="total">0</strong> records
+          </div>
+          <div class="footer-controls">
+            <nav aria-label="Program records pagination">
+              <ul
+                class="pagination pagination-sm mb-0"
+                id="programPagination"
+              ></ul>
+            </nav>
+            <div class="page-size">
+              <label for="programPageSize">Rows per page</label>
+              <select id="programPageSize" onchange="changeProgramPageSize()">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </select>
+            </div>
           </div>
         </div>
       </section>
@@ -656,6 +892,8 @@
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
     <script>
       const columns = [
         { key: "sr", label: "Sr. No.", editable: false, type: "text" },
@@ -874,6 +1112,10 @@
           actualSubmission: "2024-09-25",
         },
       ];
+      let programCurrentPage = 1;
+      let programPageSize = 10;
+      let programSortKey = "";
+      let programSortDirection = "asc";
       const modalElement = document.getElementById("editProgramModal");
       const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
       const esc = (v) =>
@@ -895,38 +1137,345 @@
         }
         return value || "—";
       }
-      function renderTable() {
+      function getFilteredProgramRecords() {
         const q = document
-            .getElementById("searchText")
-            .value.trim()
-            .toLowerCase(),
-          p = document
-            .getElementById("searchProject")
-            .value.trim()
-            .toLowerCase(),
-          o = document.getElementById("filterOrderType").value;
-        const found = records
+          .getElementById("searchText")
+          .value.trim()
+          .toLowerCase();
+        const p = document
+          .getElementById("searchProject")
+          .value.trim()
+          .toLowerCase();
+        const o = document.getElementById("filterOrderType").value;
+        const globalQ = document
+          .getElementById("globalSearch")
+          .value.trim()
+          .toLowerCase();
+        let found = records
           .map((record, index) => ({ record, index }))
-          .filter(
-            ({ record: r }) =>
-              (!q ||
-                r.customer.toLowerCase().includes(q) ||
-                r.material.toLowerCase().includes(q)) &&
-              (!p || r.project.toLowerCase().includes(p)) &&
-              (!o || r.orderType === o),
+          .filter(({ record: r }) => {
+            const matchesCustomerMaterial =
+              !q ||
+              String(r.customer ?? "")
+                .toLowerCase()
+                .includes(q) ||
+              String(r.material ?? "")
+                .toLowerCase()
+                .includes(q);
+            const matchesProject =
+              !p ||
+              String(r.project ?? "")
+                .toLowerCase()
+                .includes(p);
+            const matchesOrderType = !o || r.orderType === o;
+            const matchesGlobal =
+              !globalQ ||
+              columns.some((c) =>
+                String(r[c.key] ?? "")
+                  .toLowerCase()
+                  .includes(globalQ),
+              );
+            return (
+              matchesCustomerMaterial &&
+              matchesProject &&
+              matchesOrderType &&
+              matchesGlobal
+            );
+          });
+        if (programSortKey) {
+          found.sort((a, b) => {
+            const av = a.record[programSortKey] ?? "";
+            const bv = b.record[programSortKey] ?? "";
+            const an = Number(av);
+            const bn = Number(bv);
+            const bothNumeric =
+              String(av).trim() !== "" &&
+              String(bv).trim() !== "" &&
+              Number.isFinite(an) &&
+              Number.isFinite(bn);
+            const comparison = bothNumeric
+              ? an - bn
+              : String(av).localeCompare(String(bv), undefined, {
+                  numeric: true,
+                  sensitivity: "base",
+                });
+            return programSortDirection === "asc" ? comparison : -comparison;
+          });
+        }
+        return found;
+      }
+      function renderTable() {
+        const found = getFilteredProgramRecords();
+        const total = found.length;
+        const totalPages = Math.max(1, Math.ceil(total / programPageSize));
+        programCurrentPage = Math.min(programCurrentPage, totalPages);
+        const start = (programCurrentPage - 1) * programPageSize;
+        const visible = found.slice(start, start + programPageSize);
+        document.getElementById("recordBody").innerHTML = visible
+          .map(({ record: r, index }) => {
+            return `
+<tr>
+         ${columns
+           .map((c) => {
+             const value = shown(c, r[c.key]);
+             const editableClass = c.editable ? "editable-cell" : "";
+             return `
+<td class="${editableClass}">
+                 ${esc(value)}
+</td>
+             `;
+           })
+           .join("")}
+<td>
+<div class="action-group">
+<button
+               type="button"
+               class="action"
+               title="Edit row"
+               aria-label="Edit row ${esc(r.sr)}"
+               data-edit-index="${index}"
+>
+<i class="bi bi-pencil"></i>
+</button>
+</div>
+</td>
+</tr>
+     `;
+          })
+          .join("");
+        document.getElementById("recordCount").textContent = total;
+        document.getElementById("total").textContent = total;
+        document.getElementById("showing").textContent = total
+          ? `${start + 1} to ${Math.min(start + programPageSize, total)}`
+          : "0";
+        renderProgramPagination(totalPages);
+        updateProgramSortIndicators();
+        applyProgramColumnVisibility();
+      }
+      function handleSearch() {
+        programCurrentPage = 1;
+        renderTable();
+      }
+      function changeProgramPageSize() {
+        programPageSize =
+          Number(document.getElementById("programPageSize").value) || 10;
+        programCurrentPage = 1;
+        renderTable();
+      }
+      function goToProgramPage(page) {
+        const totalPages = Math.max(
+          1,
+          Math.ceil(getFilteredProgramRecords().length / programPageSize),
+        );
+        if (page >= 1 && page <= totalPages) {
+          programCurrentPage = page;
+          renderTable();
+        }
+      }
+      function renderProgramPagination(totalPages) {
+        const pagination = document.getElementById("programPagination");
+        const item = (page, label, disabled = false, active = false) => `
+<li class="page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}">
+<button
+       type="button"
+       class="page-link"
+       ${disabled ? "disabled" : ""}
+       onclick="goToProgramPage(${page})"
+>${label}</button>
+</li>
+ `;
+        let html = item(programCurrentPage - 1, "‹", programCurrentPage === 1);
+        const low = Math.max(1, programCurrentPage - 2);
+        const high = Math.min(totalPages, programCurrentPage + 2);
+        if (low > 1) {
+          html += item(1, "1", false, programCurrentPage === 1);
+          if (low > 2) {
+            html += `
+<li class="page-item disabled">
+<span class="page-link">…</span>
+</li>
+     `;
+          }
+        }
+        for (let page = low; page <= high; page++) {
+          html += item(page, page, false, page === programCurrentPage);
+        }
+        if (high < totalPages) {
+          if (high < totalPages - 1) {
+            html += `
+<li class="page-item disabled">
+<span class="page-link">…</span>
+</li>
+     `;
+          }
+          html += item(
+            totalPages,
+            totalPages,
+            false,
+            programCurrentPage === totalPages,
           );
-        document.getElementById("recordBody").innerHTML = found
+        }
+        html += item(
+          programCurrentPage + 1,
+          "›",
+          programCurrentPage === totalPages,
+        );
+        pagination.innerHTML = html;
+      }
+      function updateProgramSortIndicators() {
+        document
+          .querySelectorAll(".records-table thead th[data-sort-index]")
+          .forEach((th) => {
+            const key = th.dataset.sortKey;
+            const label = th.dataset.label;
+            const active = key === programSortKey;
+            th.innerHTML =
+              `${esc(label)}` +
+              `<span class="sort-indicator">${
+                active ? (programSortDirection === "asc" ? "↑" : "↓") : "↕"
+              }</span>`;
+          });
+      }
+      function initProgramSorting() {
+        const headerCells = document.querySelectorAll(
+          ".records-table thead th",
+        );
+        headerCells.forEach((th, index) => {
+          // Last column is Action; it is not sortable.
+          if (index >= columns.length) return;
+          const column = columns[index];
+          th.dataset.sortIndex = index;
+          th.dataset.sortKey = column.key;
+          th.dataset.label = column.label;
+          th.tabIndex = 0;
+          th.setAttribute("role", "button");
+          th.title = "Click to sort";
+          th.addEventListener("click", () => {
+            if (programSortKey === column.key) {
+              programSortDirection =
+                programSortDirection === "asc" ? "desc" : "asc";
+            } else {
+              programSortKey = column.key;
+              programSortDirection = "asc";
+            }
+            programCurrentPage = 1;
+            renderTable();
+          });
+          th.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              th.click();
+            }
+          });
+        });
+      }
+
+      function initProgramColumnSelector() {
+        const container = document.getElementById("programColumnCheckboxes");
+        const headers = [...columns.map((c) => c.label), "Action"];
+        container.innerHTML = headers
           .map(
-            ({ record: r, index }) =>
-              `<tr>${columns.map((c) => `<td class="${c.editable ? "editable-cell" : ""}">${esc(shown(c, r[c.key]))}</td>`).join("")}<td><div class="action-group"><button type="button" class="action" title="Edit row" aria-label="Edit row ${r.sr}" data-edit-index="${index}"><i class="bi bi-pencil"></i></button></div></td></tr>`,
+            (label, index) => `
+<div class="form-check">
+<input
+           class="form-check-input program-column-toggle"
+           type="checkbox"
+           id="program-column-${index}"
+           data-column="${index}"
+           checked
+         />
+<label
+           class="form-check-label"
+           for="program-column-${index}"
+>${esc(label)}</label>
+</div>
+     `,
           )
           .join("");
-        document.getElementById("recordCount").textContent = found.length;
-        document.getElementById("total").textContent = found.length;
-        document.getElementById("showing").textContent = found.length
-          ? `1 to ${found.length}`
-          : "0";
+        container
+          .querySelectorAll(".program-column-toggle")
+          .forEach((checkbox) => {
+            checkbox.addEventListener("change", () => {
+              setProgramColumnVisibility(
+                Number(checkbox.dataset.column),
+                checkbox.checked,
+              );
+              updateProgramStickyColumns();
+            });
+          });
       }
+      function setProgramColumnVisibility(index, show) {
+        document.querySelectorAll(".records-table tr").forEach((row) => {
+          const cell = row.children[index];
+          if (cell) {
+            cell.classList.toggle("column-hidden", !show);
+          }
+        });
+      }
+      function applyProgramColumnVisibility() {
+        document
+          .querySelectorAll(".program-column-toggle")
+          .forEach((checkbox) => {
+            setProgramColumnVisibility(
+              Number(checkbox.dataset.column),
+              checkbox.checked,
+            );
+          });
+        updateProgramStickyColumns();
+      }
+      function toggleAllProgramColumns(show) {
+        document
+          .querySelectorAll(".program-column-toggle")
+          .forEach((checkbox) => {
+            const index = Number(checkbox.dataset.column);
+            // Keep Action visible when hiding optional columns.
+            const shouldShow = show || index === columns.length;
+            checkbox.checked = shouldShow;
+            setProgramColumnVisibility(index, shouldShow);
+          });
+        updateProgramStickyColumns();
+      }
+      function updateProgramStickyColumns() {
+        const table = document.querySelector(".records-table");
+        if (!table || !table.tHead.rows.length) return;
+        const allRows = table.querySelectorAll("tr");
+        allRows.forEach((row) => {
+          Array.from(row.children).forEach((cell) => {
+            cell.classList.remove("sticky-col", "sticky-col-3");
+            cell.style.left = "";
+            cell.style.zIndex = "";
+          });
+        });
+        const headerCells = Array.from(table.tHead.rows[0].cells);
+        const visibleFirstThree = headerCells
+          .map((cell, index) => ({ cell, index }))
+          .filter(({ cell }) => getComputedStyle(cell).display !== "none")
+          .slice(0, 3);
+        let left = 0;
+        visibleFirstThree.forEach(({ cell, index }, position) => {
+          const width = cell.getBoundingClientRect().width;
+          allRows.forEach((row) => {
+            const currentCell = row.children[index];
+            if (
+              currentCell &&
+              getComputedStyle(currentCell).display !== "none"
+            ) {
+              currentCell.classList.add("sticky-col");
+              if (position === 2) {
+                currentCell.classList.add("sticky-col-3");
+              }
+              currentCell.style.left = `${left}px`;
+              if (row.parentElement.tagName === "THEAD") {
+                currentCell.style.zIndex = "6";
+              } else {
+                currentCell.style.zIndex = "3";
+              }
+            }
+          });
+          left += width;
+        });
+      }
+
       function openEditModal(index) {
         const r = records[index];
         if (!r) {
@@ -984,23 +1533,141 @@
         document.getElementById("searchText").value = "";
         document.getElementById("searchProject").value = "";
         document.getElementById("filterOrderType").value = "";
+        document.getElementById("globalSearch").value = "";
+        programCurrentPage = 1;
         renderTable();
       }
-      function exportCSV() {
-        const quote = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
-        const csv = [
-          columns.map((c) => quote(c.label)).join(","),
-          ...records.map((r) => columns.map((c) => quote(r[c.key])).join(",")),
-        ].join("\r\n");
-        const url = URL.createObjectURL(
-          new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" }),
-        );
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "program-records.csv";
-        a.click();
-        URL.revokeObjectURL(url);
+      function uploadProgramsExcel(event) {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        if (typeof XLSX === "undefined") {
+          alert(
+            "Excel library could not load. Check your internet connection.",
+          );
+          event.target.value = "";
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const workbook = XLSX.read(e.target.result, {
+              type: "array",
+              cellDates: false,
+            });
+            const sheet = workbook.Sheets[workbook.SheetNames[0]];
+            const rows = XLSX.utils.sheet_to_json(sheet, {
+              header: 1,
+              defval: "",
+              raw: false,
+            });
+            if (rows.length < 2) {
+              alert(
+                "The file must contain a header row and at least one data row.",
+              );
+              return;
+            }
+            const normalize = (value) =>
+              String(value ?? "")
+                .toLowerCase()
+                .replace(/[^a-z0-9]/g, "");
+            const sourceHeaders = rows[0].map(normalize);
+            const imported = rows
+              .slice(1)
+              .filter((row) =>
+                row.some((value) => String(value).trim() !== ""),
+              );
+            if (!imported.length) {
+              alert("No data rows found in the selected file.");
+              return;
+            }
+            // Accept column labels from the Programs table.
+            const headerMap = columns.map((column) =>
+              sourceHeaders.indexOf(normalize(column.label)),
+            );
+            const missingRequiredHeaders = [
+              "customer",
+              "project",
+              "material",
+            ].filter((key) => {
+              const colIndex = columns.findIndex((c) => c.key === key);
+              return headerMap[colIndex] === -1;
+            });
+            if (missingRequiredHeaders.length) {
+              alert(
+                "The file is missing required columns: " +
+                  missingRequiredHeaders.join(", ") +
+                  ". Use the Programs table column names in the first row.",
+              );
+              return;
+            }
+            if (!confirm(`Import ${imported.length} program record(s)?`)) {
+              return;
+            }
+            imported.forEach((row) => {
+              const record = {};
+              columns.forEach((column, index) => {
+                const sourceIndex = headerMap[index];
+                let value = sourceIndex >= 0 ? row[sourceIndex] : "";
+                if (column.key === "sr") {
+                  value = records.length + 1;
+                }
+                // Convert common Excel date strings into yyyy-mm-dd.
+                if (
+                  column.type === "date" &&
+                  value &&
+                  /^\d{1,2}[-/]\d{1,2}[-/]\d{4}$/.test(String(value))
+                ) {
+                  const parts = String(value).split(/[-/]/);
+                  const [day, month, year] = parts;
+                  value = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+                }
+                record[column.key] = String(value ?? "").trim();
+              });
+              // Maintain unique serial numbers for newly imported records.
+              record.sr = records.length + 1;
+              records.push(record);
+            });
+            programCurrentPage = 1;
+            renderTable();
+            document.getElementById("toastMessage").textContent =
+              `${imported.length} program record(s) imported successfully.`;
+            bootstrap.Toast.getOrCreateInstance(
+              document.getElementById("saveToast"),
+              { delay: 3000 },
+            ).show();
+          } catch (error) {
+            console.error("Programs import error:", error);
+            alert(
+              "Unable to read this file. Please check its format and headings.",
+            );
+          } finally {
+            event.target.value = "";
+          }
+        };
+        reader.readAsArrayBuffer(file);
       }
+
+      function exportCSV() {
+        const filtered = getFilteredProgramRecords();
+        const quote = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+        const csvRows = [
+          columns.map((column) => quote(column.label)).join(","),
+          ...filtered.map(({ record }) =>
+            columns.map((column) => quote(record[column.key])).join(","),
+          ),
+        ];
+        const blob = new Blob(["\uFEFF" + csvRows.join("\r\n")], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "mahindra-program-records.csv";
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      }
+      initProgramColumnSelector();
+      initProgramSorting();
       renderTable();
     </script>
   </body>
