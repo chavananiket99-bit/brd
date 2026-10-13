@@ -249,12 +249,17 @@
         position: sticky;
         top: 0;
         z-index: 7;
-        text-align: center;
-        padding: 9px 7px;
-        font-size: 12px;
-        color: #243746;
-        min-width: unset;
+        height: 35px;
+        min-width: 0;
         max-width: none;
+        padding: 8px 7px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+        font-size: 12px;
+        line-height: 1.2;
+        font-weight: 800;
+        color: #243746;
       }
       .eng-table tbody td,
       .eng-table tfoot td {
@@ -328,6 +333,24 @@
         z-index: 9;
         background: #f6f8fa;
       }
+      .eng-table thead tr:nth-child(2) th {
+        position: sticky;
+        top: 35px;
+        z-index: 6;
+        min-width: 78px;
+        max-width: 115px;
+        height: 58px;
+        padding: 8px 18px 8px 7px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: normal;
+        overflow-wrap: break-word;
+        font-size: 11px;
+        line-height: 1.25;
+        font-weight: 800;
+        color: #344b5a;
+        background: #f6f8fa;
+      }
       .project-link {
         color: #3b6f9c;
         font-weight: 700;
@@ -357,17 +380,7 @@
       .total-label {
         color: var(--red);
       }
-      .eng-table thead th[data-sort-key] {
-        cursor: pointer;
-      }
-      .eng-table thead th[data-sort-key]:hover {
-        filter: brightness(0.96);
-        color: var(--red);
-      }
-      .sort-indicator {
-        margin-left: 4px;
-        color: var(--red);
-      }
+
       .table-footer {
         display: flex;
         justify-content: space-between;
@@ -435,6 +448,51 @@
         outline: 2px solid var(--red);
         outline-offset: -2px;
       }
+      .eng-table thead th .sort-label {
+        display: block;
+        padding: 0;
+        overflow-wrap: anywhere;
+      }
+      /* Place sort icons in a fixed position */
+      .eng-table thead th .sort-default,
+      .eng-table thead th .sort-indicator {
+        position: absolute;
+        right: 4px;
+        top: 6px;
+        display: inline-block;
+        margin: 0;
+        font-size: 10px;
+        line-height: 1;
+      }
+      .eng-table thead th .sort-default {
+        color: #aab5bd;
+        font-weight: 400;
+      }
+      .eng-table thead th .sort-indicator {
+        color: var(--red);
+        font-size: 12px;
+        font-weight: 900;
+      }
+      /* Preserve frozen Project and Scope headers */
+      .eng-table thead tr:nth-child(2) th:first-child {
+        left: 0;
+        z-index: 10;
+        min-width: 145px;
+        width: 145px;
+        background: #f6f8fa;
+        text-align: left;
+      }
+      .eng-table thead tr:nth-child(2) th:nth-child(2) {
+        left: 145px;
+        z-index: 10;
+        min-width: 75px;
+        width: 75px;
+        background: #f6f8fa;
+      }
+      /* Group row stays above the sortable row */
+      .eng-table thead .gate-group-row th {
+        z-index: 11;
+      }
       @media (max-width: 991px) {
         .top-menu {
           display: none;
@@ -478,7 +536,7 @@
               ><i class="bi bi-folder2-open me-1"></i>Input BD</a
             >
             <a href="mahindra_programs.html"
-              ><i class="bi bi-folder2-open me-1"></i>Mahindra Programs</a
+              ><i class="bi bi-folder2-open me-1"></i>Programs</a
             >
             <a href="mahindra_engineering_records.html"
               ><i class="bi bi-folder2-open me-1"></i>Engineering 1</a
@@ -528,7 +586,7 @@
           <div class="accent"></div>
         </div>
         <div class="text-muted small">
-          <i class="bi bi-clock me-1"></i>Last refreshed: 12-Oct-2026
+          <i class="bi bi-clock me-1"></i>Last refreshed: 13-Oct-2026
         </div>
       </div>
 
@@ -559,14 +617,6 @@
               />
             </div>
             <div class="table-toolbar-right">
-              <div class="table-note">
-                <span><span class="legend-dot complete"></span> Completed</span
-                ><span><span class="legend-dot pending"></span> Pending</span>
-              </div>
-              <div class="table-date">
-                <i class="bi bi-clock me-1"></i>Engineering Portfolio • Updated
-                12-Oct-2026
-              </div>
               <div class="table-count">
                 <strong id="count">6</strong> projects
               </div>
@@ -726,12 +776,6 @@
             <div class="p-3">
               <div class="d-flex justify-content-between mb-2">
                 <span class="text-muted">TDP Available</span><b>1,757</b>
-              </div>
-              <div class="progress mb-3" style="height: 7px">
-                <div
-                  class="progress-bar"
-                  style="width: 99.9%; background: #8fb0c7"
-                ></div>
               </div>
               <div class="d-flex justify-content-between mb-2">
                 <span class="text-muted">TDP Pending</span
@@ -1231,6 +1275,7 @@
           th.setAttribute("aria-label", `Sort by ${label}`);
           th.setAttribute("aria-sort", "none");
           const labelSpan = document.createElement("span");
+          labelSpan.className = "sort-label";
           labelSpan.textContent = label;
           th.appendChild(labelSpan);
           const icon = document.createElement("span");
