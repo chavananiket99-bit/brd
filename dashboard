@@ -409,6 +409,32 @@
         justify-content: center;
         font-size: 14px;
       }
+      .eng-table thead th[data-sort-key] {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+        transition: background-color 0.15s ease;
+      }
+      .eng-table thead th[data-sort-key]:hover {
+        filter: brightness(0.96);
+        color: var(--red);
+      }
+      .sort-indicator {
+        display: inline-block;
+        margin-left: 5px;
+        color: var(--red);
+        font-size: 12px;
+        font-weight: 900;
+      }
+      .sort-default {
+        margin-left: 5px;
+        color: #aab5bd;
+        font-size: 10px;
+      }
+      .eng-table thead th[data-sort-key]:focus-visible {
+        outline: 2px solid var(--red);
+        outline-offset: -2px;
+      }
       @media (max-width: 991px) {
         .top-menu {
           display: none;
@@ -1176,8 +1202,10 @@
       ];
       let sortState = { key: null, direction: "asc" };
       function buildHeader() {
-        const head = document.getElementById("tableHead"),
-          top = document.createElement("tr");
+        const head = document.getElementById("tableHead");
+        head.replaceChildren();
+        // First row: grouped Gate headers
+        const top = document.createElement("tr");
         top.className = "gate-group-row";
         groups.forEach(([label, span, cls]) => {
           const th = document.createElement("th");
@@ -1187,37 +1215,48 @@
           top.appendChild(th);
         });
         head.appendChild(top);
+        // Second row: sortable column headers
         const sub = document.createElement("tr");
-        [
-          ["p", "Project"],
-          ["scope", "Scope"],
-        ].forEach(([key, label], i) => {
+        const headerColumns = [
+          ["p", "Project", "project-col"],
+          ["scope", "Scope", "scope-col"],
+          ...cols.map(([key, label]) => [key, label, ""]),
+        ];
+        headerColumns.forEach(([key, label, className]) => {
           const th = document.createElement("th");
-          th.textContent = label;
-          th.className = i === 0 ? "project-col" : "scope-col";
           th.dataset.sortKey = key;
-          sub.appendChild(th);
-        });
-        cols.forEach(([key, label]) => {
-          const th = document.createElement("th");
-          th.textContent = label;
-          th.dataset.sortKey = key;
+          th.className = className;
+          th.tabIndex = 0;
+          th.setAttribute("role", "button");
+          th.setAttribute("aria-label", `Sort by ${label}`);
+          th.setAttribute("aria-sort", "none");
+          const labelSpan = document.createElement("span");
+          labelSpan.textContent = label;
+          th.appendChild(labelSpan);
+          const icon = document.createElement("span");
+          icon.className = "sort-default";
+          icon.textContent = "↕";
+          icon.setAttribute("aria-hidden", "true");
+          th.appendChild(icon);
+          th.addEventListener("click", () => sortByColumn(key));
+          th.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              sortByColumn(key);
+            }
+          });
           sub.appendChild(th);
         });
         head.appendChild(sub);
-        head.querySelectorAll("th[data-sort-key]").forEach((th) =>
-          th.addEventListener("click", () => {
-            const key = th.dataset.sortKey;
-            sortState.direction =
-              sortState.key === key
-                ? sortState.direction === "asc"
-                  ? "desc"
-                  : "asc"
-                : "asc";
-            sortState.key = key;
-            render();
-          }),
-        );
+      }
+      function sortByColumn(key) {
+        if (sortState.key === key) {
+          sortState.direction = sortState.direction === "asc" ? "desc" : "asc";
+        } else {
+          sortState.key = key;
+          sortState.direction = "asc";
+        }
+        render();
       }
       function filteredRows() {
         const q = document.getElementById("search").value.trim().toLowerCase();
@@ -1298,14 +1337,23 @@
         document
           .querySelectorAll("#tableHead th[data-sort-key]")
           .forEach((th) => {
-            const old = th.querySelector(".sort-indicator");
-            if (old) old.remove();
-            if (th.dataset.sortKey === sortState.key) {
-              const span = document.createElement("span");
-              span.className = "sort-indicator";
-              span.textContent = sortState.direction === "asc" ? "↑" : "↓";
-              th.appendChild(span);
-            }
+            const icon = th.querySelector(".sort-default");
+            if (!icon) return;
+            const isActive = th.dataset.sortKey === sortState.key;
+            icon.className = isActive ? "sort-indicator" : "sort-default";
+            icon.textContent = isActive
+              ? sortState.direction === "asc"
+                ? "↑"
+                : "↓"
+              : "↕";
+            th.setAttribute(
+              "aria-sort",
+              isActive
+                ? sortState.direction === "asc"
+                  ? "ascending"
+                  : "descending"
+                : "none",
+            );
           });
       }
       function fmt(v) {
