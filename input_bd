@@ -25,6 +25,10 @@
         --muted: #71818d;
         --bg: #f3f6f8;
         --border: #dce4e9;
+        --green: #198754;
+        --green-soft: #e5f4eb;
+        --orange: #c77716;
+        --orange-soft: #fff0dc;
       }
       * {
         box-sizing: border-box;
@@ -197,14 +201,25 @@
         color: var(--navy);
       }
       .table-search {
-        width: 280px;
+        position: relative;
+        width: 300px;
         max-width: 100%;
       }
-      .table-search .form-control,
-      .table-search .input-group-text {
-        border-color: #d7e0e5;
+      .table-search i {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #8a99a5;
+      }
+      .table-search input {
+        width: 100%;
+        height: 36px;
+        padding: 7px 12px 7px 34px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: white;
         font-size: 11px;
-        height: 32px;
       }
       .table-tools {
         display: flex;
@@ -240,8 +255,8 @@
         padding: 10px 12px;
       }
       .column-menu .form-check {
-        margin: 8px 0;
-        font-size: 11px;
+        margin: 5px 0;
+        font-size: 12px;
       }
       .column-menu .form-check-input:checked {
         background-color: var(--red);
@@ -348,8 +363,31 @@
         color: var(--red);
         border-color: #e2ccd5;
       }
-      .edit-record-btn {
+      .date-cell-button {
+        border: 0;
+        background: transparent;
+        color: #3e6e96;
+        padding: 3px 5px;
+        border-radius: 4px;
+        font: inherit;
+        text-align: left;
+        min-width: 95px;
+      }
+      .date-cell-button:hover {
+        background: #f5eaf0;
         color: var(--red);
+      }
+      .date-cell-button:focus-visible {
+        outline: 2px solid var(--red);
+        outline-offset: 1px;
+      }
+      .date-cell-button.disabled-date {
+        color: #71818d;
+        cursor: default;
+      }
+      .date-cell-button.disabled-date:hover {
+        background: transparent;
+        color: #71818d;
       }
       .table-footer {
         display: flex;
@@ -359,7 +397,7 @@
         flex-wrap: wrap;
         padding: 11px 17px;
         color: #7a8994;
-        font-size: 10px;
+        font-size: 12px;
       }
       .footer-controls {
         display: flex;
@@ -391,62 +429,26 @@
         border-color: var(--red);
         color: white;
       }
-      .status-modal .modal-content,
-      .progress-modal .modal-content {
+      .modal-content {
         border: 1px solid var(--border);
         border-radius: 12px;
         box-shadow: 0 15px 45px #071b2d26;
         overflow: hidden;
       }
-      .status-modal .modal-header {
+      .modal-header {
         background: #f8fafb;
         border-bottom: 1px solid var(--border);
         padding: 17px 20px;
       }
-      .status-modal .modal-title,
-      .progress-modal .modal-title {
+      .modal-title {
         font-size: 16px;
         font-weight: 800;
         color: var(--navy);
       }
-      .status-modal .modal-body {
+      .modal-body {
         padding: 22px 20px;
       }
-      .status-modal .form-label {
-        font-size: 11px;
-        font-weight: 800;
-        color: #536777;
-      }
-      .status-options {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 9px;
-      }
-      .status-option input {
-        position: absolute;
-        opacity: 0;
-      }
-      .status-option label {
-        display: inline-flex;
-        padding: 9px 13px;
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        background: white;
-        color: #536777;
-        cursor: pointer;
-        font-size: 11px;
-        font-weight: 700;
-      }
-      .status-option input:checked + label {
-        border-color: var(--red);
-        background: var(--red-soft);
-        color: var(--red);
-      }
-      .status-modal textarea {
-        min-height: 100px;
-        font-size: 12px;
-      }
-      .status-modal .modal-footer {
+      .modal-footer {
         padding: 13px 20px;
         border-top: 1px solid var(--border);
       }
@@ -468,13 +470,56 @@
         border: 1px solid var(--red);
         color: white;
       }
+      .readonly-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 13px;
+      }
+      .readonly-field {
+        min-width: 0;
+        border: 1px solid #e0e7eb;
+        border-radius: 7px;
+        padding: 10px 12px;
+        background: #fbfcfd;
+      }
+      .readonly-field label {
+        display: block;
+        font-size: 10px;
+        font-weight: 800;
+        color: #71818d;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+      }
+      .readonly-field .value {
+        font-size: 12px;
+        font-weight: 600;
+        color: #293f4e;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+      }
+      .readonly-field .value.empty {
+        color: #9aa6ae;
+        font-weight: 400;
+        font-style: italic;
+      }
+      .view-record-modal .modal-body {
+        max-height: 70vh;
+        overflow: auto;
+      }
+      .date-edit-modal .form-label {
+        font-size: 11px;
+        font-weight: 800;
+        color: #536777;
+      }
+      .date-edit-modal .modal-body {
+        padding: 22px;
+      }
       .progress-modal .modal-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 15px;
         padding: 20px 24px;
-        border-bottom: 1px solid var(--border);
         border-left: 4px solid var(--red);
       }
       .progress-record-details {
@@ -520,7 +565,7 @@
         background: #dce4e9;
       }
       .progress-stage.done:not(:last-child):after {
-        background: var(--red);
+        background: var(--green);
       }
       .progress-stage-circle {
         position: relative;
@@ -539,14 +584,19 @@
         font-weight: 800;
       }
       .progress-stage.done .progress-stage-circle {
-        background: var(--red);
-        border-color: var(--red);
+        background: var(--green);
+        border-color: var(--green);
         color: white;
       }
       .progress-stage.current .progress-stage-circle {
         background: var(--red-soft);
         border-color: var(--red);
         color: var(--red);
+      }
+      .progress-stage.upcoming .progress-stage-circle {
+        background: var(--orange-soft);
+        border-color: #e6b36f;
+        color: #a95c0a;
       }
       .progress-stage-name {
         padding: 0 3px;
@@ -555,15 +605,32 @@
         line-height: 1.4;
         overflow-wrap: anywhere;
       }
-      .progress-stage.done .progress-stage-name,
+      .progress-stage.done .progress-stage-name {
+        color: #198754;
+        font-weight: 800;
+      }
       .progress-stage.current .progress-stage-name {
         color: var(--navy);
         font-weight: 800;
+      }
+      .progress-stage.upcoming .progress-stage-name {
+        color: #a95c0a;
       }
       .progress-stage-state {
         margin-top: 4px;
         color: #85939d;
         font-size: 8px;
+      }
+      .progress-stage.done .progress-stage-state {
+        color: #198754;
+        font-weight: 800;
+      }
+      .progress-stage.current .progress-stage-state {
+        color: var(--red);
+        font-weight: 800;
+      }
+      .progress-stage.upcoming .progress-stage-state {
+        color: #b36b1c;
       }
       .progress-legend {
         display: flex;
@@ -583,15 +650,42 @@
         vertical-align: middle;
       }
       .legend-done {
-        background: var(--red);
+        background: var(--green);
       }
       .legend-current {
         background: var(--red-soft);
         border: 2px solid var(--red);
       }
       .legend-upcoming {
-        background: white;
-        border: 1px solid #cbd5dc;
+        background: var(--orange-soft);
+        border: 1px solid #e6b36f;
+      }
+      .show-hide-search {
+        font-size: 13px;
+      }
+      .modal-field label {
+        display: block;
+        font-size: 10px;
+        font-weight: 800;
+        color: #536777;
+        margin-bottom: 6px;
+      }
+      .modal-field .value {
+        background: #f2f5f7;
+        color: #637481;
+        opacity: 1;
+        font-size: 11px;
+        min-height: 36px;
+        border-color: #d5dfe6;
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        border-radius: var(--bs-border-radius);
+        transition:
+          border-color 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out;
+        padding: 0.375rem 0.75rem;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
       }
       @media (max-width: 1100px) {
         .filter-grid {
@@ -651,10 +745,18 @@
           margin-left: 0;
           width: 100%;
         }
+        .readonly-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
         .progress-modal .modal-header {
           align-items: flex-start;
           flex-direction: column;
           padding: 16px;
+        }
+      }
+      @media (max-width: 480px) {
+        .readonly-grid {
+          grid-template-columns: 1fr;
         }
       }
     </style>
@@ -717,10 +819,8 @@
     </header>
     <main class="page">
       <div class="page-title-row">
-        <div>
-          <h5 class="title mb-1">Input BD Records</h5>
-          <div class="title-accent"></div>
-        </div>
+        <h5 class="title mb-1">Input BD Records</h5>
+        <div class="title-accent"></div>
       </div>
       <section class="filter-card">
         <div class="filter-grid">
@@ -784,14 +884,12 @@
         <div class="table-head">
           <div class="table-heading">
             <div class="table-title">Engineering Records</div>
-            <div class="input-group input-group-sm table-search">
-              <span class="input-group-text bg-white"
-                ><i class="bi bi-search"></i></span
+            <div class="table-search">
+              <i class="bi bi-search"></i
               ><input
                 type="search"
                 id="globalSearch"
-                class="form-control"
-                placeholder="Search all records..."
+                placeholder="Search..."
                 aria-label="Search all records"
                 oninput="handleSearch()"
               />
@@ -806,9 +904,8 @@
               aria-label="Export CSV"
               data-bs-toggle="tooltip"
             >
-              <i class="bi bi-download"></i>
-            </button>
-            <button
+              <i class="bi bi-download"></i></button
+            ><button
               type="button"
               class="tool-btn tool-icon-btn"
               onclick="document.getElementById('excelUpload').click()"
@@ -841,7 +938,7 @@
                 aria-labelledby="columnsDropdown"
               >
                 <div
-                  class="d-flex justify-content-between align-items-center mb-2"
+                  class="d-flex justify-content-between align-items-center mb-2 show-hide-search"
                 >
                   <strong>Show / hide columns</strong
                   ><button
@@ -904,21 +1001,24 @@
         </div>
       </section>
     </main>
+    <!-- Read-only record details modal -->
     <div
-      class="modal fade status-modal"
-      id="editStatusModal"
+      class="modal fade view-record-modal"
+      id="viewRecordModal"
       tabindex="-1"
-      aria-labelledby="editStatusModalLabel"
+      aria-labelledby="viewRecordModalLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered">
+      <div
+        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+      >
         <div class="modal-content">
           <div class="modal-header">
             <div>
-              <h5 class="modal-title" id="editStatusModalLabel">
-                Update Record Status
+              <h5 class="modal-title" id="viewRecordModalLabel">
+                Record Details
               </h5>
-              <div class="text-muted mt-1" id="editRecordNumber"></div>
+              <div class="text-muted mt-1" id="viewRecordSubtitle"></div>
             </div>
             <button
               type="button"
@@ -927,66 +1027,55 @@
               aria-label="Close"
             ></button>
           </div>
-          <form id="editStatusForm">
+          <div class="modal-body">
+            <div class="readonly-grid" id="viewRecordFields"></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn-light-action"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Planned submission date quick-edit modal -->
+    <div
+      class="modal fade date-edit-modal"
+      id="dateEditModal"
+      tabindex="-1"
+      aria-labelledby="dateEditModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div>
+              <h5 class="modal-title" id="dateEditModalLabel">
+                Edit Planned Submission Date
+              </h5>
+              <div class="text-muted mt-1" id="dateEditRecordLabel"></div>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form id="dateEditForm">
             <div class="modal-body">
-              <div class="mb-4">
-                <label class="form-label d-block">Select Status</label>
-                <div class="status-options">
-                  <div class="status-option">
-                    <input
-                      type="radio"
-                      id="statusPending"
-                      name="recordStatus"
-                      value="Pending"
-                      required
-                    /><label for="statusPending">Pending</label>
-                  </div>
-                  <div class="status-option">
-                    <input
-                      type="radio"
-                      id="statusInProgress"
-                      name="recordStatus"
-                      value="In Progress"
-                    /><label for="statusInProgress">In Progress</label>
-                  </div>
-                  <div class="status-option">
-                    <input
-                      type="radio"
-                      id="statusComplete"
-                      name="recordStatus"
-                      value="Complete"
-                    /><label for="statusComplete">Complete</label>
-                  </div>
-                  <div class="status-option">
-                    <input
-                      type="radio"
-                      id="statusRejected"
-                      name="recordStatus"
-                      value="Rejected"
-                    /><label for="statusRejected">Rejected</label>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-4">
-                <label for="plannedSubmissionDate" class="form-label"
-                  >Planned Submission Date</label
-                ><input
-                  type="date"
-                  id="plannedSubmissionDate"
-                  class="form-control"
-                />
-              </div>
-              <div>
-                <label for="statusRemark" class="form-label"
-                  >Remarks / Information</label
-                ><textarea
-                  id="statusRemark"
-                  class="form-control"
-                  rows="4"
-                  placeholder="Enter remarks about this status..."
-                ></textarea>
-              </div>
-              <input type="hidden" id="editingRecordIndex" />
+              <label for="newPlannedDate" class="form-label"
+                >Planned Submission Date</label
+              ><input
+                type="date"
+                id="newPlannedDate"
+                class="form-control"
+                required
+              /><input type="hidden" id="dateEditRecordIndex" />
             </div>
             <div class="modal-footer">
               <button
@@ -996,13 +1085,14 @@
               >
                 Cancel</button
               ><button type="submit" class="btn-primary-mahindra">
-                Submit
+                Save Date
               </button>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <!-- Project progress modal -->
     <div
       class="modal fade progress-modal"
       id="programProgressModal"
@@ -1244,6 +1334,7 @@
         "Status",
         "Actions",
       ];
+      const $ = (id) => document.getElementById(id);
       function escapeHTML(v) {
         return String(v ?? "").replace(
           /[&<>"']/g,
@@ -1273,13 +1364,26 @@
               ? "rejected"
               : "pending";
       }
+      function parseDateToInput(s) {
+        if (!s) return "";
+        const p = String(s).split("-");
+        if (p.length !== 3) return "";
+        return p[2].length === 4
+          ? `${p[2]}-${p[1]}-${p[0]}`
+          : `${p[0]}-${p[1]}-${p[2]}`;
+      }
+      function formatInputDate(s) {
+        if (!s) return "";
+        const [y, m, d] = s.split("-");
+        return `${d}-${m}-${y}`;
+      }
       function getFilteredRows() {
-        const d = docNo.value.trim().toLowerCase(),
-          c = customer.value.trim().toLowerCase(),
-          p = project.value.trim().toLowerCase(),
-          m = material.value.trim().toLowerCase(),
-          s = status.value,
-          q = globalSearch.value.trim().toLowerCase();
+        const d = $("docNo").value.trim().toLowerCase(),
+          c = $("customer").value.trim().toLowerCase(),
+          p = $("project").value.trim().toLowerCase(),
+          m = $("material").value.trim().toLowerCase(),
+          s = $("status").value,
+          q = $("globalSearch").value.trim().toLowerCase();
         let out = records
           .map((record, originalIndex) => ({ record, originalIndex }))
           .filter(
@@ -1325,14 +1429,14 @@
       }
       function clearFilters() {
         ["docNo", "customer", "project", "material", "globalSearch"].forEach(
-          (id) => (document.getElementById(id).value = ""),
+          (id) => ($(id).value = ""),
         );
-        status.value = "";
+        $("status").value = "";
         currentPage = 1;
         render();
       }
       function changePageSize() {
-        pageSize = Number(document.getElementById("pageSize").value) || 10;
+        pageSize = Number($("pageSize").value) || 10;
         currentPage = 1;
         render();
       }
@@ -1347,7 +1451,7 @@
         }
       }
       function renderPagination(pages) {
-        const el = document.getElementById("pagination"),
+        const el = $("pagination"),
           item = (p, label, disabled = false, active = false) =>
             `<li class="page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}"><button type="button" class="page-link" ${disabled ? "disabled" : ""} onclick="goToPage(${p})">${label}</button></li>`;
         let h = item(currentPage - 1, "‹", currentPage === 1),
@@ -1377,21 +1481,23 @@
         currentPage = Math.min(currentPage, pages);
         const start = (currentPage - 1) * pageSize,
           visible = rows.slice(start, start + pageSize);
-        recordBody.innerHTML = visible
-          .map(
-            ({ record: r, originalIndex }, i) =>
-              `<tr><td>${start + i + 1}</td><td>${escapeHTML(r[0])}</td><td class="doc-link">${escapeHTML(r[1])}</td><td>${escapeHTML(r[2])}</td><td>${escapeHTML(r[3])}</td><td class="customer-code">${escapeHTML(r[4])}</td><td class="project-name">${escapeHTML(r[5])}</td><td class="material-code">${escapeHTML(r[6])}</td><td>${escapeHTML(r[7])}</td><td>${escapeHTML(r[8])}</td><td>${escapeHTML(r[9])}</td><td>${escapeHTML(r[10])}</td><td>${escapeHTML(r[11])}</td><td>${escapeHTML(r[12])}</td><td>${escapeHTML(r[13])}</td><td><span class="status ${statusClass(r[14])}" title="${escapeHTML(r[15] || "No remarks added")}">${escapeHTML(normalizeStatus(r[14]))}</span></td><td><div class="action-group"><button class="action" type="button" title="View record" onclick="viewRecord(${originalIndex})"><i class="bi bi-eye"></i></button><button class="action edit-record-btn" type="button" title="Edit status and remarks" onclick="editRecord(${originalIndex})"><i class="bi bi-pencil"></i></button><button class="action" type="button" title="View program progress" onclick="openProgressModal(${originalIndex})"><i class="bi bi-three-dots"></i></button></div></td></tr>`,
-          )
+        $("recordBody").innerHTML = visible
+          .map(({ record: r, originalIndex }, i) => {
+            const canEditDate = normalizeStatus(r[14]) === "Pending";
+            const dateCell = canEditDate
+              ? `<button type="button" class="date-cell-button" title="Edit planned submission date" onclick="editPlannedDate(${originalIndex})">${escapeHTML(r[13] || "Set date")} <i class="bi bi-pencil-square ms-1"></i></button>`
+              : `<span class="date-cell-button disabled-date">${escapeHTML(r[13] || "—")}</span>`;
+            return `<tr><td>${start + i + 1}</td><td>${escapeHTML(r[0])}</td><td class="doc-link">${escapeHTML(r[1])}</td><td>${escapeHTML(r[2])}</td><td>${escapeHTML(r[3])}</td><td class="customer-code">${escapeHTML(r[4])}</td><td class="project-name">${escapeHTML(r[5])}</td><td class="material-code">${escapeHTML(r[6])}</td><td>${escapeHTML(r[7])}</td><td>${escapeHTML(r[8])}</td><td>${escapeHTML(r[9])}</td><td>${escapeHTML(r[10])}</td><td>${escapeHTML(r[11])}</td><td>${escapeHTML(r[12])}</td><td>${dateCell}</td><td><span class="status ${statusClass(r[14])}" title="${escapeHTML(r[15] || "No remarks added")}">${escapeHTML(normalizeStatus(r[14]))}</span></td><td><div class="action-group"><button class="action" type="button" title="View record (read only)" aria-label="View record" onclick="viewRecord(${originalIndex})"><i class="bi bi-eye"></i></button><button class="action" type="button" title="View project progress" aria-label="View project progress" onclick="openProgressModal(${originalIndex})"><i class="bi bi-three-dots"></i></button></div></td></tr>`;
+          })
           .join("");
-        totalEl.textContent = total;
-        showing.textContent = total
+        $("total").textContent = total;
+        $("showing").textContent = total
           ? `${start + 1}–${Math.min(start + pageSize, total)}`
           : "0";
         renderPagination(pages);
         updateSortIndicators();
         applyColumnVisibility();
       }
-      const totalEl = document.getElementById("total");
       function updateSortIndicators() {
         document
           .querySelectorAll(".records-table thead th")
@@ -1424,7 +1530,7 @@
           });
       }
       function initColumnSelector() {
-        columnCheckboxes.innerHTML = headers
+        $("columnCheckboxes").innerHTML = headers
           .map(
             (h, i) =>
               `<div class="form-check"><input class="form-check-input column-toggle" type="checkbox" id="column-${i}" data-column="${i}" checked><label class="form-check-label" for="column-${i}">${escapeHTML(h)}</label></div>`,
@@ -1472,7 +1578,7 @@
           .filter((th) => getComputedStyle(th).display !== "none")
           .slice(0, 3);
         let left = 0;
-        shown.forEach((th) => {
+        shown.forEach((th, j) => {
           const idx = Array.from(th.parentElement.children).indexOf(th),
             w = th.getBoundingClientRect().width;
           rows.forEach((row) => {
@@ -1484,8 +1590,7 @@
                 row.parentElement.tagName === "THEAD" ? "5" : "3";
               cell.style.background =
                 row.parentElement.tagName === "THEAD" ? "#f5f7f9" : "#fff";
-              if (shown.indexOf(th) === 2)
-                cell.style.boxShadow = "3px 0 5px #071b2d12";
+              if (j === 2) cell.style.boxShadow = "3px 0 5px #071b2d12";
             }
           });
           left += w;
@@ -1567,50 +1672,36 @@
         };
         reader.readAsArrayBuffer(file);
       }
-      const editModal = bootstrap.Modal.getOrCreateInstance(
-        document.getElementById("editStatusModal"),
-      );
-      function toInputDate(s) {
-        if (!s) return "";
-        const p = s.split("-");
-        return p.length === 3 ? `${p[2]}-${p[1]}-${p[0]}` : "";
-      }
-      function toDisplayDate(s) {
-        if (!s) return "";
-        const [y, m, d] = s.split("-");
-        return `${d}-${m}-${y}`;
-      }
-      function editRecord(i) {
+      function viewRecord(i) {
         const r = records[i];
         if (!r) return;
-        editingRecordIndex.value = i;
-        editRecordNumber.textContent = `${r[1]} • ${r[6]}`;
-        const s = normalizeStatus(r[14]);
-        document
-          .querySelectorAll('[name="recordStatus"]')
-          .forEach((x) => (x.checked = x.value === s));
-        if (!document.querySelector('[name="recordStatus"]:checked'))
-          statusPending.checked = true;
-        statusRemark.value = r[15] || "";
-        plannedSubmissionDate.value = toInputDate(r[13]);
-        editModal.show();
+        $("viewRecordSubtitle").textContent = `${r[1]} • ${r[6]}`;
+        const values = [...r.slice(0, 15), r[15] || ""];
+        const labels = [...headers.slice(1, 16), "Remarks"];
+        const fields = labels.map(
+          (label, j) =>
+            `<div class="modal-field"><label>${escapeHTML(label)} <i class="bi bi-lock-fill ms-1" title="Read only"></i></label><div class="value ${String(values[j] ?? "").trim() ? "" : "empty"}">${escapeHTML(String(values[j] ?? "").trim() ? values[j] : "Not provided")}</div></div>`,
+        );
+        $("viewRecordFields").innerHTML = fields.join("");
+        bootstrap.Modal.getOrCreateInstance($("viewRecordModal")).show();
       }
-      function viewRecord(i) {
-        editRecord(i);
+      function editPlannedDate(i) {
+        const r = records[i];
+        if (!r || normalizeStatus(r[14]) !== "Pending") return;
+        $("dateEditRecordIndex").value = i;
+        $("dateEditRecordLabel").textContent = `${r[1]} • ${r[6]}`;
+        $("newPlannedDate").value = parseDateToInput(r[13]);
+        bootstrap.Modal.getOrCreateInstance($("dateEditModal")).show();
       }
-      document
-        .getElementById("editStatusForm")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          const r = records[Number(editingRecordIndex.value)];
-          if (!r) return;
-          const s = document.querySelector('[name="recordStatus"]:checked');
-          if (s) r[14] = s.value;
-          r[13] = toDisplayDate(plannedSubmissionDate.value);
-          r[15] = statusRemark.value.trim();
-          editModal.hide();
-          render();
-        });
+      $("dateEditForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const i = Number($("dateEditRecordIndex").value),
+          r = records[i];
+        if (!r || normalizeStatus(r[14]) !== "Pending") return;
+        r[13] = formatInputDate($("newPlannedDate").value);
+        bootstrap.Modal.getOrCreateInstance($("dateEditModal")).hide();
+        render();
+      });
       const stages = [
           "BD",
           "Program",
@@ -1625,14 +1716,15 @@
         ],
         progressByRecord = {};
       const progressModal = bootstrap.Modal.getOrCreateInstance(
-        document.getElementById("programProgressModal"),
+        $("programProgressModal"),
       );
       function openProgressModal(i) {
         const r = records[i];
         if (!r) return;
-        progressRecordDetails.innerHTML = `<strong>Doc Ref No.:</strong> ${escapeHTML(r[1])} &nbsp; | &nbsp; <strong>Customer:</strong> ${escapeHTML(r[5])} &nbsp; | &nbsp; <strong>Material Code:</strong> ${escapeHTML(r[6])}`;
+        $("progressRecordDetails").innerHTML =
+          `<strong>Doc Ref No.:</strong> ${escapeHTML(r[1])} &nbsp; | &nbsp; <strong>Customer:</strong> ${escapeHTML(r[5])} &nbsp; | &nbsp; <strong>Material Code:</strong> ${escapeHTML(r[6])}`;
         const current = progressByRecord[i] || 2;
-        programProgressTrack.innerHTML = stages
+        $("programProgressTrack").innerHTML = stages
           .map((s, j) => {
             const n = j + 1,
               done = n < current,
@@ -1640,7 +1732,7 @@
             return `<div class="progress-stage ${done ? "done" : now ? "current" : "upcoming"}"><div class="progress-stage-circle">${done ? '<i class="bi bi-check2"></i>' : n}</div><div class="progress-stage-name">${escapeHTML(s)}</div><div class="progress-stage-state">${done ? "Completed" : now ? "In Review" : "Upcoming"}</div></div>`;
           })
           .join("");
-        progressReviewStatus.textContent =
+        $("progressReviewStatus").textContent =
           current === stages.length
             ? "FAI Submission"
             : "In Review — " + stages[current - 1];
