@@ -92,12 +92,12 @@
         font-size: 11px;
       }
       .profile-name {
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 800;
         text-align: left;
       }
       .profile-role {
-        font-size: 9px;
+        font-size: 11px;
         color: #7b8993;
       }
       .dropdown-menu {
@@ -146,6 +146,10 @@
         background: var(--red);
         border-radius: 3px;
         margin-top: 9px;
+      }
+      .title {
+        font-weight: 800;
+        color: var(--navy);
       }
       .header-actions {
         display: flex;
@@ -218,7 +222,7 @@
         align-items: end;
       }
       .filter-label {
-        font-size: 9px;
+        font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         font-weight: 800;
@@ -229,7 +233,7 @@
         height: 37px;
         border: 1px solid #d5dfe6;
         border-radius: 6px;
-        font-size: 11px;
+        font-size: 12px;
         color: #415563;
         background: #fff;
       }
@@ -246,7 +250,7 @@
         background: var(--red);
         color: #fff;
         border: 1px solid var(--red);
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 800;
         padding: 0 16px;
         border-radius: 6px;
@@ -313,7 +317,7 @@
         border-right: 1px solid #edf1f4;
         border-bottom: 1px solid #dce4e9;
         padding: 10px 9px;
-        font-size: 8px;
+        font-size: 11px;
         line-height: 1.25;
         text-transform: uppercase;
         letter-spacing: 0.3px;
@@ -324,7 +328,7 @@
         color: #405463;
         border-right: 1px solid #f0f3f5;
         border-bottom: 1px solid #e8edf0;
-        font-size: 10px;
+        font-size: 12px;
         white-space: nowrap;
       }
       .records-table tbody tr:hover td {
@@ -395,7 +399,7 @@
         align-items: center;
         padding: 11px 17px;
         color: #7a8994;
-        font-size: 10px;
+        font-size: 12px;
       }
       .page-size {
         display: flex;
@@ -505,11 +509,11 @@
         user-select: none;
       }
       .records-table th[data-sort-key]:hover {
-        color: var(--red);
+        color: #627582;
       }
       .sort-indicator {
         margin-left: 4px;
-        color: var(--red);
+        color: #627582;
       }
       .engineering-table th.sticky-col,
       .engineering-table td.sticky-col {
@@ -534,6 +538,23 @@
       .engineering-table thead tr.group-head th:not(.base-group) {
         position: relative;
         z-index: 8;
+      }
+      /* Opaque frozen cells: scrolled columns must never show through them. */
+      .engineering-table thead tr.col-head th.sticky-col {
+        background-color: #f5f7f9 !important;
+        background-clip: padding-box;
+        isolation: isolate;
+      }
+      .engineering-table tbody td.sticky-col {
+        background-color: #ffffff !important;
+        background-clip: padding-box;
+        isolation: isolate;
+      }
+      .engineering-table tbody tr:nth-child(even) td.sticky-col {
+        background-color: #fbfcfd !important;
+      }
+      .engineering-table tbody tr:hover td.sticky-col {
+        background-color: #f5f9fb !important;
       }
       .engineering-table tbody td.sticky-col {
         position: sticky !important;
@@ -563,6 +584,9 @@
       }
       .table-tools-row .table-tools {
         margin-left: auto;
+      }
+      .show-hide-search {
+        font-size: 13px;
       }
       @media (max-width: 700px) {
         .table-tools-row {
@@ -681,7 +705,7 @@
       }
       .section-helper {
         margin-left: auto;
-        font-size: 9px;
+        font-size: 11px;
         color: #81909a;
       }
       .section-panel {
@@ -879,6 +903,81 @@
       .section-anchor {
         scroll-margin-left: 12px;
       }
+
+      /* Scroll-overlap fix: opaque sticky headers and frozen identity columns. */
+      .engineering-table-wrap {
+        isolation: isolate;
+        position: relative;
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+      .engineering-table {
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+      }
+      .engineering-table thead tr.group-head th {
+        position: sticky;
+        top: 0;
+        z-index: 12;
+        background: #edf2f5 !important;
+        background-clip: padding-box;
+      }
+      .engineering-table thead tr.col-head th {
+        position: sticky;
+        top: 32px;
+        z-index: 11;
+        background: #f5f7f9 !important;
+        background-clip: padding-box;
+      }
+      .engineering-table thead tr.col-head th.sticky-col {
+        z-index: 40 !important;
+        background: #f5f7f9 !important;
+      }
+      .engineering-table thead tr.group-head th.base-group {
+        z-index: 50 !important;
+        left: 0 !important;
+        background: #edf2f5 !important;
+        box-shadow: 3px 0 5px #071b2d18;
+      }
+      /* Frozen cells must be fully opaque so horizontally scrolling cells never
+         show through them. Keep row striping/hover colours opaque as well. */
+      .engineering-table thead tr.col-head th.sticky-col {
+        position: sticky !important;
+        z-index: 60 !important;
+        background-color: #f5f7f9 !important;
+        background-image: none !important;
+        background-clip: padding-box !important;
+        isolation: isolate;
+        border-right: 1px solid #dce4e9 !important;
+      }
+      .engineering-table tbody td.sticky-col {
+        position: sticky !important;
+        z-index: 30 !important;
+        background-color: #ffffff !important;
+        background-image: none !important;
+        background-clip: padding-box !important;
+        isolation: isolate;
+        border-right: 1px solid #e1e7eb !important;
+      }
+      .engineering-table tbody tr:nth-child(even) td.sticky-col {
+        background-color: #fbfcfd !important;
+      }
+      .engineering-table tbody tr:hover td.sticky-col {
+        background-color: #f5f9fb !important;
+      }
+      .engineering-table thead tr.group-head th.base-group {
+        position: sticky !important;
+        left: 0 !important;
+        z-index: 70 !important;
+        background-color: #edf2f5 !important;
+        background-image: none !important;
+        background-clip: padding-box !important;
+        isolation: isolate;
+        box-shadow: 3px 0 5px #071b2d18;
+      }
+      .engineering-table .sticky-col-3 {
+        box-shadow: 3px 0 5px #071b2d18;
+      }
     </style>
   </head>
   <body>
@@ -898,7 +997,7 @@
               ><i class="bi bi-folder2-open me-1"></i>Input BD</a
             >
             <a href="mahindra_programs.html"
-              ><i class="bi bi-folder2-open me-1"></i>Mahindra Programs</a
+              ><i class="bi bi-folder2-open me-1"></i>Programs</a
             >
             <a href="mahindra_engineering_records.html" class="active"
               ><i class="bi bi-folder2-open me-1"></i>Engineering 1</a
@@ -932,7 +1031,9 @@
               </li>
               <li><hr class="dropdown-divider" /></li>
               <li>
-                <a class="dropdown-item text-danger" href="#"
+                <a
+                  class="dropdown-item text-danger"
+                  href="mahindra_engineering_login.html"
                   ><i class="bi bi-box-arrow-right me-2"></i>Logout</a
                 >
               </li>
@@ -943,57 +1044,21 @@
     </header>
 
     <main class="page">
-      <div class="breadcrumb">
-        <span>Home</span> <i class="bi bi-chevron-right mx-1"></i>
-        <strong>Engineering Records</strong>
-      </div>
-
       <div class="page-title-row">
         <div>
-          <h1 class="page-title">Engineering Document Records</h1>
-          <div class="page-subtitle">
-            Search, review and manage engineering document submissions and
-            project material information.
-          </div>
+          <h5 class="title mb-1">Engineering Document Records</h5>
           <div class="title-accent"></div>
         </div>
-        <div class="header-actions">
-          <button class="btn-light-action">
-            <i class="bi bi-download me-1"></i>Download Template
-          </button>
-          <button class="btn-light-action">
-            <i class="bi bi-upload me-1"></i>Upload Excel
-          </button>
-          <button class="btn-primary-mahindra">
-            <i class="bi bi-plus-lg me-1"></i>New Record
-          </button>
-        </div>
-      </div>
-
-      <div class="tabs">
-        <a href="#" class="active">All Records</a>
-        <a href="#">Pending Review</a>
-        <a href="#">Approved</a>
-        <a href="#">In Progress</a>
-        <a href="#">Completed</a>
       </div>
 
       <section class="filter-card">
         <div class="filter-grid">
           <div>
-            <div class="filter-label">Doc No.</div>
+            <div class="filter-label">MASPL</div>
             <input
               id="docNo"
               class="form-control filter-control"
-              placeholder="Search document number"
-            />
-          </div>
-          <div>
-            <div class="filter-label">Customer Code</div>
-            <input
-              id="customer"
-              class="form-control filter-control"
-              placeholder="Search customer code"
+              placeholder="Search MASPL"
             />
           </div>
           <div>
@@ -1005,11 +1070,11 @@
             />
           </div>
           <div>
-            <div class="filter-label">Customer Material Code</div>
+            <div class="filter-label">Type</div>
             <input
               id="material"
               class="form-control filter-control"
-              placeholder="Search material code"
+              placeholder="Search Type"
             />
           </div>
           <div>
@@ -1096,7 +1161,7 @@
             <input
               id="globalSearch"
               type="search"
-              placeholder="Search all engineering records..."
+              placeholder="Search..."
               aria-label="Search all engineering records"
               oninput="handleGlobalSearch()"
             />
@@ -1106,8 +1171,9 @@
               type="button"
               class="tool-btn tool-icon-btn"
               onclick="exportCSV()"
-              title="Export filtered records to CSV"
+              title="Export CSV"
               aria-label="Export CSV"
+              data-bs-toggle="tooltip"
             >
               <i class="bi bi-download"></i>
             </button>
@@ -1117,8 +1183,9 @@
               onclick="
                 document.getElementById('engineeringExcelUpload').click()
               "
-              title="Upload Excel or CSV"
-              aria-label="Upload Excel or CSV"
+              title="Upload Excel"
+              aria-label="Upload Excel"
+              data-bs-toggle="tooltip"
             >
               <i class="bi bi-file-earmark-excel"></i>
             </button>
@@ -1146,7 +1213,7 @@
                 aria-labelledby="engineeringColumnsDropdown"
               >
                 <div
-                  class="d-flex justify-content-between align-items-center mb-2"
+                  class="d-flex justify-content-between align-items-center mb-2 show-hide-search"
                 >
                   <strong>Show / hide columns</strong
                   ><button
@@ -1209,7 +1276,7 @@
                 </th>
               </tr>
               <tr class="col-head">
-                <th>SL. No.</th>
+                <th>SR. No.</th>
                 <th>Customer</th>
                 <th>Part Number</th>
                 <th>Customer Material Code</th>
@@ -1235,10 +1302,6 @@
           </table>
         </div>
 
-        <div class="text-center small text-muted py-2">
-          <i class="bi bi-arrows-left-right me-1"></i>Use the section buttons or
-          the horizontal scrollbar to explore all engineering columns.
-        </div>
         <div class="table-footer">
           <div>
             Showing <strong id="showing">1–10</strong> of
@@ -1480,10 +1543,637 @@
           eng: "COMPLETED",
           remarks: "—",
         },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303430400",
+          material: "Z579-13034-304-00",
+          process: "ROUTING+PB",
+          tdpPlan: "10/13/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/12/2023",
+          feasActual: "11/12/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303330400",
+          material: "Z579-13033-304-00",
+          process: "ROUTING",
+          tdpPlan: "10/13/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/12/2023",
+          feasActual: "11/12/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303730400",
+          material: "Z579-13037-304-00",
+          process: "ROUTING",
+          tdpPlan: "4/24/2025",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "5/24/2025",
+          feasActual: "5/24/2025",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303530400",
+          material: "Z579-13035-304-00",
+          process: "LASER+HET+PRESS",
+          tdpPlan: "1/22/2025",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "2/21/2025",
+          feasActual: "2/21/2025",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791319730300",
+          material: "Z579-13197-303-00",
+          process: "ROUTING+PB",
+          tdpPlan: "1/18/2024",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "2/17/2024",
+          feasActual: "2/17/2024",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303130400",
+          material: "Z579-13031-304-00",
+          process: "ROUTING+PB",
+          tdpPlan: "10/8/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/7/2023",
+          feasActual: "11/7/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5391064000000",
+          material: "Z539-10640-000-00",
+          process: "ROUTING+PB",
+          tdpPlan: "8/24/2024",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "9/23/2024",
+          feasActual: "9/23/2024",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "X5393680130300",
+          material: "X539-36801-303-00",
+          process: "ROUTING+PB+HF",
+          tdpPlan: "10/11/2024",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/10/2024",
+          feasActual: "11/10/2024",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5391067830000",
+          material: "Z539-10678-300-00",
+          process: "",
+          tdpPlan: "11/13/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "12/13/2023",
+          feasActual: "12/13/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5393680130400",
+          material: "Z539-36801-304-00",
+          process: "ROUTING+PB",
+          tdpPlan: "7/1/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "7/31/2023",
+          feasActual: "7/31/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5393680130600",
+          material: "Z539-36801-306-00",
+          process: "ROUTING+CHAMFER-PB",
+          tdpPlan: "9/8/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "10/8/2023",
+          feasActual: "10/8/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303430400",
+          material: "Z579-13034-304-00",
+          process: "ROUTING+PB",
+          tdpPlan: "10/13/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/12/2023",
+          feasActual: "11/12/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303330400",
+          material: "Z579-13033-304-00",
+          process: "ROUTING",
+          tdpPlan: "10/13/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/12/2023",
+          feasActual: "11/12/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303730400",
+          material: "Z579-13037-304-00",
+          process: "ROUTING",
+          tdpPlan: "4/24/2025",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "5/24/2025",
+          feasActual: "5/24/2025",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303530400",
+          material: "Z579-13035-304-00",
+          process: "LASER+HET+PRESS",
+          tdpPlan: "1/22/2025",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "2/21/2025",
+          feasActual: "2/21/2025",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791319730300",
+          material: "Z579-13197-303-00",
+          process: "ROUTING+PB",
+          tdpPlan: "1/18/2024",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "2/17/2024",
+          feasActual: "2/17/2024",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303130400",
+          material: "Z579-13031-304-00",
+          process: "ROUTING+PB",
+          tdpPlan: "10/8/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/7/2023",
+          feasActual: "11/7/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5391064000000",
+          material: "Z539-10640-000-00",
+          process: "ROUTING+PB",
+          tdpPlan: "8/24/2024",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "9/23/2024",
+          feasActual: "9/23/2024",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "X5393680130300",
+          material: "X539-36801-303-00",
+          process: "ROUTING+PB+HF",
+          tdpPlan: "10/11/2024",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/10/2024",
+          feasActual: "11/10/2024",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5391067830000",
+          material: "Z539-10678-300-00",
+          process: "",
+          tdpPlan: "11/13/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "12/13/2023",
+          feasActual: "12/13/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5393680130400",
+          material: "Z539-36801-304-00",
+          process: "ROUTING+PB",
+          tdpPlan: "7/1/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "7/31/2023",
+          feasActual: "7/31/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5393680130600",
+          material: "Z539-36801-306-00",
+          process: "ROUTING+CHAMFER-PB",
+          tdpPlan: "9/8/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "10/8/2023",
+          feasActual: "10/8/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303430400",
+          material: "Z579-13034-304-00",
+          process: "ROUTING+PB",
+          tdpPlan: "10/13/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/12/2023",
+          feasActual: "11/12/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303330400",
+          material: "Z579-13033-304-00",
+          process: "ROUTING",
+          tdpPlan: "10/13/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/12/2023",
+          feasActual: "11/12/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303730400",
+          material: "Z579-13037-304-00",
+          process: "ROUTING",
+          tdpPlan: "4/24/2025",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "5/24/2025",
+          feasActual: "5/24/2025",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303530400",
+          material: "Z579-13035-304-00",
+          process: "LASER+HET+PRESS",
+          tdpPlan: "1/22/2025",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "2/21/2025",
+          feasActual: "2/21/2025",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791319730300",
+          material: "Z579-13197-303-00",
+          process: "ROUTING+PB",
+          tdpPlan: "1/18/2024",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "2/17/2024",
+          feasActual: "2/17/2024",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5791303130400",
+          material: "Z579-13031-304-00",
+          process: "ROUTING+PB",
+          tdpPlan: "10/8/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/7/2023",
+          feasActual: "11/7/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5391064000000",
+          material: "Z539-10640-000-00",
+          process: "ROUTING+PB",
+          tdpPlan: "8/24/2024",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "9/23/2024",
+          feasActual: "9/23/2024",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "X5393680130300",
+          material: "X539-36801-303-00",
+          process: "ROUTING+PB+HF",
+          tdpPlan: "10/11/2024",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "11/10/2024",
+          feasActual: "11/10/2024",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5391067830000",
+          material: "Z539-10678-300-00",
+          process: "",
+          tdpPlan: "11/13/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "12/13/2023",
+          feasActual: "12/13/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5393680130400",
+          material: "Z539-36801-304-00",
+          process: "ROUTING+PB",
+          tdpPlan: "7/1/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "7/31/2023",
+          feasActual: "7/31/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
+        {
+          customer: "MSAYZX0005",
+          part: "Z5393680130600",
+          material: "Z539-36801-306-00",
+          process: "ROUTING+CHAMFER-PB",
+          tdpPlan: "9/8/2023",
+          tdpAvail: "TDP AVAILABLE",
+          feasPlan: "10/8/2023",
+          feasActual: "10/8/2023",
+          feas: "FEASIBILITY STUDY COMPLETED",
+          rm: "COMPLETED",
+          cons: "COMPLETED",
+          hw: "COMPLETED",
+          bom: "COMPLETED",
+          sstReq: "NO",
+          sstNeed: "NA",
+          eng: "COMPLETED",
+          remarks: "—",
+        },
       ];
 
       const engineeringColumns = [
-        { key: "sr", label: "SL. No.", group: "identity" },
+        { key: "sr", label: "SR. No.", group: "identity" },
         { key: "customer", label: "Customer", group: "identity" },
         { key: "part", label: "Part Number", group: "identity" },
         { key: "material", label: "Customer Material Code", group: "identity" },
@@ -1864,7 +2554,7 @@
           baseGroup.style.left = "0px";
           baseGroup.style.width = "";
           baseGroup.style.minWidth = "";
-          baseGroup.style.zIndex = "30";
+          baseGroup.style.zIndex = "70";
         }
       }
       function clearFilters() {
@@ -1917,7 +2607,7 @@
                 .replace(/[^a-z0-9]/g, "");
             const sourceHeaders = rows[0].map(norm);
             const aliases = {
-              sr: ["slno", "serialno", "srno"],
+              sr: ["srno", "serialno", "srno"],
               customer: ["customer", "customercode"],
               part: ["partnumber", "partno", "docno"],
               material: ["customermaterialcode", "material", "materialcode"],
@@ -2049,43 +2739,67 @@
       };
 
       function goSection(name) {
+        // Keep the active jump button in sync with the selected section.
         document.querySelectorAll(".section-btn").forEach((button) => {
           button.classList.toggle("active", button.dataset.target === name);
         });
+
         const wrap = document.getElementById("engineeringTableWrap");
         const table = wrap?.querySelector(".engineering-table");
         if (!wrap || !table) return;
-        const target =
-          name === "identity"
-            ? table.querySelector("thead tr.col-head th:nth-child(1)")
-            : document.getElementById("group-" + name);
-        if (!target) return;
-        // Recalculate sticky offsets before determining the target position.
+
+        // Identity always means the actual far-left edge of the table.
+        if (name === "identity") {
+          wrap.scrollTo({ left: 0, behavior: "auto" });
+          wrap.scrollLeft = 0;
+          return;
+        }
+
+        // Recompute sticky offsets after column visibility changes.
         updateEngineeringStickyColumns();
+
+        // Target the first visible column in the requested section, rather
+        // than the spanning group header (whose position can be misleading
+        // when sticky columns and hidden columns are involved).
         const headers = Array.from(
           table.querySelectorAll("thead tr.col-head th"),
         );
-        // Calculate the actual visible width of the frozen identity columns.
-        const frozenWidth = headers.reduce((total, header, index) => {
-          if (index >= 4 || engineeringHiddenColumns.has(index)) return total;
-          return total + header.getBoundingClientRect().width;
-        }, 0);
+        const targetIndex = engineeringColumns.findIndex(
+          (col, index) =>
+            col.group === name && !engineeringHiddenColumns.has(index),
+        );
+        if (targetIndex < 0 || !headers[targetIndex]) return;
+
+        const targetHeader = headers[targetIndex];
         const wrapRect = wrap.getBoundingClientRect();
-        const targetRect = target.getBoundingClientRect();
-        // Convert the target's screen position into the scrollable table position.
-        const targetScrollPosition =
-          targetRect.left - wrapRect.left + wrap.scrollLeft;
-        // Put the target section just to the right of the frozen block.
-        const desiredLeft = targetScrollPosition - frozenWidth - 8;
-        wrap.scrollTo({
-          left: Math.max(0, desiredLeft),
-          behavior: "smooth",
+
+        // Width of the visible frozen identity block. The section should start
+        // immediately to its right, never underneath it.
+        let frozenWidth = 0;
+        headers.forEach((header, index) => {
+          if (index < 4 && !engineeringHiddenColumns.has(index)) {
+            frozenWidth += header.getBoundingClientRect().width;
+          }
         });
+
+        // Convert the target's current viewport position into scroll content
+        // coordinates, then offset by the frozen block. This works regardless
+        // of the current horizontal scroll position.
+        const targetContentLeft =
+          wrap.scrollLeft +
+          targetHeader.getBoundingClientRect().left -
+          wrapRect.left;
+        const desiredLeft = Math.max(0, targetContentLeft - frozenWidth - 2);
+
+        wrap.scrollTo({ left: desiredLeft, behavior: "smooth" });
       }
       initEngineeringColumnSelector();
       initEngineeringSorting();
       render();
       window.addEventListener("resize", updateEngineeringStickyColumns);
+      document
+        .querySelectorAll('[data-bs-toggle="tooltip"]')
+        .forEach((el) => bootstrap.Tooltip.getOrCreateInstance(el));
     </script>
   </body>
 </html>
